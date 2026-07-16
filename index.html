@@ -127,9 +127,9 @@ header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.1) blur(8p
 .hero-note .pip{width:7px; height:7px; border-radius:50%; background:var(--go); box-shadow:0 0 0 4px color-mix(in srgb,var(--go) 22%,transparent)}
 
 /* ---------- device mock ---------- */
-.stage{position:relative; display:flex; justify-content:center}
+.stage{position:relative; display:flex; justify-content:center; min-width:0}
 .device{
-  width:min(100%,440px); aspect-ratio:4/3; background:linear-gradient(160deg,#26281f,#15170f);
+  width:min(100%,440px); min-width:0; aspect-ratio:4/3; background:linear-gradient(160deg,#26281f,#15170f);
   border-radius:26px; padding:16px; box-shadow:0 40px 70px -40px rgba(20,22,15,.85), inset 0 0 0 1px rgba(255,255,255,.05);
   position:relative;
 }
@@ -356,7 +356,8 @@ footer .fmeta a:hover{color:var(--amber)}
   .chead{display:none}
   .crow .classic::before{content:"Classique — "; font-family:'Chivo Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin-right:8px}
   .crow .appc::before{content:"Cadence — "; background:none; width:auto; height:auto; border-radius:0; font-family:'Chivo Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ember-2); margin-right:8px}
-  .voicebubble{position:static; margin-top:16px; max-width:100%}
+  .stage{flex-direction:column; align-items:center}
+  .voicebubble{position:static; margin:14px auto 0; width:100%; max-width:440px}
   .hero-cta .btn{flex:1; justify-content:center}
   .signature-band .seal{display:none}
 }
@@ -495,9 +496,10 @@ footer .fmeta a:hover{color:var(--amber)}
         <div class="b-copy">
           <span class="eyebrow">Fini les 50 minuteurs</span>
           <h3>Toutes vos cuissons sur une seule tablette, d'un coup d'œil</h3>
-          <p>Là où il fallait quinze boîtiers alignés sur le passe, une tablette montée au mur affiche toute la ligne. Le chef lit l'état de chaque cuisson sans compter les minuteurs, sans en chercher un qui a glissé dans la plonge. Zéro pile à changer, rien à recharger, rien à perdre.</p>
+          <p>Là où il fallait quinze boîtiers alignés sur le passe, une seule tablette affiche toute la ligne — le chef lit l'état de chaque cuisson d'un coup d'œil. Et pas besoin d'acheter de matériel : elle s'installe sur l'iPad ou la tablette Android que vous avez déjà, même une vieille oubliée dans un tiroir.</p>
           <ul class="b-list">
             <li>Vingt cuissons en parallèle sur un seul écran</li>
+            <li>S'installe sur une tablette que vous avez déjà — rien à acheter</li>
             <li>Zéro pile : jamais de minuteur mort en plein service</li>
             <li>Jamais perdu, cassé ni volé : la tablette reste sur son support</li>
             <li>Une surface plate essuyée en un geste, propre le jour d'un contrôle</li>
@@ -597,6 +599,7 @@ footer .fmeta a:hover{color:var(--amber)}
         <div class="crow"><div class="feat">Lisibilité</div><div class="classic"><s>Petit cadran, à tenir sous les yeux</s></div><div class="appc">Tuile lisible à trois mètres</div></div>
         <div class="crow"><div class="feat">Piles</div><div class="classic"><s>À changer, meurt en plein service</s></div><div class="appc">Zéro pile, alimentée en continu</div></div>
         <div class="crow"><div class="feat">Perte et casse</div><div class="classic"><s>Perdu dans la plonge, cassé, volé</s></div><div class="appc">Fixée à son support, toujours là</div></div>
+        <div class="crow"><div class="feat">Matériel</div><div class="classic"><s>Des minuteurs à acheter, encore et encore</s></div><div class="appc">Sur une tablette que vous avez déjà</div></div>
         <div class="crow"><div class="feat">Méthode maison</div><div class="classic"><s>Rien en mémoire, on retape tout</s></div><div class="appc">Vos recettes et vos temps enregistrés</div></div>
         <div class="crow"><div class="feat">Prise en main</div><div class="classic"><s>Chaque boîtier ses réglages obscurs</s></div><div class="appc">D'une simplicité déconcertante</div></div>
       </div>
