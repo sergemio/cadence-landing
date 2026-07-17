@@ -1,6 +1,8 @@
 # Cadence — Landing page
 
-Page vitrine (français) du **minuteur de cuisine professionnel** *Cadence* — projet [timer-app](https://github.com/sergemio) de Sezam&Co.
+Page vitrine (français) du **minuteur de cuisine professionnel** *Cadence*.
+
+> ⚠️ **Projet perso Serge Menassa + Henry Obégi — indépendant de Modern Leb Food / Sezam&Co.** Le produit n'appartient pas au restaurant : Sezam&Co n'apparaît que comme **testimonial** (le resto qui l'utilise). Publication **en nom propre**.
 
 - **Live** : https://sergemio.github.io/cadence-landing/
 - Fichier unique, autoportant : `index.html`.
