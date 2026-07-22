@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sergemio.github.io/cadence-landing/sitemap.xml
