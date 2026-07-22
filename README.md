@@ -2,7 +2,7 @@
 
 Page vitrine (français) du **minuteur de cuisine professionnel** *Cadence*.
 
-> ⚠️ **Projet perso Serge Menassa + Henry Obégi — indépendant de Modern Leb Food / Sezam&Co.** Le produit n'appartient pas au restaurant : Sezam&Co n'apparaît que comme **testimonial** (le resto qui l'utilise). Publication **en nom propre**.
+> ⚠️ **Projet perso Serge Menassa + Henry Obegi — indépendant de Modern Leb Food / Sezam&Co.** Le produit n'appartient pas au restaurant : Sezam&Co n'apparaît que comme **testimonial** (le resto qui l'utilise). Publication **en nom propre**.
 
 - **Live** : https://sergemio.github.io/cadence-landing/
 - Fichier unique, autoportant : `index.html`.
