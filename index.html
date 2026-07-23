@@ -190,6 +190,7 @@ header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.1) blur(8p
 .signature-band p{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:clamp(26px,4vw,50px); line-height:1; letter-spacing:-.01em; color:var(--ink); max-width:22ch}
 .signature-band em{font-style:normal; color:var(--ember)}
 .signature-band .amateurs{display:block; margin-top:.3em; font-size:.6em; color:var(--ink-3); font-weight:700}
+.signature-band .kitchen-shot{flex:1 1 320px; min-width:260px; max-width:440px; margin-left:auto; height:auto; border-radius:var(--rad-s); border:1px solid var(--line); box-shadow:var(--shadow)}
 
 /* ---------- section scaffolding ---------- */
 section{padding:clamp(56px,8vw,104px) 0; position:relative}
@@ -353,6 +354,7 @@ footer .fmeta a:hover{color:var(--amber)}
   header.open .navlinks a{padding:14px clamp(20px,5vw,52px)}
   header.open .navlinks .btn{margin:10px clamp(20px,5vw,52px)}
   .cred-quote{grid-row:1}
+  .signature-band .kitchen-shot{margin:0 auto}
 }
 @media (max-width:560px){
   body{font-size:16px}
@@ -438,6 +440,7 @@ footer .fmeta a:hover{color:var(--amber)}
     <div class="wrap">
       <img class="seal" src="assets/logo-mark.webp" alt="" width="159" height="256">
       <p>Built by restaurant people, <em>for restaurant people</em><span class="amateurs">— and passionate home cooks too.</span></p>
+      <img class="kitchen-shot" src="assets/pro-kitchen-tablet.webp" alt="Cadence kitchen timer app running on a wall-mounted tablet in a professional restaurant kitchen during service" width="1400" height="781" loading="lazy" decoding="async">
     </div>
   </section>
 
