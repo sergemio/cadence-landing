@@ -394,8 +394,11 @@ footer .fmeta a:hover{color:var(--amber)}
   section{padding:40px 0}
   .fgrid{grid-template-columns:1fr}
   .crow{grid-template-columns:1fr}
-  /* En 1 colonne, le filet vertical n'a plus de sens : il passe en bas de la cellule. */
-  .crow .feat{background:var(--tile); box-shadow:inset 0 -1px 0 var(--tile-edge)}
+  /* En 1 colonne, le filet vertical n'a plus de sens : il passe en bas de la cellule.
+     Et la cellule de gauche n'est plus une colonne mais le bandeau de la carte : on
+     centre son texte pour qu'il se lise comme un titre. Les deux lignes en dessous
+     (classique / notre app) restent alignées à gauche, elles se comparent. */
+  .crow .feat{background:var(--tile); box-shadow:inset 0 -1px 0 var(--tile-edge); justify-content:center; text-align:center}
   .crow .classic,.crow .appc{border-left:0; border-top:1px solid var(--line-2)}
   .chead{display:none}
   .crow .classic::before{content:"Classique — "; font-family:'Chivo Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin-right:8px}
@@ -403,6 +406,10 @@ footer .fmeta a:hover{color:var(--amber)}
   .stage{flex-direction:column; align-items:center}
   .voicebubble{position:relative; left:auto; bottom:auto; margin:14px auto 0; width:fit-content; max-width:100%}
   .hero-cta .btn{flex:1; justify-content:center}
+  /* CTA de section centrés : sur une colonne unique, un bouton collé au bord gauche
+     sous un pavé de texte se lit comme une note de bas de paragraphe. Les autres CTA
+     l'étaient déjà — hero (pleine largeur), sous le tableau et bloc final. */
+  .problem .btn-primary,.benefit .btn-primary{display:flex; width:fit-content; margin-inline:auto; justify-content:center}
   .signature-band .seal{display:none}
 }
 @media (prefers-reduced-motion:reduce){
