@@ -55,6 +55,10 @@
 <style>
 :root{
   --paper:#f4efe4; --paper-2:#ece5d6; --card:#fbf8f1;
+  /* Beige + filet des tuiles minuteur — mêmes valeurs que C.tileIdle / C.tileEdge
+     dans l'app Flutter. Sert partout où une surface doit se détacher du fond
+     de page sans devenir une autre couleur : c'est la carte posée, pas flottante. */
+  --tile:#e6ded0; --tile-edge:rgba(27,30,23,.10);
   --ink:#1b1e17; --ink-2:#3f463a; --ink-3:#6b7061;
   --line:rgba(27,30,23,.14); --line-2:rgba(27,30,23,.08);
   --ember:#e0590d; --ember-2:#bd460a; --ember-ink:#7a3007;
@@ -144,7 +148,7 @@ header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.1) blur(8p
 .screen-top b{color:var(--ink); font-weight:600}
 .kgrid{flex:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:9px}
 .tile{
-  --track:#e6ded0;
+  --track:var(--tile);
   border-radius:12px; padding:10px 11px; display:flex; flex-direction:column; justify-content:space-between;
   background:conic-gradient(from -90deg, var(--fill) calc(var(--p)*360deg), var(--track) 0);
   color:var(--ink); position:relative; overflow:hidden; box-shadow:inset 0 0 0 1px rgba(27,30,23,.06);
@@ -184,6 +188,13 @@ header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.1) blur(8p
 @keyframes wave{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
 .voicebubble .vtxt{font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:19px; line-height:1}
 .voicebubble .vtxt span{display:block; font-family:'Chivo Mono',monospace; font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--ember); font-weight:400; margin-bottom:3px}
+/* La bulle EST le bouton d'écoute : le produit est sonore, la page doit pouvoir
+   le faire entendre sans coûter un pixel de hauteur en plus sur mobile. */
+button.voicebubble{border:0; font:inherit; text-align:left; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease}
+button.voicebubble:hover{transform:translateY(-2px); box-shadow:0 28px 46px -22px rgba(20,22,15,.9)}
+button.voicebubble:focus-visible{outline:2px solid var(--ember); outline-offset:3px}
+.voicebubble .playi{width:9px; height:9px; fill:currentColor; margin-right:6px}
+.voicebubble.playing .vtxt span{color:var(--amber)}
 
 /* ---------- signature band ---------- */
 .signature-band{background:var(--paper-2); color:var(--ink); padding:clamp(30px,4vw,48px) 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
@@ -285,12 +296,16 @@ section{padding:clamp(56px,8vw,104px) 0; position:relative}
 .crow{display:grid; grid-template-columns:1.1fr 1.15fr 1.15fr; align-items:stretch}
 .crow+.crow{border-top:1px solid var(--line-2)}
 .crow>div{padding:15px 20px; display:flex; align-items:center}
-.crow .feat{font-family:'Chivo Mono',monospace; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-3); background:var(--paper-2)}
+/* La colonne de gauche portait exactement la couleur du fond de section : beige sur
+   beige, seule la bordure du tableau la séparait de la page. Elle prend le beige des
+   tuiles minuteur + leur filet, donc elle se lit comme une carte posée sur le fond. */
+.crow .feat{font-family:'Chivo Mono',monospace; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-2); background:var(--tile); box-shadow:inset -1px 0 0 var(--tile-edge)}
 .crow .classic{color:var(--ink-3); border-left:1px solid var(--line-2)}
 .crow .classic s{text-decoration-color:color-mix(in srgb,var(--red) 55%,transparent)}
 .crow .appc{color:var(--ink); font-weight:600; border-left:1px solid var(--line-2); background:color-mix(in srgb,var(--ember) 5%,var(--card))}
 .crow .appc::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--go); margin-right:11px; flex:none}
-.chead .feat,.chead .classic,.chead .appc{font-family:'Chivo Mono',monospace; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:600; color:var(--ink); background:var(--paper-2)}
+.chead .feat,.chead .classic,.chead .appc{font-family:'Chivo Mono',monospace; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:600; color:var(--ink); background:var(--tile)}
+.chead>div+div{box-shadow:inset 1px 0 0 var(--tile-edge)}
 .chead .appc{color:var(--ember-2)} .chead .appc::before{display:none}
 .chead .classic{color:var(--ink-3)}
 
@@ -374,9 +389,13 @@ footer .fmeta a:hover{color:var(--amber)}
 }
 @media (max-width:560px){
   body{font-size:16px}
+  /* 112 px de marge verticale par section coûtaient 1,2 écran de vide cumulé
+     sur téléphone, où la place manque le plus. */
+  section{padding:40px 0}
   .fgrid{grid-template-columns:1fr}
   .crow{grid-template-columns:1fr}
-  .crow .feat{background:var(--paper-2)}
+  /* En 1 colonne, le filet vertical n'a plus de sens : il passe en bas de la cellule. */
+  .crow .feat{background:var(--tile); box-shadow:inset 0 -1px 0 var(--tile-edge)}
   .crow .classic,.crow .appc{border-left:0; border-top:1px solid var(--line-2)}
   .chead{display:none}
   .crow .classic::before{content:"Classic — "; font-family:'Chivo Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin-right:8px}
@@ -428,7 +447,9 @@ footer .fmeta a:hover{color:var(--amber)}
           <a class="btn btn-primary" href="#lancement">Download — free</a>
           <a class="btn btn-ghost" href="#coach">See how it works</a>
         </div>
-        <div class="hero-note"><span class="pip"></span> Coming soon to iOS and Android · Free at launch</div>
+        <!-- On ne répète plus « coming soon » : les 2 badges du bas le disent déjà.
+             Ici on dit ce qu'on gagne, pas ce qu'on ne peut pas encore avoir. -->
+        <div class="hero-note"><span class="pip"></span> Free at launch · no account, no subscription</div>
       </div>
 
       <div class="stage">
@@ -443,11 +464,11 @@ footer .fmeta a:hover{color:var(--amber)}
             </div>
           </div>
         </div>
-        <div class="voicebubble">
+        <button class="voicebubble" id="hearBtn" type="button" aria-label="Play the zone alarm and the voice announcement">
           <svg class="mega" viewBox="0 0 24 24" fill="none" stroke="var(--ember)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
           <div class="waves" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="vtxt"><span>voice · just now</span>“The fish is ready”</div>
-        </div>
+          <div class="vtxt"><span><svg class="playi" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Hear it</span>“The fish is ready”</div>
+        </button>
       </div>
     </div>
   </section>
@@ -497,7 +518,6 @@ footer .fmeta a:hover{color:var(--amber)}
           <ul class="b-list">
             <li>Named cooking steps: sear, flip, rest</li>
             <li>The next step and the finished dish announced by name</li>
-            <li>A real voice, not an anonymous beep</li>
             <li>Hands-free: you never leave your station</li>
           </ul>
         </div>
@@ -511,39 +531,22 @@ footer .fmeta a:hover{color:var(--amber)}
         </div>
       </div>
 
-      <!-- 2 -->
-      <div class="benefit flip">
-        <div class="b-copy">
-          <span class="eyebrow">Goodbye, drawer full of timers</span>
-          <h3>Every timer on a single tablet, at a glance</h3>
-          <p>One tablet replaces fifteen timers on the pass. The chef reads the whole line at a glance. And there's nothing to buy: it runs on the iPad or Android tablet you already own — even an old one forgotten in a drawer. On the go, it runs on iPhone and Android phones too.</p>
-          <ul class="b-list">
-            <li>Twenty dishes running in parallel on one screen</li>
-            <li>Runs on a tablet you already own — nothing to buy</li>
-            <li>Zero batteries: no more timers dying mid-service</li>
-            <li>Never lost, broken or stolen: the tablet stays on its mount</li>
-            <li>One flat surface, wiped clean in a second — ready for inspection day</li>
-          </ul>
-        </div>
-        <div class="b-media">
-          <div class="stack-tablets" aria-hidden="true">
-            <div class="mini-tab t1"><div class="ms"><span style="--fill:#8fce9f;--pp:.7"></span><span style="--fill:#f0c46a;--pp:.4"></span><span style="--fill:#8fce9f;--pp:.9"></span><span style="--fill:#eb8b73;--pp:.15"></span></div></div>
-            <div class="mini-tab t2"><div class="ms"><span style="--fill:#f0c46a;--pp:.5"></span><span style="--fill:#8fce9f;--pp:.8"></span><span style="--fill:#eb8b73;--pp:.2"></span><span style="--fill:#8fce9f;--pp:.6"></span></div></div>
-            <div class="mini-tab t3"><div class="ms"><span style="--fill:#8fce9f;--pp:.85"></span><span style="--fill:#f0c46a;--pp:.35"></span><span style="--fill:#8fce9f;--pp:.55"></span><span style="--fill:#eb8b73;--pp:.1"></span></div></div>
-          </div>
-        </div>
-      </div>
+      <!-- Bloc « une seule tablette » retiré le 26/07/2026 (décision Serge, point 2) :
+           il levait une objection (rien à acheter, zéro pile, jamais perdu) au lieu de
+           vendre un différenciateur. Le tableau comparatif porte déjà ces trois arguments,
+           une ligne chacun. Visuel « stack-tablets » disponible dans l'historique git si
+           on veut le remonter ailleurs. -->
 
-      <!-- 3 -->
+      <!-- 2 -->
       <div class="benefit">
         <div class="b-copy">
-          <span class="eyebrow">One alarm per kitchen zone</span>
+          <!-- L'eyebrow disait mot pour mot la même chose que le H3. Il porte
+               maintenant le clin d'œil ; le H3 garde ses mots-clés intacts. -->
+          <span class="eyebrow">One ring to rule them all? Not in a kitchen.</span>
           <h3>A different ring for every kitchen zone</h3>
           <p>Hot, cold, oven, pastry: every station has its own ring. The second it goes off, you know where it's coming from without looking up. No more ten identical beeps — every zone has its signature, and the voice names the dish on top.</p>
           <ul class="b-list">
-            <li>A dedicated ring for each station or kitchen zone</li>
             <li>You identify the zone by ear, without checking the screen</li>
-            <li>The voice announces the dish by name over the alarm</li>
             <li>Set up once, works for the whole crew</li>
           </ul>
         </div>
@@ -557,11 +560,11 @@ footer .fmeta a:hover{color:var(--amber)}
         </div>
       </div>
 
-      <!-- 4 -->
+      <!-- 3 -->
       <div class="benefit flip">
         <div class="b-copy">
           <span class="eyebrow">Your house method</span>
-          <h3>Your recipes, your times, repeated exactly by the whole crew</h3>
+          <h3>Mise en place, but for time: your recipes, your own cook times</h3>
           <p>The restaurant saves its own cook times once. Pick the dish and it starts with the right times and the right steps. The app repeats your method — it never invents a cook time. The fish comes out the same whether it's the chef or the Saturday temp.</p>
           <ul class="b-list">
             <li>Your dishes, your names, your cook times saved</li>
@@ -569,6 +572,9 @@ footer .fmeta a:hover{color:var(--amber)}
             <li>A new hire up and running in five minutes, guided by voice</li>
             <li>English and French for the whole crew</li>
           </ul>
+          <!-- CTA récupéré du bloc 5 supprimé : le nombre de boutons sur la page
+               ne change pas (décision Serge : « aux CTA on ne touche pas »). -->
+          <a class="btn btn-primary" style="margin-top:26px" href="#lancement">Download now</a>
         </div>
         <div class="b-media">
           <div class="chip-tile demo" data-t="70">
@@ -578,27 +584,9 @@ footer .fmeta a:hover{color:var(--amber)}
         </div>
       </div>
 
-      <!-- 5 -->
-      <div class="benefit">
-        <div class="b-copy">
-          <span class="eyebrow">Built for the rush</span>
-          <h3>Readable from across the kitchen, works without wifi</h3>
-          <p>The tile fills like a pie chart and shifts from green to amber to red. You read the time left from the stove, without stepping closer or picking anything up. And if the network drops, service goes on: every tablet runs locally.</p>
-          <ul class="b-list">
-            <li>Pie-chart progress you can read from the stove</li>
-            <li>Green, amber, red: the color tells you how urgent</li>
-            <li>Big touch targets for greasy, hurried hands</li>
-            <li>100% offline: every tablet is self-sufficient</li>
-          </ul>
-          <a class="btn btn-primary" style="margin-top:26px" href="#lancement">Download now</a>
-        </div>
-        <div class="b-media">
-          <div class="chip-tile" style="--fill:#eb8b73;--p:.14">
-            <div class="tname">Focaccia</div>
-            <div><div class="ttime">0:06</div><div class="tsub" style="color:var(--red)">Almost ready</div></div>
-          </div>
-        </div>
-      </div>
+      <!-- Bloc « lisible à trois mètres / hors-ligne » retiré le 26/07/2026 (point 2) :
+           même raison que le bloc tablette — ce sont des objections levées, portées par
+           le tableau. Le camembert se voit déjà dans le mockup du hero. -->
     </div>
   </section>
 
@@ -615,39 +603,27 @@ footer .fmeta a:hover{color:var(--amber)}
         <div class="crow"><div class="feat">The alert</div><div class="classic"><s>An anonymous beep among ten</s></div><div class="appc">A voice that names the dish</div></div>
         <div class="crow"><div class="feat">Knowing the zone</div><div class="classic"><s>They all beep the same</s></div><div class="appc">One ring per kitchen zone</div></div>
         <div class="crow"><div class="feat">Cooking steps</div><div class="classic"><s>One countdown, restarted by hand</s></div><div class="appc">Steps chained automatically</div></div>
-        <div class="crow"><div class="feat">Hands-free</div><div class="classic"><s>You leave your station to go check</s></div><div class="appc">The announcement reaches your ear</div></div>
         <div class="crow"><div class="feat">Readability</div><div class="classic"><s>A tiny dial you hold up to your eyes</s></div><div class="appc">A tile readable from across the kitchen</div></div>
-        <div class="crow"><div class="feat">Batteries</div><div class="classic"><s>Need changing, die mid-service</s></div><div class="appc">Zero batteries, powered all day</div></div>
-        <div class="crow"><div class="feat">Lost and broken</div><div class="classic"><s>Lost in the dish pit, cracked, stolen</s></div><div class="appc">Mounted in place, always there</div></div>
-        <div class="crow"><div class="feat">Hardware</div><div class="classic"><s>Timers to buy, again and again</s></div><div class="appc">On a tablet you already own</div></div>
+        <!-- « Batteries » + « Lost and broken » + « Hardware » fusionnées en une seule
+             ligne le 26/07/2026 : les trois disaient la même chose — le boîtier physique
+             coûte, s'use et disparaît. « 86 » = le verbe de cuisine pour « on l'enlève ». -->
+        <div class="crow"><div class="feat">The timer drawer</div><div class="classic"><s>Buy them, lose them, change the batteries</s></div><div class="appc">86 the drawer — it's the tablet you already own</div></div>
         <div class="crow"><div class="feat">House method</div><div class="classic"><s>Nothing saved, you re-enter everything</s></div><div class="appc">Your recipes and times saved</div></div>
-        <div class="crow"><div class="feat">Learning curve</div><div class="classic"><s>Every unit has its own cryptic settings</s></div><div class="appc">Ridiculously simple</div></div>
       </div>
       <div style="text-align:center; margin-top:34px"><a class="btn btn-primary" href="#lancement">Download now</a></div>
     </div>
   </section>
 
-  <!-- FEATURES -->
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <h2 class="h2">Everything our app does, nothing you don't need</h2>
-      </div>
-      <div class="fgrid">
-        <div class="fcard"><div class="fn">/01</div><h3>Voice announcements</h3><p>Our app says “the fish is ready” out loud — not an anonymous beep among ten.</p></div>
-        <div class="fcard"><div class="fn">/02</div><h3>Programmable ring per zone</h3><p>Hot, cold, oven, pastry: every station has its own alarm. You know where it's coming from by ear.</p></div>
-        <div class="fcard"><div class="fn">/03</div><h3>Pie-chart progress</h3><p>The tile empties and changes color — readable from across the kitchen mid-rush.</p></div>
-        <div class="fcard"><div class="fn">/04</div><h3>No batteries, works offline</h3><p>The tablet stays powered and fully self-sufficient, even when the wifi drops.</p></div>
-        <div class="fcard"><div class="fn">/05</div><h3>100% configurable</h3><p>Your recipes, times and steps saved once, repeated exactly on every tablet.</p></div>
-        <div class="fcard"><div class="fn">/06</div><h3>Chained steps</h3><p>Every dish counts down its steps in order, without you restarting anything.</p></div>
-        <div class="fcard"><div class="fn">/07</div><h3>English and French</h3><p>Display and voice switch languages for the whole crew.</p></div>
-        <div class="fcard"><div class="fn">/08</div><h3>Ridiculously simple</h3><p>Start a dish in one tap. A temp is up to speed on their very first service.</p></div>
-      </div>
-    </div>
-  </section>
+  <!-- Grille de 8 features retirée le 26/07/2026 (décision Serge, point 1) : chacune
+       des 8 cartes redisait une ligne du tableau comparatif situé juste au-dessus.
+       2 écrans de scroll mobile pour zéro information neuve. -->
 
   <!-- AUDIENCE -->
-  <section class="aud band">
+  <!-- Pas de .band ici : la grille de features supprimée ci-dessus était la section
+       claire qui séparait le tableau comparatif (.band) de celle-ci. Sans elle, deux
+       bandes --paper-2 se collaient et la frontière disparaissait. L'alternance
+       claire / sombre du reste de la page est ainsi rétablie. -->
+  <section class="aud">
     <div class="wrap">
       <div>
         <h2 class="h2">For the people who live the rush</h2>
@@ -677,8 +653,8 @@ footer .fmeta a:hover{color:var(--amber)}
         </div>
       </div>
       <div class="cred-quote">
-        <p>“We coded this app for our own kitchen in Lyon, France. One rush night, we'd had enough of timers all ringing at once with the same beep, and batteries dying at the worst possible moment.</p>
-        <p style="margin-top:16px">We use it every single service. Now we're opening it up to other kitchens, pros and home cooks alike. Everything this app does was built to solve our real problems in the kitchen.”</p>
+        <!-- « cooked », pas « coded » (Serge, 26/07/2026) : c'est un resto qui parle. -->
+        <p>“We cooked this app for our own kitchen in Lyon. We use it every single service. Now we're opening it to other kitchens — pros and home cooks alike.”</p>
       </div>
     </div>
   </section>
@@ -723,7 +699,6 @@ footer .fmeta a:hover{color:var(--amber)}
           <span class="st"><small>Soon on</small><b>Google Play</b></span>
         </a>
       </div>
-      <div class="stores-note">Both buttons go live on launch day.</div>
     </div>
   </section>
 
@@ -763,6 +738,54 @@ footer .fmeta a:hover{color:var(--amber)}
       if(o.out.textContent!==txt) o.out.textContent=txt;
     });
   },150);
+})();
+
+// « Hear it » : la sonnerie de zone (le vrai son de l'app) puis l'annonce vocale.
+// La voix passe par la synthèse du navigateur — c'est exactement ce que fait l'app,
+// qui utilise la voix système de l'appareil, donc la démo ne ment pas sur le produit.
+// Jamais d'autoplay : uniquement sur clic. Sans synthèse vocale, la sonnerie seule
+// se joue et la bulle affiche la phrase, ce qui reste compréhensible.
+(function(){
+  var btn=document.getElementById('hearBtn'); if(!btn) return;
+  var LINE='The fish is ready', LANG='en-US', LABEL='Hear it';
+  var cap=btn.querySelector('.vtxt span'), icon=cap.innerHTML.replace(/Hear it|Écouter/,'');
+  var ring=new Audio('assets/audio/zone-chime.mp3'); ring.preload='none'; ring.volume=.55;
+  // Voix féminine (choix Serge). L'API Web Speech n'expose aucun genre : il faut
+  // reconnaître les noms. On tente une voix féminine connue, sinon on écarte les
+  // masculines connues, sinon on laisse la voix par défaut du système.
+  var FEM=/\bfemale\b|zira|aria|jenny|michelle|\bana\b|samantha|karen|moira|tessa|allison|\bava\b|susan|victoria|serena|fiona|joanna|salli|kendra|kimberly|\bamy\b|emma|google us english/i;
+  var MALE=/\bmale\b|david|mark|\bguy\b|alex|fred|daniel|thomas|paul|george|james|ryan|matthew|brian|arthur|oliver/i;
+  var pickVoice=function(){
+    var vs=(speechSynthesis.getVoices()||[]).filter(function(v){
+      return v.lang && v.lang.toLowerCase().slice(0,2)===LANG.slice(0,2); });
+    if(!vs.length) return null;
+    var fem=vs.filter(function(v){ return FEM.test(v.name); });
+    if(fem.length) return fem[0];
+    var neutral=vs.filter(function(v){ return !MALE.test(v.name); });
+    return neutral[0]||vs[0];
+  };
+  // getVoices() renvoie souvent une liste vide au premier appel : on l'amorce.
+  if('speechSynthesis' in window){ speechSynthesis.getVoices();
+    speechSynthesis.onvoiceschanged=function(){ speechSynthesis.getVoices(); }; }
+  var busy=false;
+  var idle=function(){ busy=false; btn.classList.remove('playing'); cap.innerHTML=icon+LABEL; };
+  var said=false;
+  var say=function(){
+    if(said) return; said=true;
+    if(!('speechSynthesis' in window)){ idle(); return; }
+    var u=new SpeechSynthesisUtterance(LINE); u.lang=LANG; u.rate=1;
+    var v=pickVoice(); if(v) u.voice=v;
+    u.onend=idle; u.onerror=idle;
+    try{ speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){ idle(); }
+  };
+  btn.addEventListener('click',function(){
+    if(busy) return;
+    busy=true; said=false; btn.classList.add('playing'); cap.innerHTML=icon+'Playing…';
+    ring.currentTime=0;
+    var p=ring.play();
+    if(p&&p.catch) p.catch(function(){ say(); });          // son bloqué : on parle quand même
+    setTimeout(say,900);                                    // la voix passe par-dessus la fin de sonnerie
+  });
 })();
 </script>
 </body>
