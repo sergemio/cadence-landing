@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Application minuteur cuisine gratuite pour restaurants — multi-plats & voix</title>
-<meta name="description" content="Application minuteur cuisine gratuite pour les pros : plusieurs minuteurs en même temps, une sonnerie par zone, une voix qui annonce chaque plat. Sur tablette, iPhone et Android. Créée par des restaurateurs.">
+<meta name="description" content="Application minuteur cuisine gratuite : plusieurs minuteurs à la fois, une sonnerie par plat, une voix qui annonce le plat prêt. Créée par des restaurateurs.">
 <meta name="keywords" content="minuteur cuisine gratuit, minuteur restaurant gratuit, application minuteur cuisine gratuite, minuteur cuisine professionnel, application minuteur cuisine, appli minuteur cuisine, application plusieurs minuteurs, plusieurs minuteurs en même temps, minuteur cuisine tablette, multi-minuteur de cuisine, minuteur multiple cuisine, minuteur cuisine mains libres, minuteur parlant cuisine, minuteur qui parle, minuteur vocal, timer cuisine pro, minuteur cuisine restaurant, minuteur cuisson multi-étapes, minuteur de cuisine iPad, minuteur cuisine sans pile, application minuteur restaurant, free kitchen timer, restaurant timer free">
 <meta name="theme-color" content="#1a1c15">
 <link rel="canonical" href="https://sergemio.github.io/cadence-landing/fr/">
@@ -18,7 +18,7 @@
 <meta property="og:url" content="https://sergemio.github.io/cadence-landing/fr/">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:title" content="Minuteur cuisine gratuit pour restaurants · Cadence — Kitchen Timer">
-<meta property="og:description" content="Plusieurs plats à la fois, une sonnerie différente par zone, une voix qui annonce le plat prêt. Une seule app sur toutes vos tablettes de cuisine. Bientôt sur iOS et Android, gratuit au lancement.">
+<meta property="og:description" content="Plusieurs plats à la fois, chacun avec sa propre sonnerie, une voix qui annonce le plat prêt. Une seule app sur toutes vos tablettes de cuisine. Bientôt sur iOS et Android, gratuit au lancement.">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="stylesheet" href="../assets/fonts/fonts.css">
@@ -30,7 +30,7 @@
   "@type": "FAQPage",
   "mainEntity": [
     {"@type":"Question","name":"Quelle est la meilleure application de minuteur pour une cuisine professionnelle ?","acceptedAnswer":{"@type":"Answer","text":"Celle qui fait tourner plusieurs minuteurs en même temps, un par plat, qui annonce à voix haute quand c'est prêt et qui répète vos temps de cuisson. La plupart des applications de minuteur sont pensées pour le téléphone d'un particulier. Celle-ci est faite pour une tablette montée en ligne de cuisine, en plein service."}},
-    {"@type":"Question","name":"Comment gérer plusieurs minuteurs en même temps sans se tromper de plat ?","acceptedAnswer":{"@type":"Answer","text":"Faites tourner plusieurs minuteurs côte à côte : chaque cuisson porte son nom à l'écran et à la voix, et chaque zone de cuisine a sa propre sonnerie. Cinq ou vingt plats peuvent tourner en parallèle : vous savez tout de suite lequel sonne et où. Impossible de confondre le minuteur du poisson avec celui de la garniture."}},
+    {"@type":"Question","name":"Comment gérer plusieurs minuteurs en même temps sans se tromper de plat ?","acceptedAnswer":{"@type":"Answer","text":"Faites tourner plusieurs minuteurs côte à côte : chaque cuisson porte son nom à l'écran et à la voix, et chacune peut avoir sa propre sonnerie. Cinq ou vingt plats peuvent tourner en parallèle : vous savez tout de suite lequel sonne. Impossible de confondre le minuteur du poisson avec celui de la garniture."}},
     {"@type":"Question","name":"L'application fonctionne-t-elle sur iPad, tablette Android et iPhone ?","acceptedAnswer":{"@type":"Answer","text":"Oui, sur les trois. Un iPad ou une tablette Android bas de gamme, montée au mur, écran toujours allumé, suffit — et l'app tourne aussi sur iPhone et téléphone Android quand vous voulez un minuteur dans la poche. Vous équipez chaque poste avec la même app."}},
     {"@type":"Question","name":"Le minuteur annonce-t-il vocalement quand le plat est prêt ?","acceptedAnswer":{"@type":"Answer","text":"Oui, c'est un minuteur qui parle : l'app annonce à voix haute l'étape suivante puis le plat prêt, par son nom. Vous gardez les mains dans le plat, l'info arrive à l'oreille sans fixer l'écran."}},
     {"@type":"Question","name":"Peut-on enregistrer ses propres recettes et temps de cuisson ?","acceptedAnswer":{"@type":"Answer","text":"C'est tout le principe. Vous saisissez vos plats, vos temps et vos phases une bonne fois. L'app répète votre méthode maison à l'identique sur toutes les tablettes. Elle n'invente aucun temps."}},
@@ -47,7 +47,7 @@
   "name": "Cadence — Kitchen Timer",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "iOS, Android",
-  "description": "Minuteur de cuisine professionnel pour tablette : timers multiples, une sonnerie par zone, phases enchaînées et annonce vocale mains libres. Créé par des restaurateurs.",
+  "description": "Minuteur de cuisine professionnel pour tablette : timers multiples, une sonnerie par plat, phases enchaînées et annonce vocale mains libres. Créé par des restaurateurs.",
   "offers": {"@type":"Offer","price":"0","priceCurrency":"EUR"}
 }
 </script>
@@ -277,18 +277,18 @@ section{padding:clamp(56px,8vw,104px) 0; position:relative}
 .mini-tab.t1{left:0; top:0; transform:rotate(-4deg)}
 .mini-tab.t2{right:0; top:12%; transform:rotate(4deg)}
 .mini-tab.t3{left:16%; bottom:0; transform:rotate(-1deg); z-index:2}
-/* zones (sonnerie par zone) */
-.zones{width:min(100%,380px); display:flex; flex-direction:column; gap:11px}
-.zone{display:flex; align-items:center; justify-content:space-between; gap:14px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 18px; box-shadow:var(--shadow); border-left:4px solid var(--zc,var(--ember))}
-.zone .zn{font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:20px}
-.zone .zt{font-family:'Chivo Mono',monospace; font-size:11px; color:var(--ink-3); letter-spacing:.06em; text-transform:uppercase; margin-left:auto; margin-right:4px}
-.zone .wv{display:flex; align-items:flex-end; gap:3px; height:20px}
-.zone .wv i{width:3px; border-radius:2px; background:var(--zc,var(--ember)); animation:wave 1.1s ease-in-out infinite}
-.zone .wv i:nth-child(1){height:45%; animation-delay:0s}
-.zone .wv i:nth-child(2){height:85%; animation-delay:.12s}
-.zone .wv i:nth-child(3){height:60%; animation-delay:.24s}
-.zone .wv i:nth-child(4){height:100%; animation-delay:.36s}
-.z-hot{--zc:var(--ember)} .z-cold{--zc:var(--teal)} .z-oven{--zc:var(--amber)} .z-pastry{--zc:var(--go)}
+/* sonneries (une par plat) */
+.rings{width:min(100%,380px); display:flex; flex-direction:column; gap:11px}
+.ring{display:flex; align-items:center; justify-content:space-between; gap:14px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 18px; box-shadow:var(--shadow); border-left:4px solid var(--rc,var(--ember))}
+.ring .rn{font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:20px}
+.ring .rt{font-family:'Chivo Mono',monospace; font-size:11px; color:var(--ink-3); letter-spacing:.06em; text-transform:uppercase; margin-left:auto; margin-right:4px}
+.ring .wv{display:flex; align-items:flex-end; gap:3px; height:20px}
+.ring .wv i{width:3px; border-radius:2px; background:var(--rc,var(--ember)); animation:wave 1.1s ease-in-out infinite}
+.ring .wv i:nth-child(1){height:45%; animation-delay:0s}
+.ring .wv i:nth-child(2){height:85%; animation-delay:.12s}
+.ring .wv i:nth-child(3){height:60%; animation-delay:.24s}
+.ring .wv i:nth-child(4){height:100%; animation-delay:.36s}
+.r-1{--rc:var(--ember)} .r-2{--rc:var(--teal)} .r-3{--rc:var(--amber)} .r-4{--rc:var(--go)}
 
 /* ---------- comparison ---------- */
 .compare .wrap{max-width:960px}
@@ -449,7 +449,7 @@ footer .fmeta a:hover{color:var(--amber)}
       <div class="hero-copy">
         <span class="eyebrow">Minuteur de cuisine gratuit pour les pros · iPad, iPhone &amp; Android</span>
         <h1>Le minuteur de cuisine qui vous dit, <em>à voix haute</em>, quand c'est prêt</h1>
-        <p class="lead">Tous vos plats sur une seule tablette. Une sonnerie différente par zone de cuisine, une voix qui appelle chaque plat par son nom. D'une simplicité déconcertante.</p>
+        <p class="lead">Tous vos plats sur une seule tablette. Une sonnerie différente pour chacun, une voix qui l'appelle par son nom. D'une simplicité déconcertante.</p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#lancement">Télécharger — gratuit</a>
           <a class="btn btn-ghost" href="#coach">Voir comment ça marche</a>
@@ -471,7 +471,7 @@ footer .fmeta a:hover{color:var(--amber)}
             </div>
           </div>
         </div>
-        <button class="voicebubble" id="hearBtn" type="button" aria-label="Écouter la sonnerie de zone et l'annonce vocale">
+        <button class="voicebubble" id="hearBtn" type="button" aria-label="Écouter la sonnerie de l'app et l'annonce vocale">
           <svg class="mega" viewBox="0 0 24 24" fill="none" stroke="var(--ember)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
           <div class="waves" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
           <div class="vtxt"><span><svg class="playi" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Écouter</span>« Le poisson est prêt »</div>
@@ -503,7 +503,7 @@ footer .fmeta a:hover{color:var(--amber)}
           <li>« Dans le bruit du service, on n'entend pas le bip »</li>
           <li>« L'extra ne sait pas quel minuteur est à lui »</li>
         </ul>
-        <p class="solve"><b>Une voix qui nomme le plat</b>, <b>une sonnerie par zone</b> : vous savez tout de suite lequel est prêt, et d'où ça vient.</p>
+        <p class="solve"><b>Une voix qui nomme le plat</b>, <b>une sonnerie différente pour chacun</b> : vous savez tout de suite lequel est prêt.</p>
         <a class="btn btn-primary" style="margin-top:26px" href="#lancement">Télécharger maintenant</a>
       </div>
     </div>
@@ -550,19 +550,19 @@ footer .fmeta a:hover{color:var(--amber)}
           <!-- L'eyebrow disait mot pour mot la même chose que le H3. Il porte
                maintenant le clin d'œil ; le H3 garde ses mots-clés intacts. -->
           <span class="eyebrow">Une seule sonnerie pour les gouverner toutes ? Pas en cuisine.</span>
-          <h3>Une sonnerie différente pour chaque zone de cuisine</h3>
-          <p>Chaud, froid, four, pâtisserie : chaque poste a sa propre sonnerie. Dès que ça sonne, vous savez d'où ça vient sans lever les yeux. Fini les dix bips identiques — chaque zone a sa signature, et la voix nomme le plat par-dessus.</p>
+          <h3>Chaque plat a sa propre sonnerie de minuteur</h3>
+          <p>Frites, poisson, bavette, focaccia : chaque plat a sa propre sonnerie. Dès que ça sonne, vous savez ce qui est prêt sans lever les yeux. Fini les dix bips identiques — douze sonneries au choix, et la voix nomme le plat par-dessus.</p>
           <ul class="b-list">
-            <li>Vous identifiez la zone à l'oreille, sans regarder l'écran</li>
+            <li>Vous savez quel plat sonne à l'oreille, sans regarder l'écran</li>
             <li>Réglé une fois, valable pour toute la brigade</li>
           </ul>
         </div>
         <div class="b-media">
-          <div class="zones" aria-hidden="true">
-            <div class="zone z-hot"><span class="zn">Chaud</span><span class="zt">sonnerie A</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
-            <div class="zone z-cold"><span class="zn">Froid</span><span class="zt">sonnerie B</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
-            <div class="zone z-oven"><span class="zn">Four</span><span class="zt">sonnerie C</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
-            <div class="zone z-pastry"><span class="zn">Pâtisserie</span><span class="zt">sonnerie D</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
+          <div class="rings" aria-hidden="true">
+            <div class="ring r-1"><span class="rn">Frites</span><span class="rt">Chirp</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
+            <div class="ring r-2"><span class="rn">Poisson</span><span class="rt">Coin</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
+            <div class="ring r-3"><span class="rn">Bavette</span><span class="rt">Pop</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
+            <div class="ring r-4"><span class="rn">Focaccia</span><span class="rt">Bowl</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
           </div>
         </div>
       </div>
@@ -608,7 +608,7 @@ footer .fmeta a:hover{color:var(--amber)}
         <div class="crow chead"><div class="feat">&nbsp;</div><div class="classic">Minuteur classique</div><div class="appc">Notre app</div></div>
         <div class="crow"><div class="feat">Plusieurs plats à la fois</div><div class="classic"><s>1 à 4 par boîtier, il faut en aligner plusieurs</s></div><div class="appc">20 minuteurs et plus sur un seul écran</div></div>
         <div class="crow"><div class="feat">L'alerte</div><div class="classic"><s>Un bip anonyme parmi dix</s></div><div class="appc">Une voix qui nomme le plat</div></div>
-        <div class="crow"><div class="feat">Reconnaître la zone</div><div class="classic"><s>Tous le même bip</s></div><div class="appc">Une sonnerie par zone de cuisine</div></div>
+        <div class="crow"><div class="feat">Reconnaître le plat</div><div class="classic"><s>Tous le même bip</s></div><div class="appc">Une sonnerie par plat, 12 au choix</div></div>
         <div class="crow"><div class="feat">Étapes de cuisson</div><div class="classic"><s>Un seul décompte à relancer à la main</s></div><div class="appc">Phases enchaînées automatiquement</div></div>
         <div class="crow"><div class="feat">Lisibilité</div><div class="classic"><s>Petit cadran, à tenir sous les yeux</s></div><div class="appc">Tuile lisible à trois mètres</div></div>
         <!-- « Piles » + « Perte et casse » + « Matériel » fusionnées en une seule ligne
@@ -674,7 +674,7 @@ footer .fmeta a:hover{color:var(--amber)}
         <h2 class="h2">Les questions qu'on nous pose</h2>
       </div>
       <details open><summary>Quelle est la meilleure application de minuteur pour une cuisine professionnelle ?</summary><p>Celle qui fait tourner plusieurs minuteurs en même temps, un par plat, qui annonce à voix haute quand c'est prêt et qui répète vos temps de cuisson. La plupart des applications de minuteur sont pensées pour le téléphone d'un particulier. Celle-ci est faite pour une tablette montée en ligne de cuisine, en plein service.</p></details>
-      <details><summary>Comment gérer plusieurs minuteurs en même temps sans se tromper de plat ?</summary><p>Faites tourner plusieurs minuteurs côte à côte : chaque cuisson porte son nom à l'écran et à la voix, et chaque zone de cuisine a sa propre sonnerie. Cinq ou vingt plats peuvent tourner en parallèle : vous savez tout de suite lequel sonne et où. Impossible de confondre le minuteur du poisson avec celui de la garniture.</p></details>
+      <details><summary>Comment gérer plusieurs minuteurs en même temps sans se tromper de plat ?</summary><p>Faites tourner plusieurs minuteurs côte à côte : chaque cuisson porte son nom à l'écran et à la voix, et chacune peut avoir sa propre sonnerie. Cinq ou vingt plats peuvent tourner en parallèle : vous savez tout de suite lequel sonne. Impossible de confondre le minuteur du poisson avec celui de la garniture.</p></details>
       <details><summary>L'application fonctionne-t-elle sur iPad, tablette Android et iPhone ?</summary><p>Oui, sur les trois. Un iPad ou une tablette Android bas de gamme, montée au mur, écran toujours allumé, suffit — et l'app tourne aussi sur iPhone et téléphone Android quand vous voulez un minuteur dans la poche. Vous équipez chaque poste avec la même app.</p></details>
       <details><summary>Le minuteur annonce-t-il vocalement quand le plat est prêt ?</summary><p>Oui, c'est un minuteur qui parle : l'app annonce à voix haute l'étape suivante puis le plat prêt, par son nom. Vous gardez les mains dans le plat, l'info arrive à l'oreille sans fixer l'écran.</p></details>
       <details><summary>Peut-on enregistrer ses propres recettes et temps de cuisson ?</summary><p>C'est tout le principe. Vous saisissez vos plats, vos temps et vos phases une bonne fois. L'app répète votre méthode maison à l'identique sur toutes les tablettes. Elle n'invente aucun temps.</p></details>
@@ -748,7 +748,7 @@ footer .fmeta a:hover{color:var(--amber)}
   },150);
 })();
 
-// « Écouter » : la sonnerie de zone (le vrai son de l'app) puis l'annonce vocale.
+// « Écouter » : la sonnerie par defaut de l'app (le vrai son) puis l'annonce vocale.
 // La voix passe par la synthèse du navigateur — c'est exactement ce que fait l'app,
 // qui utilise la voix système de l'appareil, donc la démo ne ment pas sur le produit.
 // Jamais d'autoplay : uniquement sur clic. Sans synthèse vocale, la sonnerie seule
@@ -757,7 +757,7 @@ footer .fmeta a:hover{color:var(--amber)}
   var btn=document.getElementById('hearBtn'); if(!btn) return;
   var LINE='Le poisson est prêt', LANG='fr-FR', LABEL='Écouter';
   var cap=btn.querySelector('.vtxt span'), icon=cap.innerHTML.replace(/Écouter/,'');
-  var ring=new Audio('../assets/audio/zone-chime.mp3'); ring.preload='none'; ring.volume=.55;
+  var ring=new Audio('../assets/audio/alarm-chirp.mp3'); ring.preload='none'; ring.volume=.55;
   // Voix féminine (choix Serge). L'API Web Speech n'expose aucun genre : il faut
   // reconnaître les noms. On tente une voix féminine connue, sinon on écarte les
   // masculines connues, sinon on laisse la voix par défaut du système.
