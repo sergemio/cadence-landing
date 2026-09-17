@@ -99,7 +99,7 @@ a{color:inherit; text-decoration:none}
 
 /* ---------- brand / logo ---------- */
 .brand{display:flex; align-items:center; gap:11px}
-.brand .logo-mark{height:30px; width:auto; flex:none; display:block}   /* portrait « 8 » : hauteur fixe, largeur via l'aspect-ratio */
+.brand .logo-mark{height:30px; width:auto; flex:none; display:block}   /* cloche : hauteur fixe, largeur via l'aspect-ratio */
 .brand .bt{display:flex; flex-direction:column; line-height:1}
 .brand .bt b{font-family:'Big Shoulders Display',sans-serif; font-weight:900; font-size:24px; letter-spacing:.01em; color:var(--ink); white-space:nowrap}
 .brand .bt b em{font-style:normal; font-weight:700; color:var(--ink-3)}
@@ -422,10 +422,9 @@ footer .fmeta a:hover{color:var(--amber)}
 <header id="hd">
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="CookOnTime, accueil">
-      <!-- Artwork final (Photoshop Serge, 22/07/2026) : « 8 » 7-segments,
-           quart 12h→3h gris + segment intérieur ember. Master 1024 :
-           P/topics/timer-app/logo/. Variante blanche pour le footer sombre. -->
-      <img class="logo-mark" src="../assets/logo-mark.webp" alt="" width="159" height="256">
+      <!-- Logo : la cloche qui décompte (16/09/2026). Fichiers générés par
+           P/topics/timer-app/logo/build_logo.py. Variante crème pour le footer sombre. -->
+      <img class="logo-mark" src="../assets/logo-mark.webp" alt="" width="361" height="256">
       <span class="bt"><b>CookOnTime <em>— Kitchen Timer</em></b></span>
     </a>
     <nav class="navlinks">
@@ -483,7 +482,7 @@ footer .fmeta a:hover{color:var(--amber)}
   <!-- SIGNATURE -->
   <section class="signature-band">
     <div class="wrap">
-      <img class="seal" src="../assets/logo-mark.webp" alt="" width="159" height="256">
+      <img class="seal" src="../assets/logo-mark.webp" alt="" width="361" height="256">
       <p>Fait par des restaurateurs, <em>pour des restaurateurs</em><span class="amateurs">— et les amateurs de cuisine en tout genre.</span></p>
       <img class="kitchen-shot" src="../assets/pro-kitchen-tablet.webp" alt="Application minuteur cuisine CookOnTime sur une tablette murale dans une cuisine de restaurant professionnelle en plein service" width="1400" height="781" loading="lazy" decoding="async">
     </div>
@@ -716,7 +715,7 @@ footer .fmeta a:hover{color:var(--amber)}
   <div class="wrap">
     <div>
       <a class="brand" href="#top">
-        <img class="logo-mark" src="../assets/logo-mark-white.webp" alt="" width="159" height="256">
+        <img class="logo-mark" src="../assets/logo-mark-white.webp" alt="" width="361" height="256">
         <span class="bt"><b>CookOnTime <em>— Kitchen Timer</em></b></span>
       </a>
       <p class="ftag">Le minuteur qui vous rappelle chaque étape à voix haute. Fait par des restaurateurs, à Lyon.</p>
