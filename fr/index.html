@@ -112,6 +112,9 @@ header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.1) blur(8p
 .navlinks{display:flex; gap:30px; align-items:center}
 .navlinks a{font-size:14.5px; color:var(--ink-2); font-weight:500}
 .navlinks a:hover{color:var(--ember-2)}
+/* Le bouton du menu est aussi un lien de .navlinks : sans cette règle, la couleur
+   grise des liens (plus spécifique) écrasait le texte blanc du bouton orange. */
+.navlinks a.btn-primary, .navlinks a.btn-primary:hover{color:#fff9f2; font-weight:700}
 .navlinks .lang{font-family:'Chivo Mono',monospace; font-size:12.5px; letter-spacing:.12em; font-weight:600; border:1px solid var(--line); border-radius:999px; padding:.5em .85em; line-height:1}
 .btn{
   display:inline-flex; align-items:center; gap:.55em; font-family:'Chivo',sans-serif; font-weight:700;
@@ -203,7 +206,13 @@ button.voicebubble:focus-visible{outline:2px solid var(--ember); outline-offset:
 .signature-band p{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:clamp(26px,4vw,50px); line-height:1; letter-spacing:-.01em; color:var(--ink); max-width:22ch}
 .signature-band em{font-style:normal; color:var(--ember)}
 .signature-band .amateurs{display:block; margin-top:.3em; font-size:.6em; color:var(--ink-3); font-weight:700}
-.signature-band .kitchen-shot{flex:1 1 320px; min-width:260px; max-width:440px; margin-left:auto; height:auto; border-radius:var(--rad-s); border:1px solid var(--line); box-shadow:var(--shadow)}
+/* Deux photos côte à côte, même hauteur : chaque image grandit en proportion de son
+   format (1 pour la carrée, 1.79 pour la paysage), avec une base à 0. */
+.signature-band .wrap > p{flex:1 1 300px}
+.signature-band .shots{flex:1.25 1 380px; min-width:260px; max-width:600px; margin-left:auto; display:flex; gap:12px}
+.signature-band .shots img{min-width:0; width:100%; height:auto; border-radius:var(--rad-s); border:1px solid var(--line); box-shadow:var(--shadow)}
+.signature-band .shots .founder{flex:1 1 0}
+.signature-band .shots .kitchen-shot{flex:1.79 1 0}
 
 /* ---------- section scaffolding ---------- */
 section{padding:clamp(56px,8vw,104px) 0; position:relative}
@@ -385,7 +394,7 @@ footer .fmeta a:hover{color:var(--amber)}
   header.open .navlinks a{padding:14px clamp(20px,5vw,52px)}
   header.open .navlinks .btn{margin:10px clamp(20px,5vw,52px)}
   .cred-quote{grid-row:1}
-  .signature-band .kitchen-shot{margin:0 auto}
+  .signature-band .shots{margin:0 auto}
 }
 @media (max-width:560px){
   body{font-size:16px}
@@ -484,7 +493,10 @@ footer .fmeta a:hover{color:var(--amber)}
     <div class="wrap">
       <img class="seal" src="../assets/logo-mark.webp" alt="" width="361" height="256">
       <p>Fait par des restaurateurs, <em>pour des restaurateurs</em><span class="amateurs">— et les amateurs de cuisine en tout genre.</span></p>
-      <img class="kitchen-shot" src="../assets/pro-kitchen-tablet.webp" alt="Application minuteur cuisine CookOnTime sur une tablette murale dans une cuisine de restaurant professionnelle en plein service" width="1400" height="781" loading="lazy" decoding="async">
+      <div class="shots">
+        <img class="founder" src="../assets/founder-tablet.webp" alt="Serge Menassa, cofondateur de CookOnTime et restaurateur, montre l'application sur la tablette de la cuisine de son restaurant" width="800" height="800" loading="lazy" decoding="async">
+        <img class="kitchen-shot" src="../assets/pro-kitchen-tablet.webp" alt="Application minuteur cuisine CookOnTime sur une tablette murale dans une cuisine de restaurant professionnelle en plein service" width="1400" height="781" loading="lazy" decoding="async">
+      </div>
     </div>
   </section>
 

@@ -1,0 +1,16 @@
+// Site CookOnTime servi par Cloudflare sur cookontime.app (fichiers statiques seuls).
+// Déployer : npx wrangler deploy (depuis ce dossier). Le compte Cloudflare est celui
+// de Serge (sergemenassa@gmail.com), qui détient aussi le domaine.
+{
+  "name": "cookontime-site",
+  "compatibility_date": "2026-09-29",
+  "assets": {
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "cookontime.app", "custom_domain": true },
+    { "pattern": "www.cookontime.app", "custom_domain": true }
+  ]
+}
