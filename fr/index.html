@@ -784,5 +784,18 @@ footer a:hover{color:#fff}
   });
 })();
 </script>
+<script>
+/* Compte les clics sur les boutons « Télécharger » (sans cookie, sans identifiant). */
+(function(){
+  var btns=document.querySelectorAll('a.btn-ember[href="#lancement"]'), rest=['middle','bottom'], k=0;
+  btns.forEach(function(a){
+    var where=a.closest('header')?'header':a.closest('.hero')?'hero':(rest[k++]||'other');
+    a.addEventListener('click', function(){
+      var body=JSON.stringify({button:where, lang:'fr'});
+      try{ navigator.sendBeacon('/api/click', new Blob([body],{type:'text/plain'})); }catch(e){}
+    });
+  });
+})();
+</script>
 </body>
 </html>

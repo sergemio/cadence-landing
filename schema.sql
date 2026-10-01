@@ -9,3 +9,12 @@ create table if not exists signups (
   country text,           -- pays donné par Cloudflare (pas d'adresse IP stockée)
   created_at text not null
 );
+
+-- Clics sur les boutons « Télécharger » (aucune donnée personnelle).
+create table if not exists clicks (
+  id integer primary key autoincrement,
+  button text not null,   -- header, hero, middle, bottom
+  lang text,              -- fr ou en
+  country text,           -- pays donné par Cloudflare
+  created_at text not null
+);

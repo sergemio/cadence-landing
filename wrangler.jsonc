@@ -16,6 +16,10 @@
   "d1_databases": [
     { "binding": "DB", "database_name": "cookontime-signups", "database_id": "d1550772-923d-4b80-b8e6-d98cbabfe7d5" }
   ],
+  // E-mail à Serge à chaque nouvelle inscription (adresse validée dans Email Routing).
+  "send_email": [
+    { "name": "NOTIFY", "destination_address": "sergemenassa@gmail.com" }
+  ],
   "routes": [
     { "pattern": "cookontime.app", "custom_domain": true },
     { "pattern": "www.cookontime.app", "custom_domain": true }
