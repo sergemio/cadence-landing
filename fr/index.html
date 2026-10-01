@@ -29,14 +29,16 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Quelle est la meilleure application de minuteur pour une cuisine professionnelle ?","acceptedAnswer":{"@type":"Answer","text":"Celle qui fait tourner plusieurs minuteurs en même temps, un par plat, qui annonce à voix haute quand c'est prêt et qui répète vos temps de cuisson. La plupart des applications de minuteur sont pensées pour le téléphone d'un particulier. Celle-ci est faite pour une tablette montée en ligne de cuisine, en plein service."}},
-    {"@type":"Question","name":"Comment gérer plusieurs minuteurs en même temps sans se tromper de plat ?","acceptedAnswer":{"@type":"Answer","text":"Faites tourner plusieurs minuteurs côte à côte : chaque cuisson porte son nom à l'écran et à la voix, et chacune peut avoir sa propre sonnerie. Cinq ou vingt plats peuvent tourner en parallèle : vous savez tout de suite lequel sonne. Impossible de confondre le minuteur du poisson avec celui de la garniture."}},
+    {"@type":"Question","name":"Quelle est la meilleure application de minuteur pour la cuisine ?","acceptedAnswer":{"@type":"Answer","text":"CookOnTime fait tourner plusieurs minuteurs en même temps, un par plat. Chaque plat a sa sonnerie, et une voix annonce quand il est terminé. L'app répète vos propres temps de cuisson. Elle est pensée pour une tablette en cuisine, en plein service, et marche aussi sur téléphone."}},
+    {"@type":"Question","name":"Combien coûte CookOnTime ?","acceptedAnswer":{"@type":"Answer","text":"CookOnTime est gratuit au lancement : sans abonnement, sans publicité et sans compte à créer."}},
+    {"@type":"Question","name":"Où vont mes données ?","acceptedAnswer":{"@type":"Answer","text":"Vos plats, vos temps et vos réglages restent sur votre tablette, et il n'y a aucun compte à créer. Au premier lancement, l'app vous demande si vous acceptez de partager des statistiques d'usage ; dans la version actuelle, elle n'envoie rien. Le détail est dans la politique de confidentialité."}},
+    {"@type":"Question","name":"Comment gérer plusieurs minuteurs en même temps sans se tromper de plat ?","acceptedAnswer":{"@type":"Answer","text":"Faites tourner plusieurs minuteurs côte à côte : chaque cuisson porte son nom à l'écran et à la voix, et chacune peut avoir sa propre sonnerie. Cinq ou vingt plats peuvent tourner en parallèle : vous savez tout de suite lequel sonne. Impossible de confondre le minuteur du steak avec celui de la garniture."}},
     {"@type":"Question","name":"L'application fonctionne-t-elle sur iPad, tablette Android et iPhone ?","acceptedAnswer":{"@type":"Answer","text":"Oui, sur les trois. Un iPad ou une tablette Android bas de gamme, montée au mur, écran toujours allumé, suffit — et l'app tourne aussi sur iPhone et téléphone Android quand vous voulez un minuteur dans la poche. Vous équipez chaque poste avec la même app."}},
     {"@type":"Question","name":"Le minuteur annonce-t-il vocalement quand le plat est prêt ?","acceptedAnswer":{"@type":"Answer","text":"Oui, c'est un minuteur qui parle : l'app annonce à voix haute l'étape suivante puis le plat prêt, par son nom. Vous gardez les mains dans le plat, l'info arrive à l'oreille sans fixer l'écran."}},
     {"@type":"Question","name":"Peut-on enregistrer ses propres recettes et temps de cuisson ?","acceptedAnswer":{"@type":"Answer","text":"C'est tout le principe. Vous saisissez vos plats, vos temps et vos phases une bonne fois. L'app répète votre méthode maison à l'identique sur toutes les tablettes. Elle n'invente aucun temps."}},
     {"@type":"Question","name":"L'application fonctionne-t-elle sans connexion internet, en hors-ligne ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Chaque tablette est autonome et stocke tout en local. Si le wifi tombe en plein rush, le service continue sans interruption."}},
     {"@type":"Question","name":"Peut-on enchaîner plusieurs étapes de cuisson dans un même minuteur ?","acceptedAnswer":{"@type":"Answer","text":"Oui, c'est le cœur de l'app. Un plat peut avoir plusieurs phases nommées (saisir, retourner, repos) qui s'enchaînent automatiquement, avec une annonce vocale à chaque changement d'étape."}},
-    {"@type":"Question","name":"L'application est-elle disponible sur l'App Store et Google Play, et est-elle gratuite ?","acceptedAnswer":{"@type":"Answer","text":"Elle arrive bientôt sur l'App Store et Google Play. Elle est gratuite, sans compte à créer et sans abonnement."}}
+    {"@type":"Question","name":"L'application est-elle disponible sur l'App Store et Google Play ?","acceptedAnswer":{"@type":"Answer","text":"Elle arrive bientôt sur l'App Store et Google Play."}}
   ]
 }
 </script>
@@ -89,7 +91,7 @@ a{color:inherit; text-decoration:none}
 
 /* ---------- boutons (R6.3 : 4 états ; R6.6 : 16 / 32) ---------- */
 .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:12px 28px; border-radius:12px;
-  font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:var(--t4); letter-spacing:.04em; text-transform:uppercase;
+  font-family:'Chivo',sans-serif; font-weight:700; font-size:18px; letter-spacing:0;
   border:2px solid transparent; cursor:pointer; transition:transform .12s ease, background .15s ease, border-color .15s ease}
 .btn:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
 .btn:active{transform:translateY(1px)}
@@ -106,7 +108,7 @@ header{position:sticky; top:0; z-index:40; background:var(--service); color:var(
 .brand{display:flex; align-items:center; gap:12px; margin-right:auto}
 .brand img{height:28px; width:auto}
 .brand b{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:24px; white-space:nowrap}
-.brand span{font-family:'Big Shoulders Display',sans-serif; font-weight:600; font-size:20px; color:var(--on-service-2); white-space:nowrap}
+.brand span{font-family:'Chivo',sans-serif; font-weight:500; font-size:16px; color:var(--on-service-2); white-space:nowrap}
 .navlinks{display:flex; gap:24px; align-items:center}
 .navlinks a:not(.btn){font-size:var(--t5); color:var(--on-service-2)}
 .navlinks a:not(.btn):hover{color:var(--on-service)}
@@ -115,6 +117,9 @@ header{position:sticky; top:0; z-index:40; background:var(--service); color:var(
 .navlinks a.lang:hover{border-color:var(--on-service)}
 .navlinks a:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
 .navlinks .btn{min-height:40px; padding:8px 20px; font-size:var(--t5)}
+/* Logos Apple et Android dans les boutons de téléchargement */
+.btn .oss{display:inline-flex; gap:6px; margin-left:4px}
+.btn .os{width:18px; height:18px; flex:none}
 
 /* ---------- haut de page ---------- */
 .hero{background:var(--service); color:var(--on-service); padding:56px 0 96px; position:relative; overflow:hidden}
@@ -292,7 +297,7 @@ header{position:sticky; top:0; z-index:40; background:var(--service); color:var(
 .client .wrap{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:40px; align-items:center}
 .client img{width:100%; height:auto; border-radius:20px; display:block}
 .client h2{color:#fff}
-.client blockquote{margin:0; font-size:var(--t3); font-family:'Big Shoulders Display',sans-serif; font-weight:700; line-height:1.2; color:var(--on-service)}
+.client blockquote{margin:0; font-size:24px; font-family:'Chivo',sans-serif; font-weight:600; line-height:1.4; color:var(--on-service)}
 .client .who{margin-top:24px; display:flex; align-items:center; gap:12px; font-size:var(--t5); color:var(--on-service-2)}
 .client .who b{color:#fff}
 
@@ -302,7 +307,7 @@ header{position:sticky; top:0; z-index:40; background:var(--service); color:var(
 .faq h2{margin-bottom:24px}
 details{border-top:1px solid var(--line)}
 details:last-of-type{border-bottom:1px solid var(--line)}
-summary{list-style:none; cursor:pointer; padding:20px 0; display:flex; gap:16px; align-items:center; font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:24px; line-height:1.2}
+summary{list-style:none; cursor:pointer; padding:20px 0; display:flex; gap:16px; align-items:center; font-family:'Chivo',sans-serif; font-weight:700; font-size:20px; line-height:1.3}
 summary::-webkit-details-marker{display:none}
 summary::after{content:"+"; margin-left:auto; flex:none; width:32px; height:32px; border-radius:8px; background:var(--tile); display:grid; place-items:center; font-family:'Chivo',sans-serif; font-weight:700}
 details[open] summary::after{content:"–"; background:var(--ember); color:#fff}
@@ -338,6 +343,7 @@ footer a:hover{color:#fff}
   .nav,.navlinks{gap:12px}
   .brand b{font-size:20px}
   .navlinks .btn{padding:8px 16px}
+  .navlinks .btn .oss{display:none}
   .bgrid{grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(3,1fr)}
   .board{aspect-ratio:3/4}
   .bhead{height:12cqw; gap:2.4cqw} .bhead img{height:5.6cqw} .bhead b{font-size:4.4cqw} .bhead span,.bhead i:not(.new){display:none} .bhead i.new{font-size:3.2cqw; padding:1.4cqw 2.4cqw; border-radius:1.4cqw} .bhead .clock{font-size:4.4cqw}
@@ -365,7 +371,7 @@ footer a:hover{color:#fff}
       <a href="#comparatif">Comparatif</a>
       <a href="#faq">Questions</a>
       <a class="lang" href="../" hreflang="en" lang="en" aria-label="English version">EN</a>
-      <a class="btn btn-ember" href="#lancement">Télécharger</a>
+      <a class="btn btn-ember" href="#lancement">Télécharger<span class="oss"><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.14c-1.77 0-3.43.4-4.92 1L5.22 5.92a.38.38 0 1 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg></span></a>
     </nav>
   </div>
 </header>
@@ -375,10 +381,10 @@ footer a:hover{color:#fff}
   <section class="hero">
     <div class="wrap">
       <div>
-        <h1>Le minuteur de cuisine qui vous dit, à voix haute, quand c'est prêt</h1>
-        <p class="lead">Tous vos plats sur une seule tablette. Une sonnerie différente pour chacun, une voix qui l'appelle par son nom. D'une simplicité déconcertante.</p>
+        <h1>Le minuteur de cuisine qui vous dit quand c'est prêt</h1>
+        <p class="lead">Chaque plat a son minuteur, sa sonnerie et sa voix.</p>
         <div class="cta">
-          <a class="btn btn-ember" href="#lancement">Télécharger — gratuit</a>
+          <a class="btn btn-ember" href="#lancement">Télécharger — gratuit<span class="oss"><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.14c-1.77 0-3.43.4-4.92 1L5.22 5.92a.38.38 0 1 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg></span></a>
           <a class="btn btn-line" href="#app">Voir comment ça marche</a>
         </div>
         <p class="note">Gratuit au lancement, sans compte, sans abonnement. iPad, iPhone et Android.</p>
@@ -386,7 +392,7 @@ footer a:hover{color:#fff}
 
       <div class="stage">
         <div class="device">
-          <div class="board" role="img" aria-label="Écran de CookOnTime : six plats, dont le poisson qui sonne quand il est prêt">
+          <div class="board" role="img" aria-label="Écran de CookOnTime : six plats, dont le steak qui sonne quand il est terminé">
             <div class="bhead">
               <img src="../assets/logo-mark-white.webp" alt="" width="361" height="256">
               <b>CookOnTime</b><span>— Minuteurs cuisine</span>
@@ -398,7 +404,7 @@ footer a:hover{color:#fff}
         </div>
         <button class="voice" id="voice" type="button" aria-live="polite">
           <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-          <span><small>La tablette annonce — touchez pour écouter</small><b id="voiceText">« Le poisson est prêt »</b></span>
+          <span><small>La tablette annonce — touchez pour écouter</small><b id="voiceText">« Steak, c'est terminé »</b></span>
         </button>
       </div>
     </div>
@@ -418,13 +424,13 @@ footer a:hover{color:#fff}
     <div class="wrap">
       <div>
         <h2>Fini les plats cramés et le stress du coup de feu</h2>
-        <p class="big">Dix boîtiers sur le passe, dix bips identiques. On sait plus lequel sonne, on lâche le poste pour aller voir, et le poisson est mort. On en a eu marre, alors on l'a codé.</p>
+        <p class="big">Dix boîtiers sur le passe, dix bips identiques. On sait plus lequel sonne, on lâche le poste pour aller voir, et le steak est trop cuit. On en a eu marre, alors on l'a codé.</p>
       </div>
       <div>
         <div class="rail">
           <div class="tickets">
             <div class="ticket">« Ça sonne… mais lequel ? Ils font tous le même bruit »</div>
-            <div class="ticket">« J'ai vérifié le mauvais minuteur, le poisson a brûlé »</div>
+            <div class="ticket">« J'ai vérifié le mauvais minuteur »</div>
             <div class="ticket">« Dans le bruit du service, on n'entend pas le bip »</div>
             <div class="ticket">« L'extra ne sait pas quel minuteur est à lui »</div>
           </div>
@@ -441,7 +447,7 @@ footer a:hover{color:#fff}
       <div class="feat">
         <div>
           <h3>Chaque plat s'enchaîne tout seul, phase par phase</h3>
-          <p>Un plat, c'est rarement un seul décompte. Il faut saisir, retourner, laisser reposer. L'app enchaîne les phases sans que vous touchiez à rien et annonce chaque changement d'étape à voix haute : « retournez le poisson », puis « le poisson est prêt ». Vous gardez les mains dans le plat, l'info arrive à l'oreille.</p>
+          <p>Un plat, c'est rarement un seul décompte. Il faut saisir, retourner, laisser reposer. L'app enchaîne les phases sans que vous touchiez à rien et annonce chaque changement d'étape à voix haute : « Retourner », puis « Steak, c'est terminé ». Vous gardez les mains dans le plat, l'info arrive à l'oreille.</p>
           <ul>
             <li>Étapes de cuisson nommées : saisir, retourner, repos</li>
             <li>Annonce vocale de l'étape suivante et du plat prêt, par son nom</li>
@@ -452,7 +458,7 @@ footer a:hover{color:#fff}
           <div class="bigwrap">
             <div class="tile run chain bigtile" id="bigtile" aria-hidden="true">
               <div class="band"><em id="bigPhase">1/3</em><span id="bigStep">Saisir</span></div>
-              <div class="tn">Poisson</div>
+              <div class="tn">Steak</div>
               <div class="tt seg"><span class="ghost">8:88</span><span class="val" id="bigVal">0:08</span></div>
               <div class="tc"><i>+10</i><i>−10</i><i class="x">✕</i></div>
             </div>
@@ -464,7 +470,7 @@ footer a:hover{color:#fff}
       <div class="feat flip">
         <div>
           <h3>Chaque plat a sa propre sonnerie de minuteur</h3>
-          <p>Frites, poisson, bavette, focaccia : chaque plat a sa propre sonnerie. Dès que ça sonne, vous savez ce qui est prêt sans lever les yeux. Fini les dix bips identiques — douze sonneries au choix, et la voix nomme le plat par-dessus.</p>
+          <p>Frites, steak, poulet, focaccia : chaque plat a sa propre sonnerie. Dès que ça sonne, vous savez ce qui est prêt sans lever les yeux. Fini les dix bips identiques — douze sonneries au choix, et la voix nomme le plat par-dessus.</p>
           <ul>
             <li>Vous savez quel plat sonne à l'oreille, sans regarder l'écran</li>
             <li>Réglé une fois, valable pour toute la brigade</li>
@@ -473,8 +479,8 @@ footer a:hover{color:#fff}
         <div class="media">
           <div class="rings">
             <button class="ringrow" type="button" data-snd="chirp"><span class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Frites</b><small>Chirp</small></button>
-            <button class="ringrow" type="button" data-snd="coin"><span class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Poisson</b><small>Coin</small></button>
-            <button class="ringrow" type="button" data-snd="pop"><span class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Bavette</b><small>Pop</small></button>
+            <button class="ringrow" type="button" data-snd="coin"><span class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Steak</b><small>Coin</small></button>
+            <button class="ringrow" type="button" data-snd="pop"><span class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Poulet</b><small>Pop</small></button>
             <button class="ringrow" type="button" data-snd="bowl"><span class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Focaccia</b><small>Bowl</small></button>
             <p class="hint">Touchez un plat pour entendre sa sonnerie.</p>
           </div>
@@ -484,18 +490,18 @@ footer a:hover{color:#fff}
       <div class="feat">
         <div>
           <h3>La mise en place, mais pour le temps : vos recettes, vos temps de cuisson</h3>
-          <p>Le restaurant enregistre ses propres cuissons une bonne fois. On choisit le plat, tout part avec les bons temps et les bonnes phases. L'app répète votre méthode, elle n'invente aucun temps. Le poisson cuit pareil que ce soit le chef ou l'extra du samedi.</p>
+          <p>Le restaurant enregistre ses propres cuissons une bonne fois. On choisit le plat, tout part avec les bons temps et les bonnes phases. L'app répète votre méthode, elle n'invente aucun temps. Le steak cuit pareil que ce soit le chef ou l'extra du samedi.</p>
           <ul>
             <li>Vos plats, vos noms, vos temps de cuisson enregistrés</li>
             <li>La même cuisson à chaque service, quel que soit le poste</li>
             <li>Un nouveau opérationnel en cinq minutes, guidé à la voix</li>
             <li>Français et anglais pour toute la brigade</li>
           </ul>
-          <a class="btn btn-ember" style="margin-top:32px" href="#lancement">Télécharger maintenant</a>
+          <a class="btn btn-ember" style="margin-top:32px" href="#lancement">Télécharger maintenant<span class="oss"><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.14c-1.77 0-3.43.4-4.92 1L5.22 5.92a.38.38 0 1 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg></span></a>
         </div>
         <div class="media">
           <div class="recipe" aria-hidden="true">
-            <h4>Poisson du jour</h4>
+            <h4>Steak</h4>
             <p class="meta">3 étapes · sonnerie Coin · annoncé en français</p>
             <div class="steps">
               <div class="step"><span class="n">1</span><b>Saisir côté peau</b><span class="seg">2:30</span></div>
@@ -537,7 +543,7 @@ footer a:hover{color:#fff}
           </ul>
         </div>
       </div>
-      <div class="center"><a class="btn btn-ember" href="#lancement">Télécharger maintenant</a></div>
+      <div class="center"><a class="btn btn-ember" href="#lancement">Télécharger maintenant<span class="oss"><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.14c-1.77 0-3.43.4-4.92 1L5.22 5.92a.38.38 0 1 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg></span></a></div>
     </div>
   </section>
 
@@ -566,14 +572,16 @@ footer a:hover{color:#fff}
   <section class="faq" id="faq">
     <div class="wrap">
       <h2>Les questions qu'on nous pose</h2>
-      <details open><summary>Quelle est la meilleure application de minuteur pour une cuisine professionnelle ?</summary><p>Celle qui fait tourner plusieurs minuteurs en même temps, un par plat, qui annonce à voix haute quand c'est prêt et qui répète vos temps de cuisson. La plupart des applications de minuteur sont pensées pour le téléphone d'un particulier. Celle-ci est faite pour une tablette montée en ligne de cuisine, en plein service.</p></details>
-      <details><summary>Comment gérer plusieurs minuteurs en même temps sans se tromper de plat ?</summary><p>Faites tourner plusieurs minuteurs côte à côte : chaque cuisson porte son nom à l'écran et à la voix, et chacune peut avoir sa propre sonnerie. Cinq ou vingt plats peuvent tourner en parallèle : vous savez tout de suite lequel sonne. Impossible de confondre le minuteur du poisson avec celui de la garniture.</p></details>
+      <details open><summary>Quelle est la meilleure application de minuteur pour la cuisine ?</summary><p>CookOnTime fait tourner plusieurs minuteurs en même temps, un par plat. Chaque plat a sa sonnerie, et une voix annonce quand il est terminé. L'app répète vos propres temps de cuisson. Elle est pensée pour une tablette en cuisine, en plein service, et marche aussi sur téléphone.</p></details>
+      <details><summary>Combien coûte CookOnTime ?</summary><p>CookOnTime est gratuit au lancement : sans abonnement, sans publicité et sans compte à créer.</p></details>
+      <details><summary>Où vont mes données ?</summary><p>Vos plats, vos temps et vos réglages restent sur votre tablette, et il n'y a aucun compte à créer. Au premier lancement, l'app vous demande si vous acceptez de partager des statistiques d'usage ; dans la version actuelle, elle n'envoie rien. Le détail est dans la <a href="privacy.html">politique de confidentialité</a>.</p></details>
+      <details><summary>Comment gérer plusieurs minuteurs en même temps sans se tromper de plat ?</summary><p>Faites tourner plusieurs minuteurs côte à côte : chaque cuisson porte son nom à l'écran et à la voix, et chacune peut avoir sa propre sonnerie. Cinq ou vingt plats peuvent tourner en parallèle : vous savez tout de suite lequel sonne. Impossible de confondre le minuteur du steak avec celui de la garniture.</p></details>
       <details><summary>L'application fonctionne-t-elle sur iPad, tablette Android et iPhone ?</summary><p>Oui, sur les trois. Un iPad ou une tablette Android bas de gamme, montée au mur, écran toujours allumé, suffit — et l'app tourne aussi sur iPhone et téléphone Android quand vous voulez un minuteur dans la poche. Vous équipez chaque poste avec la même app.</p></details>
       <details><summary>Le minuteur annonce-t-il vocalement quand le plat est prêt ?</summary><p>Oui, c'est un minuteur qui parle : l'app annonce à voix haute l'étape suivante puis le plat prêt, par son nom. Vous gardez les mains dans le plat, l'info arrive à l'oreille sans fixer l'écran.</p></details>
       <details><summary>Peut-on enregistrer ses propres recettes et temps de cuisson ?</summary><p>C'est tout le principe. Vous saisissez vos plats, vos temps et vos phases une bonne fois. L'app répète votre méthode maison à l'identique sur toutes les tablettes. Elle n'invente aucun temps.</p></details>
       <details><summary>L'application fonctionne-t-elle sans connexion internet, en hors-ligne ?</summary><p>Oui. Chaque tablette est autonome et stocke tout en local. Si le wifi tombe en plein rush, le service continue sans interruption.</p></details>
       <details><summary>Peut-on enchaîner plusieurs étapes de cuisson dans un même minuteur ?</summary><p>Oui, c'est le cœur de l'app. Un plat peut avoir plusieurs phases nommées (saisir, retourner, repos) qui s'enchaînent automatiquement, avec une annonce vocale à chaque changement d'étape.</p></details>
-      <details><summary>L'application est-elle disponible sur l'App Store et Google Play, et est-elle gratuite ?</summary><p>Elle arrive bientôt sur l'App Store et Google Play. Elle est gratuite, sans compte à créer et sans abonnement.</p></details>
+      <details><summary>L'application est-elle disponible sur l'App Store et Google Play ?</summary><p>Elle arrive bientôt sur l'App Store et Google Play.</p></details>
     </div>
   </section>
 
@@ -616,11 +624,11 @@ footer a:hover{color:#fff}
   // Chaque plat a sa durée. Quand il arrive à zéro, il sonne 6 s (la voix l'annonce),
   // puis il revient au repos, et un cuisinier le relance 3 s plus tard.
   var DISHES=[
-    {name:'Frites', dur:210, left:27, say:'Les frites sont prêtes'},
-    {name:'Poisson', dur:45, left:7, say:'Le poisson est prêt'},
+    {name:'Frites', dur:210, left:27},
+    {name:'Steak', dur:45, left:7},
     {name:'Pâtes', dur:540, left:250},
     {name:'Riz', dur:1020, idle:true},
-    {name:'Bavette', dur:0, chain:[['Saisir',90],['Repos',60],['Trancher',30]], phase:1, left:16, say:'Bavette : trancher'},
+    {name:'Poulet', dur:0, chain:[['Saisir',90],['Retourner',60],['Repos',30]], phase:1, left:16},
     {name:'Focaccia', dur:720, left:604}
   ];
   var grid=document.getElementById('bgrid');
@@ -633,7 +641,7 @@ footer a:hover{color:#fff}
     if(d.chain){ d.el.classList.add('chain'); d.band=el.querySelector('.band em'); d.bandTxt=el.querySelector('.band span'); }
   });
   var voice=document.getElementById('voice'), voiceText=document.getElementById('voiceText');
-  var lastSay='Le poisson est prêt';
+  var lastSay="Steak, c'est terminé";
   var announce=function(t){ lastSay=t; voiceText.textContent='«\u00a0'+t+'\u00a0»'; voice.classList.add('show'); };
   var total=function(d){ return d.chain? d.chain[d.phase][1] : d.dur; };
   var paint=function(d){
@@ -650,8 +658,8 @@ footer a:hover{color:#fff}
       if(d.ring){ d.ring-=dt; if(d.ring<=0){ d.ring=0; d.idle=true; d.restart=3; } return; }
       d.left-=dt;
       if(d.left<=0){
-        if(d.chain && d.phase<d.chain.length-1){ d.phase++; d.left=total(d); announce(d.name+' : '+d.chain[d.phase][0].toLowerCase()); }
-        else { d.left=0; d.ring=6; announce(d.say || ((d.name)+' : prêt')); }
+        if(d.chain && d.phase<d.chain.length-1){ d.phase++; d.left=total(d); announce(d.chain[d.phase][0]); }
+        else { d.left=0; d.ring=6; announce(d.name+", c'est terminé"); }
       }
     });
   };
@@ -659,7 +667,7 @@ footer a:hover{color:#fff}
   var clock=document.getElementById('clock'), now=new Date();
   var tickClock=function(){ var n=new Date(); clock.textContent=n.getHours()+':'+String(n.getMinutes()).padStart(2,'0'); };
   tickClock();
-  if(reduced){ DISHES[1].left=0; DISHES[1].ring=1; paint(DISHES[1]); announce('Le poisson est prêt'); }
+  if(reduced){ DISHES[1].left=0; DISHES[1].ring=1; paint(DISHES[1]); announce("Steak, c'est terminé"); }
   else {
     var last=performance.now();
     (function loop(t){ var dt=Math.min(.25,(t-last)/1000); last=t; step(dt); DISHES.forEach(paint); requestAnimationFrame(loop); })(last);
@@ -695,7 +703,7 @@ footer a:hover{color:#fff}
   });
 
   // ---------- la grande tuile chaînée : saisir, retourner, repos ----------
-  var big={phases:[['Saisir',8,'Retournez le poisson'],['Retourner',6,'Poisson : repos'],['Repos',5,'Le poisson est prêt']], i:0, left:8};
+  var big={phases:[['Saisir',8,'Retourner'],['Retourner',6,'Repos'],['Repos',5,"Steak, c'est terminé"]], i:0, left:8};
   var bt=document.getElementById('bigtile'), bv=document.getElementById('bigVal'), bp=document.getElementById('bigPhase'), bs=document.getElementById('bigStep'), say=document.getElementById('bigSay');
   var paintBig=function(){ var ph=big.phases[big.i], p=big.left/ph[1];
     bt.style.setProperty('--p',p.toFixed(4)); bt.style.setProperty('--fill',fillFor(p));

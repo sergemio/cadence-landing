@@ -6,7 +6,7 @@
 <title>Free Kitchen Timer App for Restaurants — Multi-Dish & Voice</title>
 <meta name="description" content="Free kitchen timer app for pros: multiple dishes at once, a ring per dish, a voice announcing each. Tablets, iPhone & Android. Built by restaurateurs.">
 <meta name="keywords" content="free kitchen timer, cooking timer app, kitchen timer app for iphone, kitchen timer app free, restaurant kitchen timer, professional kitchen timer app, commercial kitchen timer, multiple kitchen timers, multi timer kitchen app, kitchen timer for iPad, kitchen timer tablet, talking kitchen timer, voice kitchen timer, hands-free kitchen timer, chef timer app, multi-stage cooking timer, kitchen timer no batteries, minuteur cuisine gratuit">
-<meta name="theme-color" content="#1a1c15">
+<meta name="theme-color" content="#191b14">
 <link rel="canonical" href="https://cookontime.app/">
 <link rel="alternate" hreflang="en" href="https://cookontime.app/">
 <link rel="alternate" hreflang="fr" href="https://cookontime.app/fr/">
@@ -29,14 +29,16 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"What is the best timer app for a professional kitchen?","acceptedAnswer":{"@type":"Answer","text":"The one that runs multiple dishes at once, announces out loud when food is ready, and repeats your own cook times. Most cooking timer apps are built for one person's phone. This one is built for a tablet mounted on the kitchen line, in the middle of service."}},
-    {"@type":"Question","name":"How do you time multiple dishes at once without mixing them up?","acceptedAnswer":{"@type":"Answer","text":"Run multiple timers side by side: every dish carries its name on screen and in the voice announcements, and each one can carry its own ring. Five or twenty dishes can run in parallel: you know right away which one is ringing. No more mistaking the fish timer for the sides."}},
+    {"@type":"Question","name":"What is the best timer app for cooking?","acceptedAnswer":{"@type":"Answer","text":"CookOnTime runs multiple timers at once, one per dish. Each dish has its own ring, and a voice announces when it's done. The app repeats your own cook times. It's built for a kitchen tablet in the middle of service, and works on phones too."}},
+    {"@type":"Question","name":"How much does CookOnTime cost?","acceptedAnswer":{"@type":"Answer","text":"CookOnTime is free at launch: no subscription, no ads and no account to create."}},
+    {"@type":"Question","name":"Where does my data go?","acceptedAnswer":{"@type":"Answer","text":"Your dishes, times and settings stay on your tablet, and there is no account to create. On first launch, the app asks whether you agree to share usage statistics; in the current version, it sends nothing. The details are in the privacy policy."}},
+    {"@type":"Question","name":"How do you time multiple dishes at once without mixing them up?","acceptedAnswer":{"@type":"Answer","text":"Run multiple timers side by side: every dish carries its name on screen and in the voice announcements, and each one can carry its own ring. Five or twenty dishes can run in parallel: you know right away which one is ringing. No more mistaking the steak timer for the sides."}},
     {"@type":"Question","name":"Does the app work on iPad, Android tablets and iPhone?","acceptedAnswer":{"@type":"Answer","text":"Yes, on all of them. A basic iPad or a cheap Android tablet, wall-mounted with the screen always on, is enough — and it also runs on iPhone and Android phones when you want a cooking timer in your pocket. You equip every station with the same app."}},
     {"@type":"Question","name":"Does the timer announce out loud when a dish is ready?","acceptedAnswer":{"@type":"Answer","text":"Yes. The app announces the next step and then the finished dish, by name, out loud. Your hands stay on the food — the info reaches your ear without staring at a screen."}},
     {"@type":"Question","name":"Can you save your own recipes and cook times?","acceptedAnswer":{"@type":"Answer","text":"That's the whole point. You enter your dishes, times and steps once. The app repeats your house method identically on every tablet. It never invents a cook time."}},
     {"@type":"Question","name":"Does the app work offline, without an internet connection?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every tablet is self-sufficient and stores everything locally. If the wifi drops mid-rush, service goes on uninterrupted."}},
     {"@type":"Question","name":"Can one timer chain multiple cooking steps?","acceptedAnswer":{"@type":"Answer","text":"Yes — it's the heart of the app. A dish can have multiple named steps (sear, flip, rest) that chain automatically, with a voice announcement at every step change."}},
-    {"@type":"Question","name":"Is the app available on the App Store and Google Play, and is it free?","acceptedAnswer":{"@type":"Answer","text":"It's coming soon to the App Store and Google Play. It's free, with no account to create and no subscription."}}
+    {"@type":"Question","name":"Is the app available on the App Store and Google Play?","acceptedAnswer":{"@type":"Answer","text":"It's coming soon to the App Store and Google Play."}}
   ]
 }
 </script>
@@ -53,757 +55,668 @@
 </script>
 
 <style>
+/* Proposition A — « le passe en service ».
+   Parti pris : la page emprunte tout à l'app réelle. Le bandeau sombre de l'app
+   devient l'en-tête et le haut de page ; les chiffres à segments (DSEG7) sont la
+   signature ; la couleur ne décore pas, elle dit un état, comme sur la tablette :
+   vert = en cours, ambre = changement d'étape, rouge = prêt. */
+@font-face{font-family:'DSEG7 Classic'; src:url(assets/fonts/DSEG7Classic-Bold.ttf) format('truetype'); font-weight:700; font-display:swap}
+
 :root{
-  --paper:#f4efe4; --paper-2:#ece5d6; --card:#fbf8f1;
-  /* Beige + filet des tuiles minuteur — mêmes valeurs que C.tileIdle / C.tileEdge
-     dans l'app Flutter. Sert partout où une surface doit se détacher du fond
-     de page sans devenir une autre couleur : c'est la carte posée, pas flottante. */
-  --tile:#e6ded0; --tile-edge:rgba(27,30,23,.10);
-  --ink:#1b1e17; --ink-2:#3f463a; --ink-3:#6b7061;
-  --line:rgba(27,30,23,.14); --line-2:rgba(27,30,23,.08);
-  --ember:#e0590d; --ember-2:#bd460a; --ember-ink:#7a3007;
-  --go:#2f9d61; --amber:#d99a2b; --red:#cf3a24; --teal:#3d7f8c;
-  --dark:#191b14; --dark-2:#21241b; --paper-on-dark:#efe8d6;
-  --maxw:1180px;
-  --rad:18px; --rad-s:12px;
-  --shadow:0 1px 0 rgba(27,30,23,.05), 0 18px 40px -28px rgba(27,30,23,.5);
+  /* Valeurs reprises de app/lib/ui/theme.dart */
+  --service:#191b14; --service-2:#24271d; --on-service:#efe8d6; --on-service-2:#b9b3a3;
+  --paper:#f4efe4; --paper-2:#ebe4d5; --tile:#e7ded0; --tile-edge:rgba(28,33,28,.10);
+  --ink:#1d211e; --muted:#5b6259; --line:rgba(28,33,28,.14);
+  --ember:#e8600f; --ember-2:#c94f08; --on-ember:#fff8f0;
+  --amber:#dd9207; --mint:#0fa96a; --red:#e03131; --ring-ink:#8f1414;
+  --fill-mint:rgb(92,199,154);
+  /* Échelle typo fermée (R4.4 / R4.6, site) : 6 tailles */
+  --t1:clamp(44px,5.6vw,72px); --t2:clamp(34px,3.8vw,48px); --t3:clamp(26px,2.6vw,32px);
+  --t4:20px; --t5:16px; --t6:14px;
+  --maxw:1200px; --gut:clamp(16px,4vw,40px);
 }
-@property --p{ syntax:'<number>'; inherits:false; initial-value:1; }
-@property --fill{ syntax:'<color>'; inherits:false; initial-value:#2f9d61; }
+@property --p{syntax:'<number>'; inherits:false; initial-value:1}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  margin:0; background:var(--paper); color:var(--ink);
-  font-family:'Chivo',system-ui,sans-serif; font-size:17px; line-height:1.6;
-  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-  overflow-x:hidden;
-}
-/* subtle paper grain */
-body::before{
-  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
-  mix-blend-mode:multiply;
-}
-main,header,footer{position:relative; z-index:1}
-h1,h2,h3{font-family:'Big Shoulders Display',sans-serif; font-weight:800; line-height:.98; letter-spacing:-.01em; margin:0}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:'Chivo',system-ui,sans-serif; font-size:var(--t4); line-height:1.4; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+h1,h2,h3{font-family:'Big Shoulders Display',sans-serif; font-weight:800; margin:0; text-wrap:balance}
+h1{font-size:var(--t1); line-height:1.02; letter-spacing:-.02em}
+h2{font-size:var(--t2); line-height:1.05; letter-spacing:-.015em}
+h3{font-size:var(--t3); line-height:1.1; letter-spacing:-.01em}
 p{margin:0}
 a{color:inherit; text-decoration:none}
-.wrap{max-width:var(--maxw); margin:0 auto; padding:0 clamp(20px,5vw,52px)}
-.mono{font-family:'Chivo Mono',monospace}
-.eyebrow{
-  font-family:'Chivo Mono',monospace; font-size:12.5px; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--ember-ink); font-weight:600; display:inline-flex; gap:.6em; align-items:center;
-}
-.eyebrow::before{content:""; width:26px; height:2px; background:var(--ember); display:inline-block}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 var(--gut)}
+.seg{font-family:'DSEG7 Classic',monospace; font-weight:700; font-style:normal; letter-spacing:.02em}
 
-/* ---------- brand / logo ---------- */
-.brand{display:flex; align-items:center; gap:11px}
-.brand .logo-mark{height:30px; width:auto; flex:none; display:block}   /* cloche : hauteur fixe, largeur via l'aspect-ratio */
-.brand .bt{display:flex; flex-direction:column; line-height:1}
-.brand .bt b{font-family:'Big Shoulders Display',sans-serif; font-weight:900; font-size:24px; letter-spacing:.01em; color:var(--ink); white-space:nowrap}
-.brand .bt b em{font-style:normal; font-weight:700; color:var(--ink-3)}
-.brand .bt small{font-family:'Chivo Mono',monospace; font-weight:400; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); margin-top:3px}
+/* ---------- boutons (R6.3 : 4 états ; R6.6 : 16 / 32) ---------- */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:12px 28px; border-radius:12px;
+  font-family:'Chivo',sans-serif; font-weight:700; font-size:18px; letter-spacing:0;
+  border:2px solid transparent; cursor:pointer; transition:transform .12s ease, background .15s ease, border-color .15s ease}
+.btn:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
+.btn:active{transform:translateY(1px)}
+.btn-ember{background:var(--ember); color:var(--on-ember)}
+.btn-ember:hover{background:var(--ember-2)}
+.btn-line{background:transparent; color:var(--on-service); border-color:rgba(239,232,214,.28)}
+.btn-line:hover{border-color:var(--on-service)}
+.btn-line.on-paper{color:var(--ink); border-color:var(--line)}
+.btn-line.on-paper:hover{border-color:var(--ink)}
 
-/* ---------- header ---------- */
-header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.1) blur(8px);
-  background:color-mix(in srgb, var(--paper) 82%, transparent); border-bottom:1px solid var(--line-2)}
-.nav{display:flex; align-items:center; justify-content:space-between; height:70px}
-.navlinks{display:flex; gap:30px; align-items:center}
-.navlinks a{font-size:14.5px; color:var(--ink-2); font-weight:500}
-.navlinks a:hover{color:var(--ember-2)}
-/* Le bouton du menu est aussi un lien de .navlinks : sans cette règle, la couleur
-   grise des liens (plus spécifique) écrasait le texte blanc du bouton orange. */
-.navlinks a.btn-primary, .navlinks a.btn-primary:hover{color:#fff9f2; font-weight:700}
-.navlinks .lang{font-family:'Chivo Mono',monospace; font-size:12.5px; letter-spacing:.12em; font-weight:600; border:1px solid var(--line); border-radius:999px; padding:.5em .85em; line-height:1}
-.btn{
-  display:inline-flex; align-items:center; gap:.55em; font-family:'Chivo',sans-serif; font-weight:700;
-  font-size:15px; padding:.72em 1.25em; border-radius:999px; cursor:pointer; border:1px solid transparent;
-  transition:transform .12s ease, background .15s ease, color .15s ease; line-height:1;
-}
-.btn-primary{background:var(--ember); color:#fff9f2}
-.btn-primary:hover{background:var(--ember-2); transform:translateY(-1px)}
-.btn-ghost{background:transparent; color:var(--ink); border-color:var(--line)}
-.btn-ghost:hover{border-color:var(--ink)}
-.nav .btn{padding:.6em 1.1em; font-size:14px}
-.burger{display:none; background:none; border:0; cursor:pointer; padding:8px; color:var(--ink)}
+/* ---------- en-tête = le bandeau de l'app ---------- */
+header{position:sticky; top:0; z-index:40; background:var(--service); color:var(--on-service); border-bottom:1px solid rgba(239,232,214,.08)}
+.nav{display:flex; align-items:center; gap:24px; height:64px}
+.brand{display:flex; align-items:center; gap:12px; margin-right:auto}
+.brand img{height:28px; width:auto}
+.brand b{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:24px; white-space:nowrap}
+.brand span{font-family:'Chivo',sans-serif; font-weight:500; font-size:16px; color:var(--on-service-2); white-space:nowrap}
+.navlinks{display:flex; gap:24px; align-items:center}
+.navlinks a:not(.btn){font-size:var(--t5); color:var(--on-service-2)}
+.navlinks a:not(.btn):hover{color:var(--on-service)}
+/* Bascule de langue : toujours visible, y compris sur téléphone. */
+.navlinks a.lang{display:inline-flex; align-items:center; justify-content:center; min-width:44px; min-height:40px; padding:0 12px; border-radius:10px; border:1px solid rgba(239,232,214,.28); color:var(--on-service); font-weight:700; font-size:var(--t6); letter-spacing:.08em}
+.navlinks a.lang:hover{border-color:var(--on-service)}
+.navlinks a:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
+.navlinks .btn{min-height:40px; padding:8px 20px; font-size:var(--t5)}
+/* Logos Apple et Android dans les boutons de téléchargement */
+.btn .oss{display:inline-flex; gap:6px; margin-left:4px}
+.btn .os{width:18px; height:18px; flex:none}
 
-/* ---------- hero ---------- */
-.hero{padding:clamp(48px,7vw,96px) 0 clamp(40px,6vw,72px); position:relative}
-.hero .wrap{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(28px,5vw,64px); align-items:center}
-.hero h1{font-size:clamp(42px,6vw,82px); font-weight:800; margin:.28em 0 .32em; max-width:14ch}
-.hero h1 em{font-style:normal; color:var(--ember); white-space:nowrap}
-.lead{font-size:clamp(17px,1.6vw,20px); color:var(--ink-2); max-width:46ch; line-height:1.55}
-.hero-cta{display:flex; flex-wrap:wrap; gap:14px; margin-top:30px; align-items:center}
-.hero-note{margin-top:18px; font-family:'Chivo Mono',monospace; font-size:12.5px; letter-spacing:.04em; color:var(--ink-3); display:flex; align-items:center; gap:9px}
-.hero-note .pip{width:7px; height:7px; border-radius:50%; background:var(--go); box-shadow:0 0 0 4px color-mix(in srgb,var(--go) 22%,transparent)}
+/* ---------- haut de page ---------- */
+.hero{background:var(--service); color:var(--on-service); padding:56px 0 96px; position:relative; overflow:hidden}
+.hero::after{content:""; position:absolute; left:0; right:0; bottom:0; height:120px; background:linear-gradient(to bottom, transparent, rgba(0,0,0,.18)); pointer-events:none}
+.hero .wrap{max-width:1320px; display:grid; grid-template-columns:minmax(0,4.4fr) minmax(0,7.6fr); gap:40px; align-items:center; position:relative; z-index:1}
+.hero h1{color:#fff; max-width:12ch}
+.hero .lead{margin-top:24px; color:var(--on-service-2); max-width:34ch; line-height:1.4}
+.hero .cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:32px}
+.hero .note{margin-top:20px; font-size:var(--t6); color:var(--on-service-2)}
 
-/* ---------- device mock ---------- */
-.stage{position:relative; display:flex; justify-content:center; min-width:0}
-.device{
-  width:min(100%,440px); min-width:0; aspect-ratio:4/3; background:linear-gradient(160deg,#26281f,#15170f);
-  border-radius:26px; padding:16px; box-shadow:0 40px 70px -40px rgba(20,22,15,.85), inset 0 0 0 1px rgba(255,255,255,.05);
-  position:relative;
-}
-.device::after{content:""; position:absolute; right:-9px; top:38%; height:56px; width:4px; border-radius:3px; background:#2e3126}
-.screen{width:100%; height:100%; background:var(--paper); border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:9px; overflow:hidden; box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
-.screen-top{display:flex; align-items:center; justify-content:space-between; font-family:'Chivo Mono',monospace; font-size:10px; letter-spacing:.1em; color:var(--ink-3); text-transform:uppercase; padding:0 2px}
-.screen-top b{color:var(--ink); font-weight:600}
-.kgrid{flex:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:9px}
-.tile{
-  --track:var(--tile);
-  border-radius:12px; padding:10px 11px; display:flex; flex-direction:column; justify-content:space-between;
-  background:conic-gradient(from -90deg, var(--fill) calc(var(--p)*360deg), var(--track) 0);
-  color:var(--ink); position:relative; overflow:hidden; box-shadow:inset 0 0 0 1px rgba(27,30,23,.06);
-}
-.tile .tname{font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:15px; line-height:1; text-shadow:0 1px 0 rgba(255,255,255,.35)}
-.tile .ttime{font-family:'Chivo Mono',monospace; font-weight:600; font-size:23px; letter-spacing:-.02em}
-.tile .tsub{font-family:'Chivo Mono',monospace; font-size:9px; letter-spacing:.06em; text-transform:uppercase; opacity:.72}
-.tile.chain{box-shadow:inset 0 0 0 2.5px var(--ember)}
-.tile.chain .phase{position:absolute; top:8px; right:8px; font-family:'Chivo Mono',monospace; font-size:8.5px; background:var(--ember); color:#fff; padding:2px 5px; border-radius:6px; letter-spacing:.05em}
-/* Les 4 camemberts tournent en boucle à des vitesses différentes (delay négatif =
-   chaque tuile démarre au point du cycle qui correspond à son étiquette statique).
-   Les --p statiques restent le snapshot figé si prefers-reduced-motion. */
-.tile.t-go{--fill:#8fce9f; --p:.95; animation:deplete 26s linear -1.3s infinite}
-.tile.t-amber{--fill:#f0c46a; --p:.44; animation:deplete 11s linear -6.2s infinite}
-.tile.t-red{--fill:#eb8b73; --p:.12; animation:deplete 15s linear -13.2s infinite}
-.tile.t-chain{--fill:#f4d7a0; --p:.6; animation:deplete-chain 16s linear -6.4s infinite}
-@keyframes deplete{
-  0%{--p:1; --fill:#8fce9f} 55%{--fill:#f0c46a} 82%{--fill:#eb8b73} 100%{--p:0; --fill:#eb8b73}
-}
-@keyframes deplete-chain{
-  0%{--p:1; --fill:#f4d7a0} 100%{--p:0; --fill:#f4d7a0}
-}
-.voicebubble{
-  position:absolute; left:-6%; bottom:6%; background:var(--dark); color:var(--paper-on-dark);
-  border-radius:16px; padding:13px 17px 14px; box-shadow:0 24px 40px -24px rgba(20,22,15,.8);
-  display:flex; align-items:center; gap:12px; max-width:82%;
-}
-.voicebubble::before{content:""; position:absolute; top:-11px; left:50%; margin-left:-11px; width:22px; height:12px; background:var(--dark); clip-path:polygon(0 100%, 100% 100%, 62% 0)}
-.voicebubble .mega{width:20px; height:20px; flex:none; margin-right:-5px}
-.voicebubble .waves{display:flex; align-items:flex-end; gap:3px; height:22px}
-.voicebubble .waves i{width:3px; background:var(--ember); border-radius:2px; animation:wave 1.1s ease-in-out infinite}
-.voicebubble .waves i:nth-child(1){height:40%; animation-delay:0s}
-.voicebubble .waves i:nth-child(2){height:80%; animation-delay:.12s}
-.voicebubble .waves i:nth-child(3){height:55%; animation-delay:.24s}
-.voicebubble .waves i:nth-child(4){height:100%; animation-delay:.36s}
-.voicebubble .waves i:nth-child(5){height:60%; animation-delay:.48s}
-@keyframes wave{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
-.voicebubble .vtxt{font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:19px; line-height:1}
-.voicebubble .vtxt span{display:block; font-family:'Chivo Mono',monospace; font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--ember); font-weight:400; margin-bottom:3px}
-/* La bulle EST le bouton d'écoute : le produit est sonore, la page doit pouvoir
-   le faire entendre sans coûter un pixel de hauteur en plus sur mobile. */
-button.voicebubble{border:0; font:inherit; text-align:left; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease}
-button.voicebubble:hover{transform:translateY(-2px); box-shadow:0 28px 46px -22px rgba(20,22,15,.9)}
-button.voicebubble:focus-visible{outline:2px solid var(--ember); outline-offset:3px}
-.voicebubble .playi{width:9px; height:9px; fill:currentColor; margin-right:6px}
-.voicebubble.playing .vtxt span{color:var(--amber)}
+/* ---------- la tablette : réplique de l'écran principal de l'app ---------- */
+.device{background:#0c0d09; border-radius:28px; padding:14px; box-shadow:0 40px 80px -30px rgba(0,0,0,.8), inset 0 0 0 1px rgba(255,255,255,.14)}
+.board{color:var(--ink); background:var(--paper); border-radius:16px; overflow:hidden; aspect-ratio:16/10; display:flex; flex-direction:column; container-type:inline-size}
+.bhead{background:var(--service); color:var(--on-service); display:flex; align-items:center; gap:1.4cqw; padding:0 1.6cqw; height:7.5cqw; flex:none}
+.bhead img{height:3.2cqw; width:auto}
+.bhead b{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:2.6cqw; white-space:nowrap}
+.bhead span{font-family:'Big Shoulders Display',sans-serif; font-weight:600; font-size:2.2cqw; color:var(--on-service-2); white-space:nowrap}
+.bhead .clock{margin:0 auto; font-size:2.4cqw; color:var(--on-service)}
+.bhead i{font-style:normal; font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:1.7cqw; letter-spacing:.06em; background:#fff; color:var(--ink); border-radius:.8cqw; padding:.8cqw 1.4cqw; white-space:nowrap}
+.bhead i.new{background:var(--ember); color:var(--on-ember)}
+.bgrid{flex:1; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:1.4cqw; padding:1.4cqw}
 
-/* ---------- signature band ---------- */
-.signature-band{background:var(--paper-2); color:var(--ink); padding:clamp(30px,4vw,48px) 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
-.signature-band .wrap{display:flex; align-items:center; gap:clamp(20px,4vw,44px); flex-wrap:wrap}
-.signature-band .seal{height:clamp(54px,6.5vw,78px); width:auto; flex:none}
-.signature-band p{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:clamp(26px,4vw,50px); line-height:1; letter-spacing:-.01em; color:var(--ink); max-width:22ch}
-.signature-band em{font-style:normal; color:var(--ember)}
-.signature-band .amateurs{display:block; margin-top:.3em; font-size:.6em; color:var(--ink-3); font-weight:700}
-/* Deux photos côte à côte, même hauteur : chaque image grandit en proportion de son
-   format (1 pour la carrée, 1.79 pour la paysage), avec une base à 0. */
-.signature-band .wrap > p{flex:1 1 300px}
-.signature-band .shots{flex:1.25 1 380px; min-width:260px; max-width:600px; margin-left:auto; display:flex; gap:12px}
-.signature-band .shots img{min-width:0; width:100%; height:auto; border-radius:var(--rad-s); border:1px solid var(--line); box-shadow:var(--shadow)}
-.signature-band .shots .founder{flex:1 1 0}
-.signature-band .shots .kitchen-shot{flex:1.79 1 0}
+.tile{--p:1; --fill:var(--fill-mint); position:relative; border-radius:1.8cqw; background:var(--tile); box-shadow:inset 0 0 0 1.5px var(--tile-edge);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.6cqw; overflow:hidden; container-type:inline-size}
+.tile.run{background:conic-gradient(var(--fill) 0 calc(var(--p)*1turn), var(--tile) 0)}
+.tile .tn{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:12cqw; line-height:1; letter-spacing:.03em; text-transform:uppercase; position:relative}
+.tile .tt{position:relative; font-size:17cqw; line-height:1}
+.tile .tt .ghost{position:absolute; inset:0; color:rgba(28,33,28,.07)}
+.tile .tt .val{position:relative; color:var(--ink)}
+.tile.idle .tt .val{color:var(--muted)}
+.tile .tc{display:flex; gap:4cqw; position:relative; visibility:hidden}
+.tile.run .tc{visibility:visible}
+.tile .tc i{font-style:normal; font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:7cqw; background:#fff; border-radius:2.4cqw; padding:1.4cqw 5cqw; box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.tile .tc i.x{color:var(--red); background:#fbeaea}
+.tile.chain{box-shadow:inset 0 0 0 3px var(--amber)}
+.tile .band{position:absolute; top:0; left:0; right:0; height:14cqw; background:var(--amber); color:var(--ink); display:flex; align-items:center; justify-content:center; gap:3cqw;
+  font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:8cqw; letter-spacing:.06em; text-transform:uppercase}
+.tile .band em{font-style:normal; background:rgba(255,255,255,.35); border-radius:2cqw; padding:0 2.4cqw}
+.tile.chain .tn{margin-top:12cqw}
+/* Sonnerie : fond rouge, intérieur rosé, nom rouge sombre, chiffres rouges qui
+   clignotent, halo qui pulse — mêmes signes que la tuile qui sonne dans l'app. */
+.tile.ringing{background:var(--red); box-shadow:none; animation:ring .9s ease-in-out infinite}
+.tile.ringing::before{content:""; position:absolute; inset:2.4cqw; border-radius:1.4cqw; background:linear-gradient(#ffe9e6,#ffdcd6)}
+.tile.ringing .tn{color:var(--ring-ink)}
+.tile.ringing .tt .val{color:var(--red); animation:blink .9s step-end infinite}
+.tile.ringing .tc{visibility:hidden}
+@keyframes ring{0%,100%{transform:scale(1); box-shadow:0 0 0 0 rgba(255,69,69,.3)} 50%{transform:scale(1.015); box-shadow:0 0 34px 6px rgba(255,69,69,.55)}}
+@keyframes blink{50%{opacity:0}}
 
-/* ---------- section scaffolding ---------- */
-section{padding:clamp(56px,8vw,104px) 0; position:relative}
-.band{background:var(--paper-2)}
-.dark-band{background:var(--dark); color:var(--paper-on-dark)}
-.dark-band h2{color:#fff}
-.snum{font-family:'Chivo Mono',monospace; font-size:12.5px; letter-spacing:.14em; color:var(--ember-ink); font-weight:600}
-.dark-band .snum{color:var(--amber)}
-.h2{font-size:clamp(30px,4.4vw,54px); font-weight:800; max-width:22ch; margin:.35em 0 0}
-.section-head{max-width:70ch}
+/* La voix : la bulle qui annonce le plat, posée sous la tablette. */
+.stage{position:relative; perspective:1600px; isolation:isolate}
+/* Halo : un éclairage gris chaud accroché à la tablette elle-même (pas au fond de
+   la section). Il la suit donc partout où la mise en page la place, sur ordinateur,
+   tablette ou téléphone, sans calcul. Il s'éteint en douceur vers le noir. */
+.stage::before{content:""; position:absolute; left:50%; top:46%; width:175%; aspect-ratio:1.5; transform:translate(-50%,-50%); z-index:-1; pointer-events:none;
+  background:radial-gradient(closest-side, rgb(var(--halo) / .85), rgb(var(--halo) / .5) 40%, rgb(var(--halo) / .18) 70%, transparent)}
+/* Halo bordeaux, choisi par Serge le 30/09/2026 parmi six teintes. */
+.hero{--halo:120 42 58}
+/* Inclinaison au défilement (comme le site ShiftMaster, en plus léger) : la tablette
+   part légèrement couchée et se redresse à plat pendant les 420 premiers pixels de
+   défilement après son entrée à l'écran. Le défilement reste libre. */
+.device{transform-origin:50% 0; transform:rotateX(14deg) scale(.95); will-change:transform}
+@media (prefers-reduced-motion:reduce){ .device{transform:none} }
+.voice{position:absolute; left:-24px; bottom:-56px; display:flex; align-items:center; gap:12px; background:#fff; color:var(--ink); border-radius:16px; padding:12px 20px 12px 12px;
+  box-shadow:0 24px 48px -20px rgba(0,0,0,.7); border:0; font:inherit; text-align:left; cursor:pointer; max-width:calc(100% + 24px);
+  transform:translateY(12px); opacity:0; transition:opacity .35s ease, transform .35s ease}
+.voice.show{opacity:1; transform:none}
+.voice:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
+.voice .play{flex:none; width:44px; height:44px; border-radius:50%; background:var(--ember); display:grid; place-items:center}
+.voice .play svg{width:18px; height:18px; fill:#fff}
+.voice small{display:block; font-size:var(--t6); color:var(--muted)}
+.voice b{display:block; font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:24px; line-height:1.1}
 
-/* ---------- problem ---------- */
-.problem .wrap{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,70px); align-items:center}
-.problem .h2{max-width:16ch}
-.problem p.big{font-size:clamp(17px,1.7vw,20px); color:color-mix(in srgb,var(--paper-on-dark) 86%,transparent); line-height:1.62}
-.strike-list{list-style:none; padding:0; margin:18px 0 0; display:grid; gap:12px}
-.strike-list li{font-family:'Chivo Mono',monospace; font-size:14px; color:color-mix(in srgb,var(--paper-on-dark) 72%,transparent); padding-left:26px; position:relative; line-height:1.4}
-.strike-list li::before{content:"✕"; position:absolute; left:0; top:0; color:var(--red); font-size:13px}
-.problem .solve{margin-top:26px; font-family:'Chivo Mono',monospace; font-size:14.5px; color:var(--amber); letter-spacing:.01em; line-height:1.55; border-left:2px solid var(--ember); padding-left:18px}
-.problem .solve b{color:#fff; font-family:'Chivo',sans-serif; font-weight:700}
+/* ---------- preuve : les photos en service ---------- */
+.proof{padding:72px 0 40px}
+.proof .wrap{display:grid; gap:32px}
+.proof h2{max-width:24ch}
+.proof h2 span{display:block; color:var(--muted); font-size:var(--t3); margin-top:12px; font-weight:700}
+.photos{display:flex; gap:16px}
+.photos figure{margin:0; min-width:0}
+.photos figure:first-child{flex:1 1 0}
+.photos figure:last-child{flex:1.79 1 0}
+.photos img{display:block; width:100%; height:auto; border-radius:20px}
+.photos figcaption{margin-top:8px; font-size:var(--t6); color:var(--muted)}
 
-/* ---------- benefit rows ---------- */
-.benefit{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,74px); align-items:center; padding:clamp(34px,5vw,58px) 0; border-top:1px solid var(--line)}
-.benefit:first-of-type{border-top:0}
-.benefit.flip .b-media{order:-1}
-.benefit h3{font-size:clamp(26px,3.4vw,40px); font-weight:800; margin:.32em 0 .5em; max-width:16ch}
-.benefit p{color:var(--ink-2); max-width:44ch}
-.b-list{list-style:none; padding:0; margin:22px 0 0; display:grid; gap:11px}
-.b-list li{position:relative; padding-left:30px; font-size:15.5px; color:var(--ink)}
-.b-list li::before{content:""; position:absolute; left:2px; top:9px; width:11px; height:11px; border-radius:50%; background:var(--ember); box-shadow:0 0 0 4px color-mix(in srgb,var(--ember) 16%,transparent)}
-.b-media{display:flex; justify-content:center}
+/* ---------- le problème : quatre bons de cuisine sur le rail ---------- */
+.problem{padding:72px 0}
+.problem .wrap{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:40px; align-items:start}
+.problem p.big{margin-top:24px; color:var(--muted); max-width:36ch}
+.rail{position:relative; padding-top:20px}
+.rail::before{content:""; position:absolute; left:-8px; right:-8px; top:0; height:12px; border-radius:6px; background:linear-gradient(#cfc8b8,#a9a293); box-shadow:0 2px 0 rgba(0,0,0,.08)}
+.tickets{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px}
+.ticket{background:#fffdf8; padding:20px 20px 28px; font-size:var(--t5); line-height:1.4; color:var(--ink); position:relative;
+  box-shadow:0 12px 24px -16px rgba(28,33,28,.45); clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),95% 100%,90% calc(100% - 8px),85% 100%,80% calc(100% - 8px),75% 100%,70% calc(100% - 8px),65% 100%,60% calc(100% - 8px),55% 100%,50% calc(100% - 8px),45% 100%,40% calc(100% - 8px),35% 100%,30% calc(100% - 8px),25% 100%,20% calc(100% - 8px),15% 100%,10% calc(100% - 8px),5% 100%,0 calc(100% - 8px))}
+.ticket:nth-child(1){transform:rotate(-1.5deg)} .ticket:nth-child(2){transform:rotate(1deg)}
+.ticket:nth-child(3){transform:rotate(.8deg)} .ticket:nth-child(4){transform:rotate(-1deg)}
+.ticket::before{content:"✕"; display:block; color:var(--red); font-weight:700; margin-bottom:8px}
+.solve{margin-top:32px; padding:20px 24px; border-radius:16px; background:var(--service); color:var(--on-service); font-size:var(--t4); line-height:1.4}
+.solve b{color:#fff}
 
-/* small media props */
-.chip-tile{
-  --track:#e6ded0; width:min(100%,360px); aspect-ratio:1/.82; border-radius:var(--rad); padding:20px;
-  background:conic-gradient(from -90deg, var(--fill) calc(var(--p)*360deg), var(--track) 0);
-  display:flex; flex-direction:column; justify-content:space-between; box-shadow:var(--shadow); position:relative;
-}
-.chip-tile.demo{--fill:#f0c46a; --p:.34; animation:deplete 10s linear infinite}
-.chip-tile .tname{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:26px}
-.chip-tile .ttime{font-family:'Chivo Mono',monospace; font-weight:600; font-size:52px; letter-spacing:-.03em; line-height:1}
-.chip-tile .tsub{font-family:'Chivo Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2)}
-.phase-flow{width:min(100%,380px); display:flex; flex-direction:column; gap:10px}
-.pf-step{display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow)}
-.pf-step .n{font-family:'Chivo Mono',monospace; font-weight:600; font-size:13px; width:30px; height:30px; border-radius:50%; display:grid; place-items:center; background:var(--paper-2); color:var(--ink-2); flex:none}
-.pf-step.active{border-color:var(--ember); box-shadow:0 0 0 2px color-mix(in srgb,var(--ember) 25%,transparent), var(--shadow)}
-.pf-step.active .n{background:var(--ember); color:#fff}
-.pf-step .pf-name{font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:20px; line-height:1}
-.pf-step .pf-t{margin-left:auto; font-family:'Chivo Mono',monospace; font-size:14px; color:var(--ink-3)}
-.pf-step.active .pf-t{color:var(--ember-2)}
-.pf-say{display:flex; align-items:center; gap:10px; font-family:'Chivo Mono',monospace; font-size:12px; color:var(--ink-3); padding:2px 4px}
-.pf-say b{color:var(--ink); font-family:'Chivo',sans-serif; font-weight:700; font-size:14px}
-/* Animated step sequence — highlight cycles 1→2→3 with a small grow pulse. Static .active fallback if reduced-motion. */
-@media (prefers-reduced-motion: no-preference){
-.pf-step.active{border-color:var(--line); box-shadow:var(--shadow)}
-.pf-step.active .n{background:var(--paper-2); color:var(--ink-2)}
-.pf-step.active .pf-t{color:var(--ink-3)}
-.pf-step{animation:pf-card 6s infinite}
-.pf-step .n{animation:pf-num 6s infinite}
-.pf-step .pf-t{animation:pf-time 6s infinite}
-.phase-flow .pf-step:nth-child(2), .phase-flow .pf-step:nth-child(2) .n, .phase-flow .pf-step:nth-child(2) .pf-t{animation-delay:2s}
-.phase-flow .pf-step:nth-child(4), .phase-flow .pf-step:nth-child(4) .n, .phase-flow .pf-step:nth-child(4) .pf-t{animation-delay:4s}
-@keyframes pf-card{0%,100%{border-color:var(--line); box-shadow:var(--shadow); transform:scale(1)} 3%{border-color:var(--ember); box-shadow:0 0 0 2px color-mix(in srgb,var(--ember) 25%,transparent), var(--shadow); transform:scale(1.03)} 8%{transform:scale(1)} 27%{border-color:var(--ember); box-shadow:0 0 0 2px color-mix(in srgb,var(--ember) 25%,transparent), var(--shadow)} 33.33%{border-color:var(--line); box-shadow:var(--shadow)}}
-@keyframes pf-num{0%,100%{background:var(--paper-2); color:var(--ink-2)} 3%,27%{background:var(--ember); color:#fff} 33.33%{background:var(--paper-2); color:var(--ink-2)}}
-@keyframes pf-time{0%,100%{color:var(--ink-3)} 3%,27%{color:var(--ember-2)} 33.33%{color:var(--ink-3)}}
-}
-.stack-tablets{position:relative; width:min(100%,360px); aspect-ratio:1/.9}
-.mini-tab{position:absolute; width:70%; aspect-ratio:4/3; border-radius:14px; background:linear-gradient(160deg,#26281f,#15170f); padding:8px; box-shadow:0 24px 40px -26px rgba(20,22,15,.8)}
-.mini-tab .ms{width:100%; height:100%; background:var(--paper); border-radius:8px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:5px; padding:7px}
-.mini-tab .ms span{border-radius:6px; background:conic-gradient(from -90deg,var(--fill,#8fce9f) calc(var(--pp,.6)*360deg), #e6ded0 0)}
-.mini-tab.t1{left:0; top:0; transform:rotate(-4deg)}
-.mini-tab.t2{right:0; top:12%; transform:rotate(4deg)}
-.mini-tab.t3{left:16%; bottom:0; transform:rotate(-1deg); z-index:2}
-/* sonneries (une par plat) */
-.rings{width:min(100%,380px); display:flex; flex-direction:column; gap:11px}
-.ring{display:flex; align-items:center; justify-content:space-between; gap:14px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 18px; box-shadow:var(--shadow); border-left:4px solid var(--rc,var(--ember))}
-.ring .rn{font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:20px}
-.ring .rt{font-family:'Chivo Mono',monospace; font-size:11px; color:var(--ink-3); letter-spacing:.06em; text-transform:uppercase; margin-left:auto; margin-right:4px}
-.ring .wv{display:flex; align-items:flex-end; gap:3px; height:20px}
-.ring .wv i{width:3px; border-radius:2px; background:var(--rc,var(--ember)); animation:wave 1.1s ease-in-out infinite}
-.ring .wv i:nth-child(1){height:45%; animation-delay:0s}
-.ring .wv i:nth-child(2){height:85%; animation-delay:.12s}
-.ring .wv i:nth-child(3){height:60%; animation-delay:.24s}
-.ring .wv i:nth-child(4){height:100%; animation-delay:.36s}
-.r-1{--rc:var(--ember)} .r-2{--rc:var(--teal)} .r-3{--rc:var(--amber)} .r-4{--rc:var(--go)}
+/* ---------- ce que fait l'app ---------- */
+.features{background:var(--paper-2); padding:72px 0}
+.features > .wrap > h2{max-width:18ch}
+.feat{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px; align-items:center; padding:40px 0}
+.feat + .feat{border-top:1px solid var(--line)}
+.feat.flip .media{order:-1}
+.feat p{margin-top:16px; color:var(--muted); max-width:40ch}
+.feat ul{list-style:none; padding:0; margin:24px 0 0; display:grid; gap:12px}
+.feat li{position:relative; padding-left:32px; font-size:var(--t5); line-height:1.4}
+.feat li::before{content:""; position:absolute; left:0; top:2px; width:16px; height:16px; border-radius:4px; background:var(--mint)}
+.media{display:flex; justify-content:center}
 
-/* ---------- comparison ---------- */
-.compare .wrap{max-width:960px}
-.ctable{margin-top:34px; border:1px solid var(--line); border-radius:var(--rad); overflow:hidden; background:var(--card)}
-.crow{display:grid; grid-template-columns:1.1fr 1.15fr 1.15fr; align-items:stretch}
-.crow+.crow{border-top:1px solid var(--line-2)}
-.crow>div{padding:15px 20px; display:flex; align-items:center}
-/* La colonne de gauche portait exactement la couleur du fond de section : beige sur
-   beige, seule la bordure du tableau la séparait de la page. Elle prend le beige des
-   tuiles minuteur + leur filet, donc elle se lit comme une carte posée sur le fond. */
-.crow .feat{font-family:'Chivo Mono',monospace; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-2); background:var(--tile); box-shadow:inset -1px 0 0 var(--tile-edge)}
-.crow .classic{color:var(--ink-3); border-left:1px solid var(--line-2)}
-.crow .classic s{text-decoration-color:color-mix(in srgb,var(--red) 55%,transparent)}
-.crow .appc{color:var(--ink); font-weight:600; border-left:1px solid var(--line-2); background:color-mix(in srgb,var(--ember) 5%,var(--card))}
-.crow .appc::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--go); margin-right:11px; flex:none}
-.chead .feat,.chead .classic,.chead .appc{font-family:'Chivo Mono',monospace; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:600; color:var(--ink); background:var(--tile)}
-.chead>div+div{box-shadow:inset 1px 0 0 var(--tile-edge)}
-.chead .appc{color:var(--ember-2)} .chead .appc::before{display:none}
-.chead .classic{color:var(--ink-3)}
+/* grande tuile chaînée qui déroule ses étapes */
+/* Le conteneur de la grande tuile a une largeur fixe : la tuile mesure ses textes
+   sur sa propre largeur (container-type), elle ne peut donc pas la tirer de son contenu. */
+.bigwrap{width:min(100%,400px)}
+.bigtile{width:100%; aspect-ratio:1/.86; border-radius:24px}
+.bigtile .tn{font-size:12cqw}
+.say{margin-top:16px; text-align:center; font-size:var(--t5); color:var(--muted); min-height:1.4em}
+.say b{color:var(--ink)}
 
-/* ---------- feature cards ---------- */
-.fgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin-top:38px; background:var(--line); border:1px solid var(--line); border-radius:var(--rad); overflow:hidden}
-.fcard{background:var(--paper); padding:28px 24px 32px; min-height:172px}
-.fcard .fn{font-family:'Chivo Mono',monospace; font-size:12px; color:var(--ember-ink); letter-spacing:.1em}
-.fcard h3{font-size:23px; font-weight:800; margin:14px 0 9px}
-.fcard p{color:var(--ink-2); font-size:15px}
+/* sonneries qu'on peut écouter */
+.rings{width:min(100%,420px); display:grid; gap:12px}
+.ringrow{display:flex; align-items:center; gap:16px; width:100%; min-height:64px; padding:8px 12px 8px 20px; border-radius:16px; border:0; font:inherit; text-align:left; cursor:pointer;
+  background:var(--tile); box-shadow:inset 0 0 0 1.5px var(--tile-edge); transition:background .15s ease, transform .12s ease}
+.ringrow:hover{background:#e0d6c5}
+.ringrow:active{transform:scale(.99)}
+.ringrow:focus-visible{outline:3px solid var(--amber); outline-offset:2px}
+.ringrow b{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:24px; text-transform:uppercase; letter-spacing:.03em}
+.ringrow small{margin-left:auto; font-size:var(--t6); color:var(--muted)}
+.ringrow .pb{flex:none; width:44px; height:44px; border-radius:12px; background:#fff; display:grid; place-items:center}
+.ringrow .pb svg{width:16px; height:16px; fill:var(--ink)}
+.ringrow.playing{background:var(--fill-mint)}
+.ringrow.playing .pb{background:var(--ink)}
+.ringrow.playing .pb svg{fill:#fff}
+.rings .hint{font-size:var(--t6); color:var(--muted); text-align:center}
 
-/* ---------- audiences ---------- */
-.aud .wrap{display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(24px,4vw,60px); align-items:center}
+/* fiche d'un plat, comme dans l'éditeur */
+.recipe{width:min(100%,420px); background:#fff; border-radius:24px; padding:24px; box-shadow:0 24px 48px -32px rgba(28,33,28,.6)}
+.recipe h4{margin:0; font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:32px; text-transform:uppercase; letter-spacing:.02em}
+.recipe .meta{font-size:var(--t6); color:var(--muted); margin-top:4px}
+.steps{margin-top:20px; display:grid; gap:8px}
+.step{display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:12px; background:var(--paper)}
+.step .n{width:28px; height:28px; border-radius:8px; background:var(--amber); display:grid; place-items:center; font-weight:700; font-size:var(--t6)}
+.step b{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:20px; text-transform:uppercase}
+.step .seg{margin-left:auto; font-size:18px}
+
+/* ---------- comparatif ---------- */
+.compare{padding:72px 0}
+.compare h2{max-width:20ch}
+.vs{margin-top:40px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); border-radius:24px; overflow:hidden; box-shadow:0 24px 48px -36px rgba(28,33,28,.6)}
+.vs .col{padding:32px}
+.vs .old{background:var(--tile)}
+.vs .new{background:var(--service); color:var(--on-service)}
+.vs h3{font-size:var(--t3)}
+.vs .new h3{color:#fff}
+.vs ul{list-style:none; margin:24px 0 0; padding:0; display:grid; gap:0}
+.vs li{padding:16px 0; border-top:1px solid var(--line); font-size:var(--t5); line-height:1.4; min-height:76px}
+.vs .new li{border-color:rgba(239,232,214,.12)}
+.vs li small{display:block; font-size:var(--t6); color:var(--muted); margin-bottom:4px}
+.vs .new li small{color:var(--on-service-2)}
+.vs .old li span{color:var(--muted)}
+.vs .new li span{color:#fff; font-weight:700}
+.vs .new li span::before{content:""; display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--fill-mint); margin-right:8px; vertical-align:1px}
+.center{text-align:center; margin-top:40px}
+
+/* ---------- pour qui ---------- */
+.aud{background:var(--paper-2); padding:56px 0}
+.aud .wrap{display:grid; grid-template-columns:minmax(0,4fr) minmax(0,8fr); gap:40px; align-items:center}
 .chips{display:flex; flex-wrap:wrap; gap:12px}
-.chips span{border:1px solid var(--line); background:var(--card); border-radius:999px; padding:11px 20px; font-weight:600; font-size:15.5px; box-shadow:0 1px 0 rgba(27,30,23,.03)}
-.chips span::before{content:""; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--ember); margin-right:10px; vertical-align:middle}
+.chips span{padding:12px 20px; border-radius:12px; background:var(--tile); box-shadow:inset 0 0 0 1.5px var(--tile-edge); font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:20px; text-transform:uppercase; letter-spacing:.03em}
 
-/* ---------- credibility ---------- */
-.cred{background:var(--dark); color:var(--paper-on-dark)}
-.cred .wrap{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(28px,5vw,64px); align-items:center}
-.cred h2{color:#fff}
-.cred p{color:color-mix(in srgb,var(--paper-on-dark) 84%,transparent); font-size:clamp(16px,1.55vw,19px); line-height:1.64; margin-top:22px}
-.cred .signature{margin-top:26px; display:flex; align-items:center; gap:16px}
-.cred .signature .mark{width:52px; height:52px; border-radius:14px; background:var(--ember); display:grid; place-items:center; font-family:'Big Shoulders Display',sans-serif; font-weight:900; font-size:26px; color:#fff}
-.cred .signature b{display:block; font-family:'Big Shoulders Display',sans-serif; font-size:22px; font-weight:800; color:#fff}
-.cred .signature small{font-family:'Chivo Mono',monospace; font-size:11.5px; letter-spacing:.08em; color:var(--amber); text-transform:uppercase}
-.cred-quote{border-left:2px solid var(--ember); padding-left:22px}
+/* ---------- client : Sezam&Co ---------- */
+.client{background:var(--service); color:var(--on-service); padding:72px 0}
+.client .wrap{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:40px; align-items:center}
+.client img{width:100%; height:auto; border-radius:20px; display:block}
+.client h2{color:#fff}
+.client blockquote{margin:0; font-size:24px; font-family:'Chivo',sans-serif; font-weight:600; line-height:1.4; color:var(--on-service)}
+.client .who{margin-top:24px; display:flex; align-items:center; gap:12px; font-size:var(--t5); color:var(--on-service-2)}
+.client .who b{color:#fff}
 
-/* ---------- FAQ ---------- */
-.faq .wrap{max-width:820px}
-.faq details{border-top:1px solid var(--line); padding:6px 0}
-.faq details:last-of-type{border-bottom:1px solid var(--line)}
-.faq summary{list-style:none; cursor:pointer; padding:20px 44px 20px 0; position:relative; font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:clamp(19px,2.1vw,24px); line-height:1.12}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+"; position:absolute; right:4px; top:50%; transform:translateY(-50%); font-family:'Chivo Mono',monospace; font-size:24px; color:var(--ember); transition:transform .2s ease}
-.faq details[open] summary::after{content:"–"}
-.faq details p{color:var(--ink-2); padding:0 44px 22px 0; max-width:62ch; font-size:16px}
+/* ---------- questions ---------- */
+.faq{padding:72px 0}
+.faq .wrap{max-width:880px}
+.faq h2{margin-bottom:24px}
+details{border-top:1px solid var(--line)}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{list-style:none; cursor:pointer; padding:20px 0; display:flex; gap:16px; align-items:center; font-family:'Chivo',sans-serif; font-weight:700; font-size:20px; line-height:1.3}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+"; margin-left:auto; flex:none; width:32px; height:32px; border-radius:8px; background:var(--tile); display:grid; place-items:center; font-family:'Chivo',sans-serif; font-weight:700}
+details[open] summary::after{content:"–"; background:var(--ember); color:#fff}
+summary:focus-visible{outline:3px solid var(--amber); outline-offset:2px}
+details p{padding:0 0 24px; color:var(--muted); font-size:var(--t5); line-height:1.6; max-width:64ch}
 
-/* ---------- final CTA ---------- */
-.final{background:linear-gradient(180deg,var(--paper-2),var(--paper))}
-.final .wrap{text-align:center; max-width:760px}
-.final h2{font-size:clamp(32px,5vw,60px); margin:14px auto 0; max-width:16ch}
-.final p{color:var(--ink-2); margin:20px auto 0; max-width:52ch; font-size:17.5px}
-.stores{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:34px}
-.store-badge{
-  display:inline-flex; align-items:center; gap:12px; background:var(--dark); color:#fff;
-  border-radius:14px; padding:11px 20px 11px 18px; position:relative; transition:transform .12s ease, opacity .15s;
-  border:1px solid rgba(255,255,255,.08);
+/* ---------- appel final ---------- */
+.final{background:var(--service); color:var(--on-service); padding:80px 0; text-align:center}
+.final h2{color:#fff; font-size:var(--t1); line-height:1.02; max-width:14ch; margin:0 auto}
+.final p{margin:24px auto 0; color:var(--on-service-2); max-width:40ch}
+.stores{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:40px}
+.store{display:flex; align-items:center; gap:12px; min-height:64px; padding:12px 24px; border-radius:16px; background:#000; color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.2); position:relative}
+.store svg{width:28px; height:28px}
+.store span{display:flex; flex-direction:column; text-align:left; line-height:1.1}
+.store small{font-size:12px; color:#cfc9bb}
+.store b{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:24px}
+.store em{position:absolute; top:-10px; right:-8px; font-style:normal; background:var(--amber); color:var(--ink); font-size:12px; font-weight:700; padding:4px 8px; border-radius:8px}
+
+footer{background:#0f100b; color:var(--on-service-2); padding:32px 0; font-size:var(--t6)}
+footer .wrap{display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:center}
+footer a:hover{color:#fff}
+
+/* ---------- tablette et téléphone ---------- */
+@media (max-width:980px){
+  .hero .wrap,.proof .wrap,.problem .wrap,.feat,.aud .wrap,.client .wrap{grid-template-columns:1fr}
+  .feat.flip .media{order:0}
+  .hero h1{max-width:16ch}
+  .navlinks a:not(.btn):not(.lang){display:none}
+  .voice{left:12px}
 }
-.store-badge:hover{transform:translateY(-2px)}
-.store-badge svg{width:26px; height:26px; flex:none}
-.store-badge .st{display:flex; flex-direction:column; line-height:1.1; text-align:left}
-.store-badge .st small{font-size:10.5px; letter-spacing:.03em; opacity:.75; font-family:'Chivo Mono',monospace}
-.store-badge .st b{font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:20px; letter-spacing:.01em}
-.store-badge .soon{position:absolute; top:-9px; right:-8px; background:var(--ember); color:#fff; font-family:'Chivo Mono',monospace; font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; padding:3px 7px; border-radius:7px; box-shadow:0 4px 10px -3px rgba(224,89,13,.7)}
-.stores-note{margin-top:16px; font-family:'Chivo Mono',monospace; font-size:11.5px; color:var(--ink-3); letter-spacing:.04em}
-
-/* ---------- footer ---------- */
-footer{background:var(--dark); color:color-mix(in srgb,var(--paper-on-dark) 70%,transparent); padding:56px 0 40px}
-footer .wrap{display:flex; justify-content:space-between; gap:30px; flex-wrap:wrap; align-items:flex-end}
-footer .brand{color:#fff}
-footer .brand .bt b{color:#fff}
-footer .brand .bt b em{color:color-mix(in srgb,var(--paper-on-dark) 55%,transparent)}
-footer .ftag{font-family:'Chivo Mono',monospace; font-size:12.5px; max-width:34ch; margin-top:14px; color:color-mix(in srgb,var(--paper-on-dark) 60%,transparent); line-height:1.5}
-footer .fmeta{font-family:'Chivo Mono',monospace; font-size:11.5px; letter-spacing:.03em; text-align:right; line-height:1.9}
-footer .fmeta a:hover{color:var(--amber)}
-
-/* ---------- responsive ---------- */
-@media (max-width:940px){
-  .hero .wrap,.problem .wrap,.benefit,.aud .wrap,.cred .wrap{grid-template-columns:1fr}
-  .benefit.flip .b-media{order:0}
-  .b-media,.stage{order:-1}
-  .benefit .b-media{margin-bottom:6px}
-  .fgrid{grid-template-columns:repeat(2,1fr)}
-  .navlinks{display:none}
-  .burger{display:block}
-  header.open .navlinks{display:flex; position:absolute; top:70px; left:0; right:0; flex-direction:column; gap:0; background:var(--paper); border-bottom:1px solid var(--line); padding:8px 0}
-  header.open .navlinks a{padding:14px clamp(20px,5vw,52px)}
-  header.open .navlinks .btn{margin:10px clamp(20px,5vw,52px)}
-  .cred-quote{grid-row:1}
-  .signature-band .shots{margin:0 auto}
+@media (max-width:640px){
+  .brand span{display:none}
+  .nav,.navlinks{gap:12px}
+  .brand b{font-size:20px}
+  .navlinks .btn{padding:8px 16px}
+  .navlinks .btn .oss{display:none}
+  .bgrid{grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(3,1fr)}
+  .board{aspect-ratio:3/4}
+  .bhead{height:12cqw; gap:2.4cqw} .bhead img{height:5.6cqw} .bhead b{font-size:4.4cqw} .bhead span,.bhead i:not(.new){display:none} .bhead i.new{font-size:3.2cqw; padding:1.4cqw 2.4cqw; border-radius:1.4cqw} .bhead .clock{font-size:4.4cqw}
+  .tile .tc{display:none}
+  .tickets{grid-template-columns:1fr}
+  .vs{grid-template-columns:1fr}
+  .vs li{min-height:0}
+  .photos{flex-direction:column}
+  .voice{position:relative; left:0; bottom:0; margin-top:16px; width:100%}
+  .hero{padding-top:32px}
 }
-@media (max-width:560px){
-  body{font-size:16px}
-  /* 112 px de marge verticale par section coûtaient 1,2 écran de vide cumulé
-     sur téléphone, où la place manque le plus. */
-  section{padding:40px 0}
-  .fgrid{grid-template-columns:1fr}
-  .crow{grid-template-columns:1fr}
-  /* En 1 colonne, le filet vertical n'a plus de sens : il passe en bas de la cellule.
-     Et la cellule de gauche n'est plus une colonne mais le bandeau de la carte : on
-     centre son texte pour qu'il se lise comme un titre. Les deux lignes en dessous
-     (classic / our app) restent alignées à gauche, elles se comparent. */
-  .crow .feat{background:var(--tile); box-shadow:inset 0 -1px 0 var(--tile-edge); justify-content:center; text-align:center}
-  .crow .classic,.crow .appc{border-left:0; border-top:1px solid var(--line-2)}
-  .chead{display:none}
-  .crow .classic::before{content:"Classic — "; font-family:'Chivo Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin-right:8px}
-  .crow .appc::before{content:"Our app — "; background:none; width:auto; height:auto; border-radius:0; font-family:'Chivo Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ember-2); margin-right:8px}
-  .stage{flex-direction:column; align-items:center}
-  .voicebubble{position:relative; left:auto; bottom:auto; margin:14px auto 0; width:fit-content; max-width:100%}
-  .hero-cta .btn{flex:1; justify-content:center}
-  /* CTA de section centrés : sur une colonne unique, un bouton collé au bord gauche
-     sous un pavé de texte se lit comme une note de bas de paragraphe. Les autres CTA
-     l'étaient déjà — hero (pleine largeur), sous le tableau et bloc final. */
-  .problem .btn-primary,.benefit .btn-primary{display:flex; width:fit-content; margin-inline:auto; justify-content:center}
-  .signature-band .seal{display:none}
-}
+@media (max-width:359px){ .brand b{display:none} }
 @media (prefers-reduced-motion:reduce){
-  *{animation:none !important; scroll-behavior:auto}
+  *{animation:none !important; transition:none !important}
 }
 </style>
 </head>
 <body>
 
-<header id="hd">
+<header>
   <div class="wrap nav">
-    <a class="brand" href="#top" aria-label="CookOnTime — home">
-      <!-- Logo : la cloche qui décompte (16/09/2026). Fichiers générés par
-           P/topics/timer-app/logo/build_logo.py. Variante crème pour le footer sombre. -->
-      <img class="logo-mark" src="assets/logo-mark.webp" alt="" width="361" height="256">
-      <span class="bt"><b>CookOnTime <em>— Kitchen Timer</em></b></span>
-    </a>
-    <nav class="navlinks">
-      <a href="#coach">How it works</a>
+    <a class="brand" href="#top"><img src="assets/logo-mark-white.webp" alt="" width="361" height="256"><b>CookOnTime</b><span>— Kitchen Timer</span></a>
+    <nav class="navlinks" aria-label="Menu">
+      <a href="#app">How it works</a>
       <a href="#comparatif">Compare</a>
       <a href="#faq">FAQ</a>
-      <a class="lang" href="fr/" hreflang="fr" lang="fr" title="Version française">FR</a>
-      <a class="btn btn-primary" href="#lancement">Download</a>
+      <a class="lang" href="fr/" hreflang="fr" lang="fr" aria-label="Version française">FR</a>
+      <a class="btn btn-ember" href="#lancement">Download<span class="oss"><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.14c-1.77 0-3.43.4-4.92 1L5.22 5.92a.38.38 0 1 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg></span></a>
     </nav>
-    <button class="burger" aria-label="Menu" onclick="document.getElementById('hd').classList.toggle('open')">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-    </button>
   </div>
 </header>
 
 <main id="top">
 
-  <!-- HERO -->
   <section class="hero">
     <div class="wrap">
-      <div class="hero-copy">
-        <span class="eyebrow">Free kitchen timer for pros · iPad, iPhone &amp; Android</span>
-        <h1>The kitchen timer that tells you, <em>out loud</em>, when it's ready</h1>
-        <p class="lead">Every dish on one tablet. A different ring for each one, a voice that calls it out by name. Ridiculously simple.</p>
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="#lancement">Download — free</a>
-          <a class="btn btn-ghost" href="#coach">See how it works</a>
+      <div>
+        <h1>The kitchen timer that tells you when it's ready</h1>
+        <p class="lead">Every dish gets its own timer, its own ring and its own voice.</p>
+        <div class="cta">
+          <a class="btn btn-ember" href="#lancement">Download — free<span class="oss"><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.14c-1.77 0-3.43.4-4.92 1L5.22 5.92a.38.38 0 1 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg></span></a>
+          <a class="btn btn-line" href="#app">See how it works</a>
         </div>
-        <!-- On ne répète plus « coming soon » : les 2 badges du bas le disent déjà.
-             Ici on dit ce qu'on gagne, pas ce qu'on ne peut pas encore avoir. -->
-        <div class="hero-note"><span class="pip"></span> Free at launch · no account, no subscription</div>
+        <p class="note">Free at launch, no account, no subscription. iPad, iPhone and Android.</p>
       </div>
 
       <div class="stage">
-        <div class="device" role="img" aria-label="Kitchen tablet showing multiple dish timers running">
-          <div class="screen">
-            <div class="screen-top"><b>Hot line</b><span>19:42 · service</span></div>
-            <div class="kgrid">
-              <div class="tile t-red" data-t="6"><div class="tname">Focaccia</div><div><div class="ttime">0:06</div><div class="tsub">ready</div></div></div>
-              <div class="tile chain t-chain" data-t="70"><span class="phase">2/3</span><div class="tname">Steak</div><div><div class="ttime">1:10</div><div class="tsub">resting</div></div></div>
-              <div class="tile t-amber" data-t="24"><div class="tname">Fish</div><div><div class="ttime">0:24</div><div class="tsub">soon</div></div></div>
-              <div class="tile t-go" data-t="180"><div class="tname">Fries</div><div><div class="ttime">3:00</div><div class="tsub">cooking</div></div></div>
+        <div class="device">
+          <div class="board" role="img" aria-label="CookOnTime screen: six dishes, including the steak ringing when it is done">
+            <div class="bhead">
+              <img src="assets/logo-mark-white.webp" alt="" width="361" height="256">
+              <b>CookOnTime</b><span>— Kitchen Timer</span>
+              <span class="clock seg" id="clock">19:42</span>
+              <i>✎ Edit</i><i class="new">＋ New</i>
             </div>
+            <div class="bgrid" id="bgrid"></div>
           </div>
         </div>
-        <button class="voicebubble" id="hearBtn" type="button" aria-label="Play the app's alarm and the voice announcement">
-          <svg class="mega" viewBox="0 0 24 24" fill="none" stroke="var(--ember)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
-          <div class="waves" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="vtxt"><span><svg class="playi" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Hear it</span>“The fish is ready”</div>
+        <button class="voice" id="voice" type="button" aria-live="polite">
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <span><small>The tablet announces — tap to listen</small><b id="voiceText">“Steak, done”</b></span>
         </button>
       </div>
     </div>
   </section>
 
-  <!-- SIGNATURE -->
-  <section class="signature-band">
+  <section class="proof">
     <div class="wrap">
-      <img class="seal" src="assets/logo-mark.webp" alt="" width="361" height="256">
-      <p>Built by restaurant people, <em>for restaurant people</em><span class="amateurs">— and passionate home cooks too.</span></p>
-      <div class="shots">
-        <img class="founder" src="assets/founder-tablet.webp" alt="Serge Menassa, co-founder of CookOnTime and restaurant owner, showing the app on the kitchen tablet at his restaurant's pass" width="800" height="800" loading="lazy" decoding="async">
-        <img class="kitchen-shot" src="assets/pro-kitchen-tablet.webp" alt="CookOnTime kitchen timer app running on a wall-mounted tablet in a professional restaurant kitchen during service" width="1400" height="781" loading="lazy" decoding="async">
+      <h2>Built by restaurant people, for restaurant people<span>and passionate home cooks too.</span></h2>
+      <div class="photos">
+        <figure><img src="assets/serge-tablette.webp" alt="Serge Menassa, co-founder of CookOnTime, showing the app on the kitchen tablet at Sezam&amp;Co" width="900" height="900" loading="lazy"><figcaption>Serge Menassa, co-founder, at Sezam&amp;Co in Lyon</figcaption></figure>
+        <figure><img src="assets/pro-kitchen-tablet.webp" alt="Wall-mounted tablet running CookOnTime in a professional kitchen during service" width="1400" height="781" loading="lazy"><figcaption>One tablet on the wall covers the whole line</figcaption></figure>
       </div>
     </div>
   </section>
 
-  <!-- PROBLEM -->
-  <section class="problem dark-band">
+  <section class="problem">
     <div class="wrap">
       <div>
-        <h2 class="h2">No more burnt food, no more dinner-rush panic</h2>
+        <h2>No more burnt food, no more dinner-rush panic</h2>
+        <p class="big">Ten timers on the pass, ten identical beeps. Nobody knows which one is ringing, you leave your station to go check, and the steak is overcooked. We got fed up, so we coded it.</p>
       </div>
       <div>
-        <p class="big">Ten timers on the pass, ten identical beeps. Nobody knows which one is ringing, you leave your station to go check, and the fish is toast. We got fed up, so we coded it.</p>
-        <ul class="strike-list">
-          <li>“It's ringing… but which one? They all sound the same”</li>
-          <li>“I checked the wrong timer and the fish burned”</li>
-          <li>“You can't hear the beep over the noise of service”</li>
-          <li>“The temp doesn't know which timer is theirs”</li>
-        </ul>
-        <p class="solve"><b>A voice that names the dish</b>, <b>a different ring for each one</b>: you instantly know what's ready.</p>
-        <a class="btn btn-primary" style="margin-top:26px" href="#lancement">Download now</a>
+        <div class="rail">
+          <div class="tickets">
+            <div class="ticket">“It's ringing… but which one? They all sound the same”</div>
+            <div class="ticket">“I checked the wrong timer”</div>
+            <div class="ticket">“You can't hear the beep over the noise of service”</div>
+            <div class="ticket">“The temp doesn't know which timer is theirs”</div>
+          </div>
+        </div>
+        <p class="solve"><b>A voice that names the dish, a different ring for each one</b>: you instantly know what's ready.</p>
       </div>
     </div>
   </section>
 
-  <!-- BENEFITS -->
-  <section id="coach">
+  <section class="features" id="app">
     <div class="wrap">
-      <div class="section-head">
-        <h2 class="h2">Spoken reminders, at every station</h2>
-      </div>
+      <h2>Spoken reminders, at every station</h2>
 
-      <!-- 1 -->
-      <div class="benefit">
-        <div class="b-copy">
-          <span class="eyebrow">Voice reminders on the line</span>
+      <div class="feat">
+        <div>
           <h3>Every dish runs through its steps on its own</h3>
-          <p>A dish is rarely a single countdown. You sear, you flip, you let it rest. The app chains the steps without you touching a thing and announces every change out loud: “flip the fish”, then “the fish is ready”. Your hands stay on the food — the info reaches your ear.</p>
-          <ul class="b-list">
+          <p>A dish is rarely a single countdown. You sear, you flip, you let it rest. The app chains the steps without you touching a thing and announces every change out loud: “Flip”, then “Steak, done”. Your hands stay on the food — the info reaches your ear.</p>
+          <ul>
             <li>Named cooking steps: sear, flip, rest</li>
             <li>The next step and the finished dish announced by name</li>
             <li>Hands-free: you never leave your station</li>
           </ul>
         </div>
-        <div class="b-media">
-          <div class="phase-flow" aria-hidden="true">
-            <div class="pf-step"><span class="n">1</span><span class="pf-name">Sear skin-side down</span><span class="pf-t">2:30</span></div>
-            <div class="pf-step active"><span class="n">2</span><span class="pf-name">Flip</span><span class="pf-t">1:10</span></div>
-            <div class="pf-say"><b>“Flip the fish”</b> announced out loud</div>
-            <div class="pf-step"><span class="n">3</span><span class="pf-name">Rest</span><span class="pf-t">0:45</span></div>
+        <div class="media">
+          <div class="bigwrap">
+            <div class="tile run chain bigtile" id="bigtile" aria-hidden="true">
+              <div class="band"><em id="bigPhase">1/3</em><span id="bigStep">Sear</span></div>
+              <div class="tn">Steak</div>
+              <div class="tt seg"><span class="ghost">8:88</span><span class="val" id="bigVal">0:08</span></div>
+              <div class="tc"><i>+10</i><i>−10</i><i class="x">✕</i></div>
+            </div>
+            <p class="say" id="bigSay">&nbsp;</p>
           </div>
         </div>
       </div>
 
-      <!-- Bloc « une seule tablette » retiré le 26/07/2026 (décision Serge, point 2) :
-           il levait une objection (rien à acheter, zéro pile, jamais perdu) au lieu de
-           vendre un différenciateur. Le tableau comparatif porte déjà ces trois arguments,
-           une ligne chacun. Visuel « stack-tablets » disponible dans l'historique git si
-           on veut le remonter ailleurs. -->
-
-      <!-- 2 -->
-      <div class="benefit">
-        <div class="b-copy">
-          <!-- L'eyebrow disait mot pour mot la même chose que le H3. Il porte
-               maintenant le clin d'œil ; le H3 garde ses mots-clés intacts. -->
-          <span class="eyebrow">One ring to rule them all? Not in a kitchen.</span>
+      <div class="feat flip">
+        <div>
           <h3>Every dish gets its own kitchen timer ring</h3>
-          <p>Fries, fish, steak, focaccia: every dish gets its own ring. The second it goes off, you know what's ready without looking up. No more ten identical beeps — twelve rings to choose from, and the voice names the dish on top.</p>
-          <ul class="b-list">
+          <p>Fries, steak, chicken, focaccia: every dish gets its own ring. The second it goes off, you know what's ready without looking up. No more ten identical beeps — twelve rings to choose from, and the voice names the dish on top.</p>
+          <ul>
             <li>You know which dish it is by ear, without checking the screen</li>
             <li>Set up once, works for the whole crew</li>
           </ul>
         </div>
-        <div class="b-media">
-          <div class="rings" aria-hidden="true">
-            <div class="ring r-1"><span class="rn">Fries</span><span class="rt">Chirp</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
-            <div class="ring r-2"><span class="rn">Fish</span><span class="rt">Coin</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
-            <div class="ring r-3"><span class="rn">Steak</span><span class="rt">Pop</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
-            <div class="ring r-4"><span class="rn">Focaccia</span><span class="rt">Bowl</span><span class="wv"><i></i><i></i><i></i><i></i></span></div>
+        <div class="media">
+          <div class="rings">
+            <button class="ringrow" type="button" data-snd="chirp"><span class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Fries</b><small>Chirp</small></button>
+            <button class="ringrow" type="button" data-snd="coin"><span class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Steak</b><small>Coin</small></button>
+            <button class="ringrow" type="button" data-snd="pop"><span class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Chicken</b><small>Pop</small></button>
+            <button class="ringrow" type="button" data-snd="bowl"><span class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Focaccia</b><small>Bowl</small></button>
+            <p class="hint">Tap a dish to hear its ring.</p>
           </div>
         </div>
       </div>
 
-      <!-- 3 -->
-      <div class="benefit flip">
-        <div class="b-copy">
-          <span class="eyebrow">Your house method</span>
+      <div class="feat">
+        <div>
           <h3>Mise en place, but for time: your recipes, your own cook times</h3>
-          <p>The restaurant saves its own cook times once. Pick the dish and it starts with the right times and the right steps. The app repeats your method — it never invents a cook time. The fish comes out the same whether it's the chef or the Saturday temp.</p>
-          <ul class="b-list">
+          <p>The restaurant saves its own cook times once. Pick the dish and it starts with the right times and the right steps. The app repeats your method — it never invents a cook time. The steak comes out the same whether it's the chef or the Saturday temp.</p>
+          <ul>
             <li>Your dishes, your names, your cook times saved</li>
             <li>The same result every service, at every station</li>
             <li>A new hire up and running in five minutes, guided by voice</li>
             <li>English and French for the whole crew</li>
           </ul>
-          <!-- CTA récupéré du bloc 5 supprimé : le nombre de boutons sur la page
-               ne change pas (décision Serge : « aux CTA on ne touche pas »). -->
-          <a class="btn btn-primary" style="margin-top:26px" href="#lancement">Download now</a>
+          <a class="btn btn-ember" style="margin-top:32px" href="#lancement">Download now<span class="oss"><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.14c-1.77 0-3.43.4-4.92 1L5.22 5.92a.38.38 0 1 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg></span></a>
         </div>
-        <div class="b-media">
-          <div class="chip-tile demo" data-t="70">
-            <div class="tname">Catch of the day</div>
-            <div><div class="ttime">0:24</div><div class="tsub">Step 2 / 3 · flip</div></div>
+        <div class="media">
+          <div class="recipe" aria-hidden="true">
+            <h4>Steak</h4>
+            <p class="meta">3 steps · Coin ring · announced in English</p>
+            <div class="steps">
+              <div class="step"><span class="n">1</span><b>Sear</b><span class="seg">2:30</span></div>
+              <div class="step"><span class="n">2</span><b>Flip</b><span class="seg">1:10</span></div>
+              <div class="step"><span class="n">3</span><b>Rest</b><span class="seg">0:45</span></div>
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- Bloc « lisible à trois mètres / hors-ligne » retiré le 26/07/2026 (point 2) :
-           même raison que le bloc tablette — ce sont des objections levées, portées par
-           le tableau. Le camembert se voit déjà dans le mockup du hero. -->
     </div>
   </section>
 
-  <!-- COMPARISON -->
-  <section id="comparatif" class="compare band">
+  <section class="compare" id="comparatif">
     <div class="wrap">
-      <div class="section-head">
-        <h2 class="h2">Classic kitchen timer <span style="color:var(--ember-2)">VS</span> our app: what changes?</h2>
-        <p class="lead" style="margin-top:16px">What changes, line by line, between classic timer units and our app.</p>
+      <h2>Classic kitchen timer or CookOnTime: what changes</h2>
+      <div class="vs">
+        <div class="col old">
+          <h3>Classic timer units</h3>
+          <ul>
+            <li><small>Multiple dishes at once</small><span>1 to 4 per unit, so you line up several</span></li>
+            <li><small>The alert</small><span>An anonymous beep among ten</span></li>
+            <li><small>Knowing which dish</small><span>They all beep the same</span></li>
+            <li><small>Cooking steps</small><span>One countdown, restarted by hand</span></li>
+            <li><small>Readability</small><span>A tiny dial you hold up to your eyes</span></li>
+            <li><small>The timer drawer</small><span>Buy them, lose them, change the batteries</span></li>
+            <li><small>House method</small><span>Nothing saved, you re-enter everything</span></li>
+          </ul>
+        </div>
+        <div class="col new">
+          <h3>CookOnTime</h3>
+          <ul>
+            <li><small>Multiple dishes at once</small><span>20 timers or more on a single screen</span></li>
+            <li><small>The alert</small><span>A voice that names the dish</span></li>
+            <li><small>Knowing which dish</small><span>One ring per dish, 12 to choose from</span></li>
+            <li><small>Cooking steps</small><span>Steps chained automatically</span></li>
+            <li><small>Readability</small><span>A tile readable from across the kitchen</span></li>
+            <li><small>The timer drawer</small><span>86 the drawer — it's the tablet you already own</span></li>
+            <li><small>House method</small><span>Your recipes and times saved</span></li>
+          </ul>
+        </div>
       </div>
-      <div class="ctable">
-        <div class="crow chead"><div class="feat">&nbsp;</div><div class="classic">Classic timer</div><div class="appc">Our app</div></div>
-        <div class="crow"><div class="feat">Multiple dishes at once</div><div class="classic"><s>1 to 4 per unit, so you have to line up multiple units</s></div><div class="appc">20 timers or more on a single screen</div></div>
-        <div class="crow"><div class="feat">The alert</div><div class="classic"><s>An anonymous beep among ten</s></div><div class="appc">A voice that names the dish</div></div>
-        <div class="crow"><div class="feat">Knowing which dish</div><div class="classic"><s>They all beep the same</s></div><div class="appc">One ring per dish, 12 to choose from</div></div>
-        <div class="crow"><div class="feat">Cooking steps</div><div class="classic"><s>One countdown, restarted by hand</s></div><div class="appc">Steps chained automatically</div></div>
-        <div class="crow"><div class="feat">Readability</div><div class="classic"><s>A tiny dial you hold up to your eyes</s></div><div class="appc">A tile readable from across the kitchen</div></div>
-        <!-- « Batteries » + « Lost and broken » + « Hardware » fusionnées en une seule
-             ligne le 26/07/2026 : les trois disaient la même chose — le boîtier physique
-             coûte, s'use et disparaît. « 86 » = le verbe de cuisine pour « on l'enlève ». -->
-        <div class="crow"><div class="feat">The timer drawer</div><div class="classic"><s>Buy them, lose them, change the batteries</s></div><div class="appc">86 the drawer — it's the tablet you already own</div></div>
-        <div class="crow"><div class="feat">House method</div><div class="classic"><s>Nothing saved, you re-enter everything</s></div><div class="appc">Your recipes and times saved</div></div>
-      </div>
-      <div style="text-align:center; margin-top:34px"><a class="btn btn-primary" href="#lancement">Download now</a></div>
+      <div class="center"><a class="btn btn-ember" href="#lancement">Download now<span class="oss"><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><svg class="os" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.14c-1.77 0-3.43.4-4.92 1L5.22 5.92a.38.38 0 1 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg></span></a></div>
     </div>
   </section>
 
-  <!-- Grille de 8 features retirée le 26/07/2026 (décision Serge, point 1) : chacune
-       des 8 cartes redisait une ligne du tableau comparatif situé juste au-dessus.
-       2 écrans de scroll mobile pour zéro information neuve. -->
-
-  <!-- AUDIENCE -->
-  <!-- Pas de .band ici : la grille de features supprimée ci-dessus était la section
-       claire qui séparait le tableau comparatif (.band) de celle-ci. Sans elle, deux
-       bandes --paper-2 se collaient et la frontière disparaissait. L'alternance
-       claire / sombre du reste de la page est ainsi rétablie. -->
   <section class="aud">
     <div class="wrap">
-      <div>
-        <h2 class="h2">For the people who live the rush</h2>
-      </div>
+      <h2>For the people who live the rush</h2>
       <div class="chips">
-        <span>Chefs and sous chefs</span>
-        <span>Passionate home cooks</span>
-        <span>Line cooks and commis</span>
-        <span>Pizzaiolos</span>
-        <span>Bakers and pastry chefs</span>
-        <span>Caterers and dark kitchens</span>
+        <span>Chefs and sous chefs</span><span>Line cooks and commis</span><span>Pizzaiolos</span>
+        <span>Bakers and pastry chefs</span><span>Caterers and dark kitchens</span><span>Passionate home cooks</span>
       </div>
     </div>
   </section>
 
-  <!-- CREDIBILITY -->
-  <section class="cred">
+  <section class="client">
     <div class="wrap">
       <div>
-        <h2 class="h2">Built by restaurant owners, tested in live service</h2>
-        <div class="signature">
-          <div class="mark">S</div>
-          <div>
-            <b>Sezam&amp;Co</b>
-            <small>Restaurant · Lyon, France</small>
-          </div>
-        </div>
+        <h2>Tested in live service</h2>
+        <p class="who"><b>Sezam&amp;Co</b> restaurant in Lyon, France, a customer since July 2026</p>
       </div>
-      <div class="cred-quote">
-        <!-- « cooked », pas « coded » (Serge, 26/07/2026) : c'est un resto qui parle. -->
-        <p>“We cooked this app for our own kitchen in Lyon. We use it every single service. Now we're opening it to other kitchens — pros and home cooks alike.”</p>
+      <div>
+        <blockquote>“We cooked this app for our own kitchen in Lyon. We use it every single service. Now we're opening it to other kitchens — pros and home cooks alike.”</blockquote>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section id="faq" class="faq">
+  <section class="faq" id="faq">
     <div class="wrap">
-      <div class="section-head" style="margin-bottom:20px">
-        <h2 class="h2">The questions we get asked</h2>
-      </div>
-      <details open><summary>What is the best timer app for a professional kitchen?</summary><p>The one that runs multiple dishes at once, announces out loud when food is ready, and repeats your own cook times. Most cooking timer apps are built for one person's phone. This one is built for a tablet mounted on the kitchen line, in the middle of service.</p></details>
-      <details><summary>How do you time multiple dishes at once without mixing them up?</summary><p>Run multiple timers side by side: every dish carries its name on screen and in the voice announcements, and each one can carry its own ring. Five or twenty dishes can run in parallel: you know right away which one is ringing. No more mistaking the fish timer for the sides.</p></details>
+      <h2>The questions we get asked</h2>
+      <details open><summary>What is the best timer app for cooking?</summary><p>CookOnTime runs multiple timers at once, one per dish. Each dish has its own ring, and a voice announces when it's done. The app repeats your own cook times. It's built for a kitchen tablet in the middle of service, and works on phones too.</p></details>
+      <details><summary>How much does CookOnTime cost?</summary><p>CookOnTime is free at launch: no subscription, no ads and no account to create.</p></details>
+      <details><summary>Where does my data go?</summary><p>Your dishes, times and settings stay on your tablet, and there is no account to create. On first launch, the app asks whether you agree to share usage statistics; in the current version, it sends nothing. The details are in the <a href="privacy.html">privacy policy</a>.</p></details>
+      <details><summary>How do you time multiple dishes at once without mixing them up?</summary><p>Run multiple timers side by side: every dish carries its name on screen and in the voice announcements, and each one can carry its own ring. Five or twenty dishes can run in parallel: you know right away which one is ringing. No more mistaking the steak timer for the sides.</p></details>
       <details><summary>Does the app work on iPad, Android tablets and iPhone?</summary><p>Yes, on all of them. A basic iPad or a cheap Android tablet, wall-mounted with the screen always on, is enough — and it also runs on iPhone and Android phones when you want a cooking timer in your pocket. You equip every station with the same app.</p></details>
       <details><summary>Does the timer announce out loud when a dish is ready?</summary><p>Yes. The app announces the next step and then the finished dish, by name, out loud. Your hands stay on the food — the info reaches your ear without staring at a screen.</p></details>
       <details><summary>Can you save your own recipes and cook times?</summary><p>That's the whole point. You enter your dishes, times and steps once. The app repeats your house method identically on every tablet. It never invents a cook time.</p></details>
       <details><summary>Does the app work offline, without an internet connection?</summary><p>Yes. Every tablet is self-sufficient and stores everything locally. If the wifi drops mid-rush, service goes on uninterrupted.</p></details>
       <details><summary>Can one timer chain multiple cooking steps?</summary><p>Yes — it's the heart of the app. A dish can have multiple named steps (sear, flip, rest) that chain automatically, with a voice announcement at every step change.</p></details>
-      <details><summary>Is the app available on the App Store and Google Play, and is it free?</summary><p>It's coming soon to the App Store and Google Play. It's free, with no account to create and no subscription.</p></details>
+      <details><summary>Is the app available on the App Store and Google Play?</summary><p>It's coming soon to the App Store and Google Play.</p></details>
     </div>
   </section>
 
-  <!-- FINAL CTA -->
-  <section id="lancement" class="final">
+  <section class="final" id="lancement">
     <div class="wrap">
       <h2>Coming soon to your tablets and phones. Free.</h2>
       <p>The timer is coming to the App Store and Google Play. Free, no account needed.</p>
-
       <div class="stores">
-        <a class="store-badge" href="#" aria-label="Coming soon to the App Store">
-          <span class="soon">Soon</span>
+        <a class="store" href="#" aria-label="Coming soon to the App Store"><em>Soon</em>
           <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-          <span class="st"><small>Soon on the</small><b>App Store</b></span>
-        </a>
-        <a class="store-badge" href="#" aria-label="Coming soon to Google Play">
-          <span class="soon">Soon</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="#00d0ff" d="M3.9 2.3c-.3.2-.5.6-.5 1.1v17.2c0 .5.2.9.5 1.1l.1.1L13.6 12v-.2L3.9 2.3z"/>
-            <path fill="#ffce00" d="M17 15.3 13.6 12v-.2L17 8.5l4.1 2.4c1.1.6 1.1 1.7 0 2.4L17 15.3z"/>
-            <path fill="#ff3a44" d="M17 15.3 13.6 11.9 3.9 21.7c.4.4 1 .4 1.7.1L17 15.3z"/>
-            <path fill="#00e676" d="M17 8.7 5.6 2.2C4.9 1.8 4.3 1.9 3.9 2.3l9.7 9.6L17 8.7z"/>
-          </svg>
-          <span class="st"><small>Soon on</small><b>Google Play</b></span>
-        </a>
+          <span><small>Soon on the</small><b>App Store</b></span></a>
+        <a class="store" href="#" aria-label="Coming soon to Google Play"><em>Soon</em>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00d0ff" d="M3.9 2.3c-.3.2-.5.6-.5 1.1v17.2c0 .5.2.9.5 1.1l.1.1L13.6 12v-.2L3.9 2.3z"/><path fill="#ffce00" d="M17 15.3 13.6 12v-.2L17 8.5l4.1 2.4c1.1.6 1.1 1.7 0 2.4L17 15.3z"/><path fill="#ff3a44" d="M17 15.3 13.6 11.9 3.9 21.7c.4.4 1 .4 1.7.1L17 15.3z"/><path fill="#00e676" d="M17 8.7 5.6 2.2C4.9 1.8 4.3 1.9 3.9 2.3l9.7 9.6L17 8.7z"/></svg>
+          <span><small>Soon on</small><b>Google Play</b></span></a>
       </div>
     </div>
   </section>
-
 </main>
 
 <footer>
   <div class="wrap">
-    <div>
-      <a class="brand" href="#top">
-        <img class="logo-mark" src="assets/logo-mark-white.webp" alt="" width="361" height="256">
-        <span class="bt"><b>CookOnTime <em>— Kitchen Timer</em></b></span>
-      </a>
-      <p class="ftag">The timer that reminds you of every step, out loud. Built by restaurant people in Lyon, France.</p>
-    </div>
-    <div class="fmeta">
-      <div>© 2026 CookOnTime</div>
-      <div><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></div>
-      <div><a href="#faq">FAQ</a></div>
-      <div><a href="fr/" hreflang="fr" lang="fr">Version française — FR</a></div>
-    </div>
+    <span>© 2026 CookOnTime — the timer that reminds you of every step, out loud.</span>
+    <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="fr/" hreflang="fr" lang="fr">Français</a></span>
   </div>
 </footer>
 
 <script>
-// Compteurs du mockup hero : le mm:ss suit le camembert (--p animé en CSS,
-// data-t = durée affichée à plein). Coupé si prefers-reduced-motion (snapshot figé).
 (function(){
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var tiles=[].slice.call(document.querySelectorAll('.kgrid .tile[data-t], .chip-tile[data-t]')).map(function(el){
-    return {el:el, t:+el.getAttribute('data-t'), out:el.querySelector('.ttime')};
-  });
-  var fmt=function(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
-  setInterval(function(){
-    tiles.forEach(function(o){
-      var p=parseFloat(getComputedStyle(o.el).getPropertyValue('--p'))||0;
-      var txt=fmt(Math.ceil(o.t*p));
-      if(o.out.textContent!==txt) o.out.textContent=txt;
-    });
-  },150);
-})();
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fmt = function(s){ s=Math.max(0,Math.ceil(s)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); };
+  var ghostFor = function(t){ return t.replace(/\d/g,'8'); };
+  // Couleur du camembert : vert, puis ambre, puis rouge, comme fillFor() dans l'app.
+  var M=[92,199,154], A=[216,144,22], R=[233,85,85];
+  var mix=function(a,b,t){ return 'rgb('+a.map(function(v,i){return Math.round(v+(b[i]-v)*t);}).join(',')+')'; };
+  // Copie exacte de fillFor() (app/lib/ui/theme.dart) : le vert glisse vers l'ambre
+  // dès le départ (de 100 % à 35 %), puis l'ambre vers le rouge (de 35 % à 15 %).
+  var fillFor=function(p){ if(p>=1) return mix(M,M,0); if(p>=.35) return mix(A,M,(p-.35)/.65); if(p>=.15) return mix(R,A,(p-.15)/.20); return mix(R,R,0); };
 
-// « Hear it » : la sonnerie par defaut de l'app (le vrai son) puis l'annonce vocale.
-// La voix passe par la synthèse du navigateur — c'est exactement ce que fait l'app,
-// qui utilise la voix système de l'appareil, donc la démo ne ment pas sur le produit.
-// Jamais d'autoplay : uniquement sur clic. Sans synthèse vocale, la sonnerie seule
-// se joue et la bulle affiche la phrase, ce qui reste compréhensible.
-(function(){
-  var btn=document.getElementById('hearBtn'); if(!btn) return;
-  var LINE='The fish is ready', LANG='en-US', LABEL='Hear it';
-  var cap=btn.querySelector('.vtxt span'), icon=cap.innerHTML.replace(/Hear it|Écouter/,'');
-  var ring=new Audio('assets/audio/alarm-chirp.mp3'); ring.preload='none'; ring.volume=.55;
-  // Voix féminine (choix Serge). L'API Web Speech n'expose aucun genre : il faut
-  // reconnaître les noms. On tente une voix féminine connue, sinon on écarte les
-  // masculines connues, sinon on laisse la voix par défaut du système.
-  var FEM=/\bfemale\b|zira|aria|jenny|michelle|\bana\b|samantha|karen|moira|tessa|allison|\bava\b|susan|victoria|serena|fiona|joanna|salli|kendra|kimberly|\bamy\b|emma|google us english/i;
-  var MALE=/\bmale\b|david|mark|\bguy\b|alex|fred|daniel|thomas|paul|george|james|ryan|matthew|brian|arthur|oliver/i;
-  var pickVoice=function(){
-    var vs=(speechSynthesis.getVoices()||[]).filter(function(v){
-      return v.lang && v.lang.toLowerCase().slice(0,2)===LANG.slice(0,2); });
-    if(!vs.length) return null;
-    var fem=vs.filter(function(v){ return FEM.test(v.name); });
-    if(fem.length) return fem[0];
-    var neutral=vs.filter(function(v){ return !MALE.test(v.name); });
-    return neutral[0]||vs[0];
-  };
-  // getVoices() renvoie souvent une liste vide au premier appel : on l'amorce.
-  if('speechSynthesis' in window){ speechSynthesis.getVoices();
-    speechSynthesis.onvoiceschanged=function(){ speechSynthesis.getVoices(); }; }
-  var busy=false;
-  var idle=function(){ busy=false; btn.classList.remove('playing'); cap.innerHTML=icon+LABEL; };
-  var said=false;
-  var say=function(){
-    if(said) return; said=true;
-    if(!('speechSynthesis' in window)){ idle(); return; }
-    var u=new SpeechSynthesisUtterance(LINE); u.lang=LANG; u.rate=1;
-    var v=pickVoice(); if(v) u.voice=v;
-    u.onend=idle; u.onerror=idle;
-    try{ speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){ idle(); }
-  };
-  btn.addEventListener('click',function(){
-    if(busy) return;
-    busy=true; said=false; btn.classList.add('playing'); cap.innerHTML=icon+'Playing…';
-    ring.currentTime=0;
-    var p=ring.play();
-    if(p&&p.catch) p.catch(function(){ say(); });          // son bloqué : on parle quand même
-    setTimeout(say,900);                                    // la voix passe par-dessus la fin de sonnerie
+  // ---------- la tablette du haut de page : une vraie petite simulation ----------
+  // Chaque plat a sa durée. Quand il arrive à zéro, il sonne 6 s (la voix l'annonce),
+  // puis il revient au repos, et un cuisinier le relance 3 s plus tard.
+  var DISHES=[
+    {name:'Fries', dur:210, left:27},
+    {name:'Steak', dur:45, left:7},
+    {name:'Pasta', dur:540, left:250},
+    {name:'Rice', dur:1020, idle:true},
+    {name:'Chicken', dur:0, chain:[['Sear',90],['Flip',60],['Rest',30]], phase:1, left:16},
+    {name:'Focaccia', dur:720, left:604}
+  ];
+  var grid=document.getElementById('bgrid');
+  DISHES.forEach(function(d){
+    var el=document.createElement('div'); el.className='tile';
+    el.innerHTML=(d.chain?'<div class="band"><em></em><span></span></div>':'')+
+      '<div class="tn">'+d.name+'</div><div class="tt seg"><span class="ghost"></span><span class="val"></span></div>'+
+      '<div class="tc"><i>+10</i><i>−10</i><i class="x">✕</i></div>';
+    grid.appendChild(el); d.el=el; d.val=el.querySelector('.val'); d.ghost=el.querySelector('.ghost');
+    if(d.chain){ d.el.classList.add('chain'); d.band=el.querySelector('.band em'); d.bandTxt=el.querySelector('.band span'); }
   });
+  var voice=document.getElementById('voice'), voiceText=document.getElementById('voiceText');
+  var lastSay='Steak, done';
+  var announce=function(t){ lastSay=t; voiceText.textContent='“'+t+'”'; voice.classList.add('show'); };
+  var total=function(d){ return d.chain? d.chain[d.phase][1] : d.dur; };
+  var paint=function(d){
+    var el=d.el, run=!d.idle && !d.ring;
+    el.classList.toggle('run',run); el.classList.toggle('idle',!!d.idle); el.classList.toggle('ringing',!!d.ring);
+    var t = d.idle? fmt(d.chain? d.chain[0][1] : d.dur) : fmt(d.left);
+    if(d.val.textContent!==t){ d.val.textContent=t; d.ghost.textContent=ghostFor(t); }
+    if(run){ var p=d.left/total(d); el.style.setProperty('--p',p.toFixed(4)); el.style.setProperty('--fill',fillFor(p)); }
+    if(d.chain){ d.band.textContent=(d.phase+1)+'/'+d.chain.length; d.bandTxt.textContent=d.chain[d.phase][0]; }
+  };
+  var step=function(dt){
+    DISHES.forEach(function(d){
+      if(d.idle){ if(d.restart!=null){ d.restart-=dt; if(d.restart<=0){ d.idle=false; d.restart=null; d.phase=0; d.left=total(d); } } return; }
+      if(d.ring){ d.ring-=dt; if(d.ring<=0){ d.ring=0; d.idle=true; d.restart=3; } return; }
+      d.left-=dt;
+      if(d.left<=0){
+        if(d.chain && d.phase<d.chain.length-1){ d.phase++; d.left=total(d); announce(d.chain[d.phase][0]); }
+        else { d.left=0; d.ring=6; announce(d.name+', done'); }
+      }
+    });
+  };
+  DISHES.forEach(paint);
+  var clock=document.getElementById('clock'), now=new Date();
+  var tickClock=function(){ var n=new Date(); clock.textContent=n.getHours()+':'+String(n.getMinutes()).padStart(2,'0'); };
+  tickClock();
+  if(reduced){ DISHES[1].left=0; DISHES[1].ring=1; paint(DISHES[1]); announce('Steak, done'); }
+  else {
+    var last=performance.now();
+    (function loop(t){ var dt=Math.min(.25,(t-last)/1000); last=t; step(dt); DISHES.forEach(paint); requestAnimationFrame(loop); })(last);
+    setInterval(tickClock, 10000);
+  }
+
+  // ---------- la tablette se redresse pendant le défilement ----------
+  var dev=document.querySelector('.device');
+  if(!reduced){
+    var tilt=function(){
+      var start=Math.max(0, dev.getBoundingClientRect().top + scrollY - innerHeight);
+      var t=Math.min(1, Math.max(0, (scrollY-start)/420));
+      dev.style.transform='rotateX('+(14*(1-t)).toFixed(2)+'deg) scale('+(.95+.05*t).toFixed(4)+')';
+    };
+    var queued=false;
+    addEventListener('scroll',function(){ if(!queued){ queued=true; requestAnimationFrame(function(){ queued=false; tilt(); }); } },{passive:true});
+    addEventListener('resize',tilt); tilt();
+  }
+
+  // ---------- écouter : la sonnerie, puis la voix du navigateur ----------
+  var sounds={}; var snd=function(n){ if(!sounds[n]){ sounds[n]=new Audio('assets/audio/ring-'+n+'.mp3'); sounds[n].volume=.6; } return sounds[n]; };
+  var speak=function(t){ if(!('speechSynthesis' in window)) return; try{ speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(t); u.lang='en-US'; speechSynthesis.speak(u);}catch(e){} };
+  voice.addEventListener('click',function(){ var a=snd('chirp'); a.currentTime=0; var p=a.play(); if(p&&p.catch) p.catch(function(){}); setTimeout(function(){ speak(lastSay); },700); });
+
+  document.querySelectorAll('.ringrow').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.ringrow.playing').forEach(function(x){ x.classList.remove('playing'); });
+      var a=snd(b.dataset.snd); a.currentTime=0; b.classList.add('playing');
+      var p=a.play(); if(p&&p.catch) p.catch(function(){ b.classList.remove('playing'); });
+      a.onended=function(){ b.classList.remove('playing'); };
+      setTimeout(function(){ b.classList.remove('playing'); }, 2500);
+    });
+  });
+
+  // ---------- la grande tuile chaînée : saisir, retourner, repos ----------
+  var big={phases:[['Sear',8,'Flip'],['Flip',6,'Rest'],['Rest',5,'Steak, done']], i:0, left:8};
+  var bt=document.getElementById('bigtile'), bv=document.getElementById('bigVal'), bp=document.getElementById('bigPhase'), bs=document.getElementById('bigStep'), say=document.getElementById('bigSay');
+  var paintBig=function(){ var ph=big.phases[big.i], p=big.left/ph[1];
+    bt.style.setProperty('--p',p.toFixed(4)); bt.style.setProperty('--fill',fillFor(p));
+    bv.textContent=fmt(big.left); bp.textContent=(big.i+1)+'/3'; bs.textContent=ph[0]; };
+  paintBig();
+  if(!reduced){ var lb=performance.now(), rest=0;
+    (function lp(t){ var dt=Math.min(.25,(t-lb)/1000); lb=t;
+      if(rest>0){ rest-=dt; if(rest<=0){ bt.classList.remove('ringing'); bt.classList.add('run','chain'); big.i=0; big.left=big.phases[0][1]; say.innerHTML='&nbsp;'; } }
+      else { big.left-=dt; if(big.left<=0){ var msg=big.phases[big.i][2];
+        say.innerHTML='Announced out loud: <b>“'+msg+'”</b>';
+        if(big.i<2){ big.i++; big.left=big.phases[big.i][1]; } else { big.left=0; rest=4; bt.classList.remove('run'); bt.classList.add('ringing'); } } }
+      paintBig(); requestAnimationFrame(lp); })(lb);
+  }
 })();
 </script>
 </body>
