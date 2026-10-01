@@ -1,14 +1,21 @@
-// Site CookOnTime servi par Cloudflare sur cookontime.app (fichiers statiques seuls).
+// Site CookOnTime servi par Cloudflare sur cookontime.app : fichiers statiques, plus
+// worker.js pour la seule adresse /api/signup (formulaire d'accès anticipé, base D1).
 // Déployer : npx wrangler deploy (depuis ce dossier). Le compte Cloudflare est celui
 // de Serge (sergemenassa@gmail.com), qui détient aussi le domaine.
 {
   "name": "cookontime-site",
-  "compatibility_date": "2026-09-29",
+  "compatibility_date": "2026-09-18",
+  "main": "worker.js",
   "assets": {
     "directory": ".",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
   },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "cookontime-signups", "database_id": "d1550772-923d-4b80-b8e6-d98cbabfe7d5" }
+  ],
   "routes": [
     { "pattern": "cookontime.app", "custom_domain": true },
     { "pattern": "www.cookontime.app", "custom_domain": true }

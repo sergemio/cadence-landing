@@ -5,3 +5,5 @@
 wrangler.jsonc
 README.md
 propositions
+worker.js
+schema.sql

@@ -352,6 +352,23 @@ details p{padding:0 0 24px; color:var(--muted); font-size:var(--t5); line-height
 .store small{font-size:12px; color:#cfc9bb}
 .store b{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:24px}
 .store em{position:absolute; top:-10px; right:-8px; font-style:normal; background:var(--amber); color:var(--ink); font-size:12px; font-weight:700; padding:4px 8px; border-radius:8px}
+/* Accès anticipé : remplace les badges de stores tant que l'app n'est pas publiée. */
+.signup{max-width:560px; margin:40px auto 0; text-align:left; display:grid; gap:16px}
+.signup label{display:grid; gap:8px; font-size:var(--t5); color:var(--on-service)}
+.signup input[type=email], .signup select{width:100%; min-height:52px; padding:12px 16px; border-radius:12px; border:1px solid rgba(239,232,214,.28);
+  background:#0f100b; color:#fff; font:inherit; font-size:18px}
+.signup input[type=email]:focus-visible, .signup select:focus-visible, .signup input[type=checkbox]:focus-visible{outline:3px solid var(--amber); outline-offset:2px}
+.signup .check{display:flex; align-items:flex-start; gap:12px; grid-template-columns:none; color:var(--on-service-2)}
+.signup .check input{width:22px; height:22px; margin-top:2px; flex:none; accent-color:var(--ember)}
+.signup .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+.signup button{width:100%; border:0; cursor:pointer}
+.signup button:disabled{opacity:.6; cursor:wait}
+.signup .legal{font-size:var(--t6); color:var(--on-service-2); text-align:center}
+.signup .legal a{text-decoration:underline}
+.signup .msg{min-height:1.4em; text-align:center; font-weight:700}
+.signup .msg.ok{color:var(--fill-mint, #7fbf8a)}
+.signup .msg.err{color:#ff8a80}
+.soon{margin-top:24px; font-size:var(--t6); color:var(--on-service-2)}
 
 footer{background:#0f100b; color:var(--on-service-2); padding:32px 0; font-size:var(--t6)}
 footer .wrap{display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:center}
@@ -616,14 +633,16 @@ footer a:hover{color:#fff}
     <div class="wrap">
       <h2>Bientôt sur vos tablettes et téléphones. Gratuit.</h2>
       <p>L'application de minuteur de cuisine arrive sur l'App Store et Google Play. Gratuite, sans compte à créer.</p>
-      <div class="stores">
-        <a class="store" href="#" aria-label="Bientôt sur l'App Store"><em>Bientôt</em>
-          <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-          <span><small>Bientôt sur l'</small><b>App Store</b></span></a>
-        <a class="store" href="#" aria-label="Bientôt sur Google Play"><em>Bientôt</em>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00d0ff" d="M3.9 2.3c-.3.2-.5.6-.5 1.1v17.2c0 .5.2.9.5 1.1l.1.1L13.6 12v-.2L3.9 2.3z"/><path fill="#ffce00" d="M17 15.3 13.6 12v-.2L17 8.5l4.1 2.4c1.1.6 1.1 1.7 0 2.4L17 15.3z"/><path fill="#ff3a44" d="M17 15.3 13.6 11.9 3.9 21.7c.4.4 1 .4 1.7.1L17 15.3z"/><path fill="#00e676" d="M17 8.7 5.6 2.2C4.9 1.8 4.3 1.9 3.9 2.3l9.7 9.6L17 8.7z"/></svg>
-          <span><small>Bientôt sur</small><b>Google Play</b></span></a>
-      </div>
+      <form class="signup" id="signup" novalidate>
+        <label>Votre e-mail<input type="email" name="email" autocomplete="email" required></label>
+        <label>Votre appareil<select name="device"><option value="">Choisir…</option><option value="android-tablet">Tablette Android</option><option value="android-phone">Téléphone Android</option><option value="ipad">iPad</option><option value="iphone">iPhone</option></select></label>
+        <label class="check"><input type="checkbox" name="tester"><span>Je veux tester la version Android avant sa sortie (test fermé de 14 jours sur Google Play).</span></label>
+        <label class="hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        <button class="btn btn-ember" type="submit">Me prévenir de la sortie</button>
+        <p class="msg" role="status" aria-live="polite"></p>
+        <p class="legal">On vous écrit seulement pour la sortie de l'app et le test. Rien d'autre, et jamais de revente. <a href="privacy.html#site">Détails</a>.</p>
+      </form>
+      <p class="soon">Bientôt sur l'App Store et Google Play.</p>
     </div>
   </section>
 </main>
@@ -744,6 +763,25 @@ footer a:hover{color:#fff}
         if(big.i<2){ big.i++; big.left=big.phases[big.i][1]; } else { big.left=0; rest=4; bt.classList.remove('run'); bt.classList.add('ringing'); } } }
       paintBig(); requestAnimationFrame(lp); })(lb);
   }
+})();
+</script>
+<script>
+/* Accès anticipé : envoie l'inscription au site (/api/signup), sans recharger la page. */
+(function(){
+  var f=document.getElementById('signup'); if(!f) return;
+  var msg=f.querySelector('.msg'), btn=f.querySelector('button');
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var email=f.email.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ msg.className='msg err'; msg.textContent='Cet e-mail ne semble pas valide.'; f.email.focus(); return; }
+    btn.disabled=true;
+    fetch('/api/signup', {method:'POST', headers:{'content-type':'application/json'},
+      body:JSON.stringify({email:email, device:f.device.value, tester:f.tester.checked, website:f.website.value, lang:'fr'})})
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if(!d.ok) throw 0; msg.className='msg ok'; msg.textContent="C'est noté. On vous écrit dès que l'app sort."; f.reset(); })
+      .catch(function(){ msg.className='msg err'; msg.textContent="L'envoi n'a pas marché. Réessayez dans un instant."; })
+      .then(function(){ btn.disabled=false; });
+  });
 })();
 </script>
 </body>
