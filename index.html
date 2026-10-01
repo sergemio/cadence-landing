@@ -197,7 +197,7 @@ header{position:sticky; top:0; z-index:40; background:var(--service); color:var(
 @keyframes blink{50%{opacity:0}}
 
 /* La voix : la bulle qui annonce le plat, posée sous la tablette. */
-.stage{position:relative; perspective:1600px; isolation:isolate}
+.stage{position:relative; perspective:1475px; isolation:isolate}
 /* Halo : un éclairage gris chaud accroché à la tablette elle-même (pas au fond de
    la section). Il la suit donc partout où la mise en page la place, sur ordinateur,
    tablette ou téléphone, sans calcul. Il s'éteint en douceur vers le noir. */
@@ -208,7 +208,7 @@ header{position:sticky; top:0; z-index:40; background:var(--service); color:var(
 /* Inclinaison au défilement (comme le site ShiftMaster, en plus léger) : la tablette
    part légèrement couchée et se redresse à plat pendant les 420 premiers pixels de
    défilement après son entrée à l'écran. Le défilement reste libre. */
-.device{transform-origin:50% 0; transform:rotateX(14deg) scale(.95); will-change:transform}
+.device{transform-origin:50% 0; transform:rotateX(17.5deg) scale(.925); will-change:transform}
 @media (prefers-reduced-motion:reduce){ .device{transform:none} }
 .voice{position:absolute; left:-24px; bottom:-56px; display:flex; align-items:center; gap:12px; background:#fff; color:var(--ink); border-radius:16px; padding:12px 20px 12px 12px;
   box-shadow:0 24px 48px -20px rgba(0,0,0,.7); border:0; font:inherit; text-align:left; cursor:pointer; max-width:calc(100% + 24px);
@@ -725,12 +725,24 @@ footer a:hover{color:#fff}
   if(!reduced){
     var tilt=function(){
       var start=Math.max(0, dev.getBoundingClientRect().top + scrollY - innerHeight);
-      var t=Math.min(1, Math.max(0, (scrollY-start)/420));
-      dev.style.transform='rotateX('+(14*(1-t)).toFixed(2)+'deg) scale('+(.95+.05*t).toFixed(4)+')';
+      // Plus marqué depuis le 02/10/2026 (demande de Serge, réglé par paliers) : couchée à 17,5° et réduite à 92,5 %,
+      // elle se redresse sur 445 px de défilement, en douceur au début et à la fin.
+      var p=Math.min(1, Math.max(0, (scrollY-start)/445)), t=p*p*(3-2*p);
+      dev.style.transform='rotateX('+(17.5*(1-t)).toFixed(2)+'deg) scale('+(.925+.075*t).toFixed(4)+')';
+      // Et elle descend doucement (50 px au plus, 02/10/2026) : elle reste plus longtemps à
+      // l'écran pendant qu'elle se redresse. La descente est bornée par la place qui reste
+      // sous la tablette et sa bulle dans le haut de page : rien ne déborde.
+      stage.style.transform='translateY('+(slide*t).toFixed(1)+'px)';
+    };
+    var stage=dev.closest('.stage'), hero=document.querySelector('.hero'), slide=0;
+    var room=function(){
+      stage.style.transform='';
+      var low=Math.max(stage.getBoundingClientRect().bottom, document.getElementById('voice').getBoundingClientRect().bottom);
+      slide=Math.max(0, Math.min(50, hero.getBoundingClientRect().bottom - low - 16));
     };
     var queued=false;
     addEventListener('scroll',function(){ if(!queued){ queued=true; requestAnimationFrame(function(){ queued=false; tilt(); }); } },{passive:true});
-    addEventListener('resize',tilt); tilt();
+    addEventListener('resize',function(){ room(); tilt(); }); room(); tilt();
   }
 
   // ---------- écouter : la sonnerie, puis la voix du navigateur ----------
