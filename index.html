@@ -123,6 +123,11 @@ header{position:sticky; top:0; z-index:40; background:var(--service); color:var(
 
 /* ---------- haut de page ---------- */
 .hero{background:var(--service); color:var(--on-service); padding:56px 0 96px; position:relative; overflow:hidden}
+/* Le haut de page remplit tout l'écran visible sous l'en-tête : la section suivante
+   n'apparaît qu'au défilement. Contenu centré verticalement ; s'il est plus haut
+   que l'écran (petit portable, téléphone), la section grandit simplement. */
+.hero{min-height:calc(100vh - 64px); min-height:calc(100svh - 64px); display:flex; align-items:center}
+.hero > .wrap{width:100%}
 .hero::after{content:""; position:absolute; left:0; right:0; bottom:0; height:120px; background:linear-gradient(to bottom, transparent, rgba(0,0,0,.18)); pointer-events:none}
 .hero .wrap{max-width:1320px; display:grid; grid-template-columns:minmax(0,4.4fr) minmax(0,7.6fr); gap:40px; align-items:center; position:relative; z-index:1}
 .hero h1{color:#fff; max-width:12ch}
