@@ -225,6 +225,13 @@ header{position:sticky; top:0; z-index:40; background:var(--service); color:var(
 .proof .wrap{display:grid; gap:32px}
 .proof h2{max-width:24ch}
 .proof h2 span{display:block; color:var(--muted); font-size:var(--t3); margin-top:12px; font-weight:700}
+.kitchens{display:flex; flex-wrap:wrap; align-items:center; gap:16px 40px; margin:0; padding:0; list-style:none}
+.kitchens li:first-child{font-size:var(--t6); font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.kitchens a{display:block; line-height:0; border-radius:6px}
+.kitchens img{height:40px; width:auto; opacity:.6; transition:opacity .2s}
+.kitchens a:hover img,.kitchens a:focus-visible img{opacity:1}
+.kitchens a:focus-visible{outline:3px solid var(--amber); outline-offset:6px}
+@media (prefers-reduced-motion:reduce){ .kitchens img{transition:none} }
 .photos{display:flex; gap:16px}
 .photos figure{margin:0; min-width:0}
 .photos figure:first-child{flex:1 1 0}
@@ -327,6 +334,10 @@ header{position:sticky; top:0; z-index:40; background:var(--service); color:var(
 .client blockquote{margin:0; font-size:24px; font-family:'Chivo',sans-serif; font-weight:600; line-height:1.4; color:var(--on-service)}
 .client .who{margin-top:24px; display:flex; align-items:center; gap:12px; font-size:var(--t5); color:var(--on-service-2)}
 .client .who b{color:#fff}
+.client .also{margin:20px 0 0; font-size:var(--t5); color:var(--on-service-2)}
+.client .also b{color:#fff}
+.client .who a,.client .also a{color:inherit; text-decoration:underline; text-decoration-color:var(--on-service-2); text-decoration-thickness:1px; text-underline-offset:4px}
+.client .who a:hover,.client .also a:hover{text-decoration-color:#fff; text-decoration-thickness:2px}
 
 /* ---------- questions ---------- */
 .faq{padding:72px 0}
@@ -334,10 +345,16 @@ header{position:sticky; top:0; z-index:40; background:var(--service); color:var(
 .faq h2{margin-bottom:24px}
 details{border-top:1px solid var(--line)}
 details:last-of-type{border-bottom:1px solid var(--line)}
-summary{list-style:none; cursor:pointer; padding:20px 0; display:flex; gap:16px; align-items:center; font-family:'Chivo',sans-serif; font-weight:700; font-size:20px; line-height:1.3}
+summary{position:relative; list-style:none; cursor:pointer; padding:20px 0; display:flex; gap:16px; align-items:center; font-family:'Chivo',sans-serif; font-weight:700; font-size:20px; line-height:1.3; transition:color .2s}
+summary:hover{color:var(--ember)}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"+"; margin-left:auto; flex:none; width:32px; height:32px; border-radius:8px; background:var(--tile); display:grid; place-items:center; font-family:'Chivo',sans-serif; font-weight:700}
-details[open] summary::after{content:"–"; background:var(--ember); color:#fff}
+/* Icone + / - : barre horizontale dans la case, barre verticale qui pivote pour se poser dessus */
+summary::after{content:""; margin-left:auto; flex:none; width:32px; height:32px; border-radius:8px; background:linear-gradient(var(--ink),var(--ink)) center/12px 2px no-repeat, var(--tile); transition:background-color .3s}
+summary::before{content:""; position:absolute; right:15px; top:50%; width:2px; height:12px; margin-top:-6px; border-radius:1px; background:var(--ink); transition:transform .35s cubic-bezier(.2,.7,.2,1), background-color .3s}
+details[open] summary::after{background:linear-gradient(#fff,#fff) center/12px 2px no-repeat, var(--ember)}
+details[open] summary::before{transform:rotate(90deg); background:#fff}
+details.closing summary::after{background:linear-gradient(var(--ink),var(--ink)) center/12px 2px no-repeat, var(--tile)}
+details.closing summary::before{transform:none; background:var(--ink)}
 summary:focus-visible{outline:3px solid var(--amber); outline-offset:2px}
 details p{padding:0 0 24px; color:var(--muted); font-size:var(--t5); line-height:1.6; max-width:64ch}
 
@@ -461,6 +478,13 @@ footer a:hover{color:#fff}
         <figure><img src="assets/serge-tablette.webp" alt="Serge Menassa, co-founder of CookOnTime, showing the app on the kitchen tablet at Sezam&amp;Co" width="900" height="900" loading="lazy"><figcaption>Serge Menassa, co-founder, at Sezam&amp;Co in Lyon</figcaption></figure>
         <figure><img src="assets/pro-kitchen-tablet.webp" alt="Wall-mounted tablet running CookOnTime in a professional kitchen during service" width="1400" height="781" loading="lazy"><figcaption>One tablet on the wall covers the whole line</figcaption></figure>
       </div>
+      <ul class="kitchens" id="cuisines" aria-label="Restaurants using CookOnTime">
+        <li>In the kitchen at</li>
+        <li><a href="https://sezamandco.com/en/" target="_blank" rel="noopener"><img src="assets/logo-sezam.webp" alt="Sezam&amp;Co, Lebanese restaurant in Lyon" width="307" height="120" style="height:36px" loading="lazy"></a></li>
+        <li><a href="https://www.yallaeat.fr/" target="_blank" rel="noopener"><img src="assets/logo-yallaeat.webp" alt="YallaEat, Lebanese restaurant in Lyon 9" width="299" height="120" style="height:42px" loading="lazy"></a></li>
+        <li><a href="https://www.legrandliban.com/" target="_blank" rel="noopener"><img src="assets/logo-grand-liban.webp" alt="Le Grand Liban, Lebanese restaurant in Lyon" width="104" height="120" style="height:52px" loading="lazy"></a></li>
+        <li><a href="https://www.google.com/maps/search/?api=1&amp;query=CENTRICO%20Badaro%20Beyrouth" target="_blank" rel="noopener"><img src="assets/logo-centrico.webp" alt="Centrico, tapas bar in Beirut" width="497" height="120" style="height:30px" loading="lazy"></a></li>
+      </ul>
     </div>
   </section>
 
@@ -605,10 +629,11 @@ footer a:hover{color:#fff}
     <div class="wrap">
       <div>
         <h2>Tested in live service</h2>
-        <p class="who"><b>Sezam&amp;Co</b> restaurant in Lyon, France, a customer since July 2026</p>
+        <p class="who"><a href="https://sezamandco.com/en/" target="_blank" rel="noopener"><b>Sezam&amp;Co</b></a> Lebanese restaurant in Lyon, France, a customer since July 2026</p>
       </div>
       <div>
         <blockquote>“We use it every single service. Each dish has its own ring, and nobody checks the wrong timer anymore.”</blockquote>
+        <p class="also">Also in the kitchen at <a href="https://www.yallaeat.fr/" target="_blank" rel="noopener"><b>YallaEat</b></a>, a Lebanese restaurant in Lyon 9.</p>
       </div>
     </div>
   </section>
@@ -805,6 +830,38 @@ footer a:hover{color:#fff}
     a.addEventListener('click', function(){
       var body=JSON.stringify({button:where, lang:'en'});
       try{ navigator.sendBeacon('/api/click', new Blob([body],{type:'text/plain'})); }catch(e){}
+    });
+  });
+})();
+</script>
+<script>
+/* FAQ : ouverture et fermeture animees (hauteur + fondu). Sans JS ou avec
+   « reduire les animations », les <details> gardent leur comportement natif. */
+(function(){
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll('.faq details').forEach(function(d){
+    var s = d.querySelector('summary'), p = d.querySelector('p'), anim = null;
+    if (!s || !p || !d.animate) return;
+    s.addEventListener('click', function(e){
+      if (calm.matches) return;
+      e.preventDefault();
+      var from = d.offsetHeight, closing = d.open && !d.classList.contains('closing');
+      if (anim) anim.cancel();
+      var cs = getComputedStyle(d);
+      var shut = s.offsetHeight + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+      if (closing) { d.classList.add('closing'); }
+      else { d.classList.remove('closing'); d.open = true; }
+      var to = closing ? shut : d.offsetHeight;
+      d.style.overflow = 'hidden';
+      anim = d.animate({height: [from + 'px', to + 'px']}, {duration: closing ? 260 : 380, easing: 'cubic-bezier(.2,.7,.2,1)'});
+      p.animate(closing ? {opacity: [1, 0], transform: ['none', 'translateY(-6px)']}
+                        : {opacity: [0, 1], transform: ['translateY(-8px)', 'none']},
+                {duration: closing ? 180 : 380, easing: 'ease-out', fill: 'both'});
+      anim.onfinish = function(){
+        if (closing) d.open = false;
+        d.classList.remove('closing'); d.style.overflow = ''; anim = null;
+        p.getAnimations().forEach(function(a){ a.cancel(); });
+      };
     });
   });
 })();
