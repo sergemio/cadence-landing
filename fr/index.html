@@ -2,6 +2,14 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<!-- Google Analytics (G-W3V1ZGBVZE) : mesure d'audience du site, propriété « cookontime-app ». -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W3V1ZGBVZE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W3V1ZGBVZE', {allow_google_signals: false, allow_ad_personalization_signals: false, cookie_expires: 33696000});
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Application minuteur cuisine gratuite pour restaurants — multi-plats & voix</title>
 <meta name="description" content="Application minuteur cuisine gratuite : plusieurs minuteurs à la fois, une sonnerie par plat, une voix qui annonce le plat prêt. Créée par des restaurateurs.">
@@ -815,7 +823,7 @@ footer a:hover{color:#fff}
     fetch('/api/signup', {method:'POST', headers:{'content-type':'application/json'},
       body:JSON.stringify({email:email, device:f.device.value, tester:f.tester.checked, website:f.website.value, lang:'fr'})})
       .then(function(r){ return r.json(); })
-      .then(function(d){ if(!d.ok) throw 0; msg.className='msg ok'; msg.textContent="C'est noté. On vous écrit dès que l'app sort."; f.reset(); })
+      .then(function(d){ if(!d.ok) throw 0; if(window.gtag) gtag('event','sign_up',{method:'landing', device:f.device.value, tester:f.tester.checked?'oui':'non', page_lang:'fr'}); msg.className='msg ok'; msg.textContent="C'est noté. On vous écrit dès que l'app sort."; f.reset(); })
       .catch(function(){ msg.className='msg err'; msg.textContent="L'envoi n'a pas marché. Réessayez dans un instant."; })
       .then(function(){ btn.disabled=false; });
   });
@@ -830,6 +838,7 @@ footer a:hover{color:#fff}
     a.addEventListener('click', function(){
       var body=JSON.stringify({button:where, lang:'fr'});
       try{ navigator.sendBeacon('/api/click', new Blob([body],{type:'text/plain'})); }catch(e){}
+      if(window.gtag) gtag('event','cta_click',{location:where});
     });
   });
 })();
