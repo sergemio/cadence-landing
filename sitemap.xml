@@ -13,4 +13,18 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://cookontime.app/fr/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cookontime.app/"/>
   </url>
+  <url>
+    <loc>https://cookontime.app/cooking-times/pasta/</loc>
+    <lastmod>2026-10-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cookontime.app/cooking-times/pasta/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cookontime.app/fr/temps-de-cuisson/pates/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cookontime.app/cooking-times/pasta/"/>
+  </url>
+  <url>
+    <loc>https://cookontime.app/fr/temps-de-cuisson/pates/</loc>
+    <lastmod>2026-10-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cookontime.app/cooking-times/pasta/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cookontime.app/fr/temps-de-cuisson/pates/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cookontime.app/cooking-times/pasta/"/>
+  </url>
 </urlset>

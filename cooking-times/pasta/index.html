@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics (G-W3V1ZGBVZE) : mesure d'audience du site, propriété « cookontime-app ». -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W3V1ZGBVZE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W3V1ZGBVZE', {allow_google_signals: false, allow_ad_personalization_signals: false, cookie_expires: 33696000});
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pasta Cooking Times: Chart and Online Timer | CookOnTime</title>
+<meta name="description" content="How long to boil pasta: spaghetti, penne, fusilli, farfalle, tagliatelle, fresh pasta. An al dente cooking time chart and a free kitchen timer you start in one click.">
+<meta name="theme-color" content="#191b14">
+<link rel="canonical" href="https://cookontime.app/cooking-times/pasta/">
+<link rel="alternate" hreflang="en" href="https://cookontime.app/cooking-times/pasta/">
+<link rel="alternate" hreflang="fr" href="https://cookontime.app/fr/temps-de-cuisson/pates/">
+<link rel="alternate" hreflang="x-default" href="https://cookontime.app/cooking-times/pasta/">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cookontime.app/cooking-times/pasta/">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Pasta cooking times: chart and online timer">
+<meta property="og:description" content="The al dente time for every pasta shape, and a timer that rings and tells you out loud when it is ready.">
+<meta property="og:image" content="https://cookontime.app/assets/og-en.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"CookOnTime","item":"https://cookontime.app/"},
+    {"@type":"ListItem","position":2,"name":"Pasta cooking times","item":"https://cookontime.app/cooking-times/pasta/"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How long do you boil spaghetti?","acceptedAnswer":{"@type":"Answer","text":"Dried spaghetti takes 8 to 10 minutes in salted boiling water, depending on its thickness. Taste it one minute before the time on the package for al dente pasta."}},
+    {"@type":"Question","name":"When should you salt pasta water?","acceptedAnswer":{"@type":"Answer","text":"Salt the water once it boils, just before adding the pasta: about 10 g of coarse salt per litre (roughly 1½ tablespoons per gallon)."}},
+    {"@type":"Question","name":"Should you add oil to pasta water?","acceptedAnswer":{"@type":"Answer","text":"No. The oil floats on the surface and does not stop pasta from sticking. What stops it is plenty of water (1 litre per 100 g, about 4 quarts per pound) and a few stirs during the first minute."}},
+    {"@type":"Question","name":"How long do you cook fresh pasta?","acceptedAnswer":{"@type":"Answer","text":"Thin store-bought fresh pasta (tagliatelle, ravioli) cooks in 2 to 4 minutes and is ready shortly after it floats. Thicker fresh pasta, often homemade, takes longer: follow the package or taste it."}},
+    {"@type":"Question","name":"When do you start timing pasta?","acceptedAnswer":{"@type":"Answer","text":"Start the timer when the water comes back to a boil after adding the pasta, not the moment you drop it in."}}
+  ]
+}
+</script>
+
+<style>
+@font-face{font-family:'DSEG7 Classic'; src:url(/assets/fonts/DSEG7Classic-Bold.ttf) format('truetype'); font-weight:700; font-display:swap}
+:root{
+  /* Jetons repris de la page d'accueil (eux-mêmes repris de app/lib/ui/theme.dart) */
+  --service:#191b14; --service-2:#24271d; --on-service:#efe8d6; --on-service-2:#b9b3a3;
+  --paper:#f4efe4; --paper-2:#ebe4d5; --tile:#e7ded0;
+  --ink:#1d211e; --muted:#5b6259; --line:rgba(28,33,28,.14);
+  --ember:#e8600f; --ember-2:#c94f08; --on-ember:#fff8f0;
+  --amber:#dd9207; --mint:#0fa96a; --red:#e03131;
+  --t1:clamp(40px,5.6vw,64px); --t2:clamp(30px,3.6vw,42px); --t3:clamp(22px,2.4vw,28px);
+  --t4:20px; --t5:16px; --t6:14px;
+  --maxw:1080px; --gut:clamp(16px,4vw,40px);
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:'Chivo',system-ui,sans-serif; font-size:var(--t4); line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+h1,h2,h3{font-family:'Big Shoulders Display',sans-serif; font-weight:800; margin:0; text-wrap:balance}
+h1{font-size:var(--t1); line-height:1.02; letter-spacing:-.02em}
+h2{font-size:var(--t2); line-height:1.05; letter-spacing:-.015em}
+h3{font-size:var(--t3); line-height:1.1}
+p{margin:0}
+a{color:inherit}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 var(--gut)}
+.visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+.seg{font-family:'DSEG7 Classic',monospace; font-weight:700; font-style:normal}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:12px 28px; border-radius:12px;
+  font-family:'Chivo',sans-serif; font-weight:700; font-size:18px; border:2px solid transparent; cursor:pointer; text-decoration:none;
+  transition:transform .12s ease, background .15s ease, border-color .15s ease}
+.btn:focus-visible,.chip:focus-visible,.step:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
+.btn:active{transform:translateY(1px)}
+.btn-ember{background:var(--ember); color:var(--on-ember)}
+.btn-ember:hover{background:var(--ember-2)}
+.btn-line{background:transparent; color:var(--on-service); border-color:rgba(239,232,214,.28)}
+.btn-line:hover{border-color:var(--on-service)}
+
+/* en-tête : le bandeau de l'app, comme sur l'accueil */
+header{position:sticky; top:0; z-index:40; background:var(--service); color:var(--on-service); border-bottom:1px solid rgba(239,232,214,.08)}
+.nav{display:flex; align-items:center; gap:16px; height:64px}
+.brand{display:flex; align-items:center; gap:12px; margin-right:auto; text-decoration:none}
+.brand img{height:28px; width:auto}
+.brand b{font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:24px}
+.nav .btn{min-height:40px; padding:8px 20px; font-size:var(--t5)}
+.nav a.lang{display:inline-flex; align-items:center; justify-content:center; min-width:44px; min-height:40px; padding:0 12px; border-radius:10px; border:1px solid rgba(239,232,214,.28); color:var(--on-service); font-weight:700; font-size:var(--t6); text-decoration:none}
+.nav a.lang:hover{border-color:var(--on-service)}
+.nav a.lang:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
+
+/* haut de page : le minuteur EST le sujet */
+.hero{background:var(--service); color:var(--on-service); padding:40px 0 56px}
+.crumbs{font-size:var(--t6); color:var(--on-service-2); margin-bottom:16px}
+.crumbs a{text-decoration:none} .crumbs a:hover{color:var(--on-service)}
+.hero .wrap{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px; align-items:center}
+.lede{margin-top:16px; color:var(--on-service-2); font-size:var(--t4); max-width:44ch}
+.lede b{color:var(--on-service)}
+
+.timer{position:relative; background:var(--service-2); border:1px solid rgba(239,232,214,.10); border-radius:20px; padding:24px}
+/* Bande de progression : le contour du minuteur se vide a mesure que le temps passe */
+.ring{position:absolute; inset:-1px; width:calc(100% + 2px); height:calc(100% + 2px); pointer-events:none; overflow:visible}
+.ring rect{fill:none; stroke-width:5; stroke-linecap:round; opacity:0; transition:opacity .3s, stroke .3s}
+.timer[data-state="run"] .ring rect,.timer[data-state="paused"] .ring rect,.timer[data-state="done"] .ring rect{opacity:1}
+.ring .track{stroke:rgba(239,232,214,.08)}
+.ring .bar{stroke:#5cc79a}
+.timer[data-state="run"].late .ring .bar{stroke:var(--amber)}
+.timer[data-state="paused"] .ring .bar{stroke:var(--on-service-2)}
+.timer[data-state="done"] .ring .track{stroke:var(--red); animation:blink 1s steps(2) infinite}
+.timer-name{font-size:var(--t5); color:var(--on-service-2); text-transform:uppercase; letter-spacing:.08em; font-weight:700}
+.readout{display:flex; align-items:center; justify-content:space-between; gap:12px; margin:12px 0 20px}
+.digits{font-size:clamp(56px,9vw,88px); line-height:1; color:var(--on-service); font-variant-numeric:tabular-nums; transition:color .2s}
+.timer[data-state="run"] .digits{color:#5cc79a}
+.timer[data-state="done"] .digits{color:var(--red); animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.35}}
+.steps{display:flex; flex-direction:column; gap:8px}
+.step{width:48px; height:40px; border-radius:10px; border:1px solid rgba(239,232,214,.28); background:transparent; color:var(--on-service);
+  font:700 var(--t5) 'Chivo',sans-serif; cursor:pointer}
+.step:hover{border-color:var(--on-service)}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px}
+.chip{min-height:40px; padding:8px 16px; border-radius:999px; border:1px solid rgba(239,232,214,.22); background:transparent; color:var(--on-service-2);
+  font:500 var(--t6) 'Chivo',sans-serif; cursor:pointer}
+.chip:hover{color:var(--on-service); border-color:rgba(239,232,214,.5)}
+.chip[aria-pressed="true"]{background:var(--on-service); color:var(--service); border-color:var(--on-service); font-weight:700}
+.actions{display:flex; gap:12px}
+.actions .btn{flex:1}
+.voice-note{margin-top:12px; font-size:var(--t6); color:var(--on-service-2)}
+/* Badges des stores : noirs, bord gris, logo officiel, comme sur tous les sites d'apps */
+.store-badges{display:flex; gap:12px; margin-top:16px; flex-wrap:wrap}
+.store-badges.center{justify-content:center; margin-top:28px}
+.store-badge{display:inline-flex; align-items:center; gap:10px; height:52px; padding:0 18px 0 14px; border-radius:9px;
+  background:#000; color:#fff; border:1px solid #a6a6a6; text-decoration:none; font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  transition:transform .12s ease, border-color .15s ease}
+.store-badge:hover{border-color:#fff}
+.store-badge:active{transform:translateY(1px)}
+.store-badge:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
+.store-badge span{display:flex; flex-direction:column; line-height:1.05; text-align:left}
+.store-badge small{font-size:10px; letter-spacing:.02em}
+.store-badge b{font-size:21px; font-weight:600; letter-spacing:-.01em}
+.sb-logo{width:26px; height:28px; flex:none}
+.soon{margin-top:12px; font-size:var(--t6); color:var(--on-service-2)}
+.os{width:20px; height:20px; flex:none}
+figure{margin:0}
+figure img{display:block; width:100%; height:auto; border-radius:16px; background:var(--paper-2)}
+figcaption{margin-top:12px; font-size:var(--t6); color:var(--muted); max-width:68ch}
+.howgrid,.split{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); gap:40px; align-items:start; margin-top:8px}
+.split{align-items:center; margin-top:0}
+.split.photo-first{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+.howgrid ol.how{margin-top:16px}
+.split p + p{margin-top:16px}
+.split p{font-size:var(--t5)}
+ul.shapes{margin:20px 0 0; padding:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; font-size:var(--t5)}
+ul.shapes li{display:flex; justify-content:space-between; border-bottom:1px solid var(--line); padding:8px 0}
+ul.shapes b{font-variant-numeric:tabular-nums}
+@media (max-width:820px){ .howgrid,.split,.split.photo-first{grid-template-columns:1fr; gap:24px} }
+
+/* corps */
+main section{padding:72px 0}
+main section.alt{background:var(--paper-2)}
+main section.dark{background:var(--service); color:var(--on-service); text-align:center; padding:80px 0}
+main section.dark p{color:var(--on-service-2); max-width:56ch; margin:16px auto 0; font-size:var(--t4)}
+.prose{max-width:68ch}
+.prose p + p{margin-top:16px}
+.muted{color:var(--muted)}
+table{width:100%; border-collapse:collapse; margin-top:24px; font-size:var(--t5); font-variant-numeric:tabular-nums}
+.table-scroll{overflow-x:auto}
+th,td{text-align:left; padding:12px 16px; border-bottom:1px solid var(--line)}
+th{font-size:var(--t6); text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:700}
+td:nth-child(2){font-weight:700; white-space:nowrap}
+td button{min-height:36px; padding:4px 12px; border-radius:8px; border:1px solid var(--line); background:var(--paper); font:700 var(--t6) 'Chivo',sans-serif; cursor:pointer; white-space:nowrap}
+td button:hover{border-color:var(--ink)}
+td button:focus-visible{outline:3px solid var(--amber); outline-offset:2px}
+.note{margin-top:16px; font-size:var(--t5); color:var(--muted)}
+ol.how{margin:24px 0 0; padding:0; list-style:none; counter-reset:how; display:grid; gap:16px; max-width:68ch}
+ol.how li{counter-increment:how; display:grid; grid-template-columns:40px 1fr; gap:12px; font-size:var(--t5)}
+ol.how li::before{content:counter(how); width:32px; height:32px; border-radius:8px; background:var(--tile); display:grid; place-items:center; font-weight:700; font-size:var(--t6)}
+.pro{margin-top:24px; background:var(--paper-2); border-radius:16px; padding:24px; max-width:68ch; font-size:var(--t5)}
+.pro h3{font-size:var(--t4); font-family:'Chivo',sans-serif; margin-bottom:8px}
+h2 + details{margin-top:24px}
+details{border-top:1px solid var(--line); max-width:820px}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{position:relative; list-style:none; cursor:pointer; padding:20px 0; font-weight:700; font-size:var(--t4); display:flex; justify-content:space-between; align-items:center; gap:16px; transition:color .2s}
+summary:hover{color:var(--ember)}
+summary::-webkit-details-marker{display:none}
+/* Icone + / - comme sur l'accueil : la barre verticale pivote pour se poser sur l'horizontale */
+summary::after{content:""; flex:none; width:32px; height:32px; border-radius:8px; background:linear-gradient(var(--ink),var(--ink)) center/12px 2px no-repeat, var(--tile); transition:background-color .3s}
+summary::before{content:""; position:absolute; right:15px; top:50%; width:2px; height:12px; margin-top:-6px; border-radius:1px; background:var(--ink); transition:transform .35s cubic-bezier(.2,.7,.2,1), background-color .3s}
+details[open] summary::after{background:linear-gradient(#fff,#fff) center/12px 2px no-repeat, var(--ember)}
+details[open] summary::before{transform:rotate(90deg); background:#fff}
+details.closing summary::after{background:linear-gradient(var(--ink),var(--ink)) center/12px 2px no-repeat, var(--tile)}
+details.closing summary::before{transform:none; background:var(--ink)}
+summary:focus-visible{outline:3px solid var(--amber); outline-offset:2px}
+details p{padding:0 0 20px; color:var(--muted); font-size:var(--t5); max-width:64ch}
+footer{background:#0f100b; color:var(--on-service-2); padding:32px 0; font-size:var(--t6)}
+footer .wrap{display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between}
+footer a{text-decoration:none} footer a:hover{color:#fff}
+
+@media (max-width:820px){
+  .hero .wrap{grid-template-columns:1fr; gap:28px}
+}
+@media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/"><img src="/assets/logo-mark-white.webp" alt="" width="361" height="256"><b>CookOnTime</b></a>
+    <a class="lang" href="/fr/temps-de-cuisson/pates/" hreflang="fr" lang="fr" aria-label="Version française">FR</a>
+    <a class="btn btn-ember" href="/#lancement">Free app</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">CookOnTime</a> › Pasta cooking times</nav>
+      <h1>Pasta cooking times</h1>
+      <p class="lede">Dried pasta cooks <b>al dente</b> in <b>8 to 12 minutes</b> depending on its shape, fresh pasta in <b>2 to 4 minutes</b>. Pick your pasta, start the timer: it rings and tells you when it is ready.</p>
+    </div>
+
+    <div class="timer-col">
+    <div class="timer" id="timer" data-state="idle" aria-label="Cooking timer">
+      <svg class="ring" id="tRing" aria-hidden="true"><rect class="track"/><rect class="bar" id="tBar" pathLength="1000"/></svg>
+      <div class="timer-name" id="tName">Spaghetti</div>
+      <div class="readout">
+        <output class="seg digits" id="tDigits" aria-live="off">09:00</output>
+        <div class="steps">
+          <button class="step" type="button" id="tPlus" aria-label="One more minute">+1</button>
+          <button class="step" type="button" id="tMinus" aria-label="One minute less">−1</button>
+        </div>
+      </div>
+      <div class="chips" role="group" aria-label="Pasta shape">
+        <button class="chip" type="button" data-min="9" data-name="Spaghetti" aria-pressed="true">Spaghetti 9 min</button>
+        <button class="chip" type="button" data-min="11" data-name="Penne">Penne 11 min</button>
+        <button class="chip" type="button" data-min="11" data-name="Fusilli">Fusilli 11 min</button>
+        <button class="chip" type="button" data-min="8" data-name="Elbow macaroni">Elbows 8 min</button>
+        <button class="chip" type="button" data-min="7" data-name="Tagliatelle">Tagliatelle 7 min</button>
+        <button class="chip" type="button" data-min="3" data-name="Fresh pasta">Fresh 3 min</button>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ember" type="button" id="tGo">Start</button>
+        <button class="btn btn-line" type="button" id="tReset">Reset</button>
+      </div>
+      <p class="voice-note" id="tNote">Start it when the water comes back to a boil. It rings and says “Spaghetti is ready”.</p>
+    </div>
+    <div class="store-badges">
+      <a class="store-badge" href="/#lancement" aria-label="Get it on Google Play"><svg class="sb-logo" viewBox="0 0 24 26" aria-hidden="true"><path fill="#4285F4" d="M1.2 1.1 13 13 1.2 24.9C.8 24.6.6 24.1.6 23.5V2.5c0-.6.2-1.1.6-1.4z"/><path fill="#34A853" d="M1.2 1.1c.5-.4 1.2-.4 1.9 0L17.3 9.3 13 13z"/><path fill="#EA4335" d="M13 13l4.3 3.7L3.1 24.9c-.7.4-1.4.4-1.9 0z"/><path fill="#FBBC04" d="M17.3 9.3l4.3 2.5c1 .6 1 1.8 0 2.4l-4.3 2.5L13 13z"/></svg><span><small>GET IT ON</small><b>Google Play</b></span></a>
+      <a class="store-badge" href="/#lancement" aria-label="Download on the App Store"><svg class="sb-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><span><small>Download on the</small><b>App Store</b></span></a>
+    </div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section>
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>A timer right next to the pot</h2>
+          <p class="note">Put your phone or tablet next to the stove: the timer stays big on screen, rings at the end and says out loud that the dish is ready. No more watching the clock while you stir the sauce.</p>
+          <p class="note">With the CookOnTime app, every dish gets its own timer: the pasta, the sauce and the meat run at the same time, each with its own ring.</p>
+        </div>
+        <figure>
+          <img src="/assets/cuisson/pates-cuisson-minuteur-tablette.webp" width="1376" height="768" fetchpriority="high"
+               alt="Spaghetti boiling in a pot of water on the stove, with the CookOnTime kitchen timer app running on a tablet next to it">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>Pasta cooking time chart</h2>
+      <p class="note">Times for al dente pasta, counted from when the water comes back to a boil. The package has the final word: every brand has its own thickness. Taste one minute before the end.</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Pasta</th><th scope="col">Al dente</th><th scope="col">Soft</th><th scope="col"><span class="visually-hidden">Timer</span></th></tr></thead>
+          <tbody>
+            <tr><td>Spaghetti</td><td> to  min</td><td>11 min</td><td><button type="button" data-min="9" data-name="Spaghetti">Start 9 min</button></td></tr>
+            <tr><td>Linguine</td><td> to  min</td><td>12 min</td><td><button type="button" data-min="10" data-name="Linguine">Start 10 min</button></td></tr>
+            <tr><td>Penne</td><td> to  min</td><td>13 min</td><td><button type="button" data-min="11" data-name="Penne">Start 11 min</button></td></tr>
+            <tr><td>Fusilli</td><td> to  min</td><td>13 min</td><td><button type="button" data-min="11" data-name="Fusilli">Start 11 min</button></td></tr>
+            <tr><td>Farfalle (bow ties)</td><td> to  min</td><td>13 min</td><td><button type="button" data-min="11" data-name="Farfalle">Start 11 min</button></td></tr>
+            <tr><td>Rigatoni</td><td> to  min</td><td>15 min</td><td><button type="button" data-min="13" data-name="Rigatoni">Start 13 min</button></td></tr>
+            <tr><td>Elbow macaroni</td><td> to  min</td><td>10 min</td><td><button type="button" data-min="8" data-name="Elbow macaroni">Start 8 min</button></td></tr>
+            <tr><td>Dried tagliatelle</td><td> to  min</td><td>9 min</td><td><button type="button" data-min="7" data-name="Tagliatelle">Start 7 min</button></td></tr>
+            <tr><td>Thin fresh pasta</td><td> to  min</td><td>5 min</td><td><button type="button" data-min="3" data-name="Fresh pasta">Start 3 min</button></td></tr>
+            <tr><td>Fresh ravioli</td><td> to  min</td><td>6 min</td><td><button type="button" data-min="4" data-name="Ravioli">Start 4 min</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="split photo-first" style="margin-top:48px">
+        <figure>
+          <img src="/assets/cuisson/formes-de-pates.webp" width="1200" height="670" loading="lazy"
+               alt="Dried pasta shapes seen from above: spaghetti, linguine, penne, fusilli, farfalle, rigatoni, elbow macaroni and tagliatelle">
+          <figcaption>Top: spaghetti, linguine, penne, fusilli. Bottom: farfalle, rigatoni, elbow macaroni, tagliatelle.</figcaption>
+        </figure>
+        <div>
+          <h3>Pasta shapes and their cooking times</h3>
+          <p class="note">The thicker the pasta, the longer it cooks: long thin strands are quick, thick tubes like rigatoni take the longest.</p>
+          <ul class="shapes">
+            <li>Spaghetti <b>9 min</b></li><li>Linguine <b>10 min</b></li>
+            <li>Penne <b>11 min</b></li><li>Fusilli <b>11 min</b></li>
+            <li>Farfalle <b>11 min</b></li><li>Rigatoni <b>13 min</b></li>
+            <li>Elbows <b>8 min</b></li><li>Tagliatelle <b>7 min</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>How to cook pasta</h2>
+      <div class="howgrid">
+      <ol class="how">
+        <li><span><b>Plenty of water:</b> 1 litre of water per 100 g of pasta (about 4 quarts per pound), in a large pot.</span></li>
+        <li><span><b>Salt at the boil:</b> about 10 g of coarse salt per litre, once the water is at a rolling boil.</span></li>
+        <li><span><b>Drop it in and stir</b> during the first minute: that is what keeps pasta from sticking. No oil needed.</span></li>
+        <li><span><b>Start the timer</b> when the water comes back to a boil, and cook with the lid off.</span></li>
+        <li><span><b>Taste one minute early:</b> the pasta should still have a little bite.</span></li>
+        <li><span><b>Save a ladle of pasta water</b> before draining: its starch binds the sauce.</span></li>
+      </ol>
+      <figure>
+        <img src="/assets/cuisson/spaghetti-al-dente.webp" width="1200" height="896" loading="lazy"
+             alt="Al dente spaghetti lifted on a fork above a pot of boiling water to check if the pasta is done">
+        <figcaption>The al dente test: fish out a strand one minute before the end and bite it. It should be slightly firm in the center.</figcaption>
+      </figure>
+      </div>
+      <div class="pro">
+        <h3>In a restaurant: par-cook for the rush</h3>
+        <p>Many kitchens par-cook pasta for about two thirds of the time, shock it in ice water, then toss it with a little oil for prep. During service, it only needs one or two minutes in boiling water to finish.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>Common questions</h2>
+      <details><summary>How long do you boil spaghetti?</summary><p>Dried spaghetti takes 8 to 10 minutes in salted boiling water, depending on its thickness. Taste it one minute before the time on the package for al dente pasta.</p></details>
+      <details><summary>When should you salt pasta water?</summary><p>Salt the water once it boils, just before adding the pasta: about 10 g of coarse salt per litre (roughly 1½ tablespoons per gallon).</p></details>
+      <details><summary>Should you add oil to pasta water?</summary><p>No. The oil floats on the surface and does not stop pasta from sticking. What stops it is plenty of water (1 litre per 100 g, about 4 quarts per pound) and a few stirs during the first minute.</p></details>
+      <details><summary>How long do you cook fresh pasta?</summary><p>Thin store-bought fresh pasta (tagliatelle, ravioli) cooks in 2 to 4 minutes and is ready shortly after it floats. Thicker fresh pasta, often homemade, takes longer: follow the package or taste it.</p></details>
+      <details><summary>When do you start timing pasta?</summary><p>Start the timer when the water comes back to a boil after adding the pasta, not the moment you drop it in.</p></details>
+    </div>
+  </section>
+
+  <section class="dark" id="app">
+    <div class="wrap">
+      <h2>Pasta, sauce and meat all at once?</h2>
+      <p>CookOnTime runs one timer per dish on your tablet or phone. Each one has its own ring, and a voice calls out each dish by name when it is ready. Free, no account.</p>
+      <div class="store-badges center">
+      <a class="store-badge" href="/#lancement" aria-label="Get it on Google Play"><svg class="sb-logo" viewBox="0 0 24 26" aria-hidden="true"><path fill="#4285F4" d="M1.2 1.1 13 13 1.2 24.9C.8 24.6.6 24.1.6 23.5V2.5c0-.6.2-1.1.6-1.4z"/><path fill="#34A853" d="M1.2 1.1c.5-.4 1.2-.4 1.9 0L17.3 9.3 13 13z"/><path fill="#EA4335" d="M13 13l4.3 3.7L3.1 24.9c-.7.4-1.4.4-1.9 0z"/><path fill="#FBBC04" d="M17.3 9.3l4.3 2.5c1 .6 1 1.8 0 2.4l-4.3 2.5L13 13z"/></svg><span><small>GET IT ON</small><b>Google Play</b></span></a>
+      <a class="store-badge" href="/#lancement" aria-label="Download on the App Store"><svg class="sb-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.31 7.34c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.63 5.98.68 7.68-.66 1.73-1.53 3.45-2.01 3.7zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><span><small>Download on the</small><b>App Store</b></span></a>
+    </div>
+      <p class="soon">Coming soon to the stores: sign up to hear when it launches.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 CookOnTime — the timer that calls out every step out loud.</span>
+    <span><a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/">Home</a></span>
+  </div>
+</footer>
+
+<script>
+/* Minuteur de la page : un plat, une sonnerie, une annonce vocale.
+   L'heure de fin est calculée une fois (Date.now), pas décomptée seconde par
+   seconde : un onglet mis en arrière-plan ne prend donc aucun retard. */
+(function(){
+  var box=document.getElementById('timer'), digits=document.getElementById('tDigits'), nameEl=document.getElementById('tName'),
+      go=document.getElementById('tGo'), reset=document.getElementById('tReset'), note=document.getElementById('tNote'),
+      plus=document.getElementById('tPlus'), minus=document.getElementById('tMinus'),
+      chips=[].slice.call(document.querySelectorAll('.chip'));
+  var name='Spaghetti', total=9*60*1000, left=total, endAt=0, tick=null, alarm=null, ctx=null, lock=null, title=document.title;
+
+  function fmt(ms){ var s=Math.max(0,Math.ceil(ms/1000)), m=Math.floor(s/60); s%=60; return (m<10?'0':'')+m+':'+(s<10?'0':'')+s; }
+  var ring=document.getElementById('tRing'), bar=document.getElementById('tBar'), rects=[].slice.call(ring.querySelectorAll('rect'));
+  function frame(){ /* le rectangle suit la taille reelle du bloc (coins arrondis non deformes) */
+    var w=ring.clientWidth, h=ring.clientHeight, i=2.5;
+    ring.setAttribute('viewBox','0 0 '+w+' '+h);
+    rects.forEach(function(r){ r.setAttribute('x',i); r.setAttribute('y',i); r.setAttribute('width',Math.max(0,w-2*i)); r.setAttribute('height',Math.max(0,h-2*i)); r.setAttribute('rx',19); });
+  }
+  function draw(){ digits.textContent=fmt(left);
+    var f= total>0 ? Math.max(0,Math.min(1,left/total)) : 0;
+    bar.setAttribute('stroke-dasharray', (1000*f)+' 1000');
+    box.classList.toggle('late', f<0.2);
+  }
+  frame(); window.addEventListener('resize',frame);
+  function state(s){ box.setAttribute('data-state',s); go.textContent = s==='run' ? 'Pause' : s==='done' ? 'Stop' : 'Start'; }
+  function choose(min,n,quiet){
+    if(!quiet) blip(700,900,.09);
+    stop(); name=n; total=min*60000; left=total; nameEl.textContent=n; draw(); state('idle');
+    note.textContent="Start it when the water comes back to a boil. It rings and says “"+n+" is ready”.";
+    chips.forEach(function(c){ c.setAttribute('aria-pressed', c.getAttribute('data-name')===n && +c.getAttribute('data-min')===min ? 'true':'false'); });
+  }
+  function beep(){
+    try{
+      ctx = ctx || new (window.AudioContext||window.webkitAudioContext)();
+      var t=ctx.currentTime;
+      [0,.25,.5].forEach(function(d){ var o=ctx.createOscillator(), g=ctx.createGain(); o.type='square'; o.frequency.value=880;
+        g.gain.setValueAtTime(.0001,t+d); g.gain.exponentialRampToValueAtTime(.25,t+d+.02); g.gain.exponentialRampToValueAtTime(.0001,t+d+.18);
+        o.connect(g); g.connect(ctx.destination); o.start(t+d); o.stop(t+d+.2); });
+    }catch(e){}
+  }
+  function audio(){ try{ ctx = ctx || new (window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); }catch(e){} return ctx; }
+  /* un petit son a chaque geste : l'utilisateur comprend tout de suite que la page a du son */
+  function blip(f1,f2,dur){
+    var c=audio(); if(!c) return;
+    try{ var t=c.currentTime, o=c.createOscillator(), g=c.createGain(); o.type='triangle';
+      o.frequency.setValueAtTime(f1,t); if(f2) o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+      g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.22,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+      o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+dur+.02); }catch(e){}
+  }
+  function say(text){
+    try{ if(!window.speechSynthesis) return; var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){}
+  }
+  function speak(){
+    try{ if(!window.speechSynthesis) return; var u=new SpeechSynthesisUtterance(name+" is ready"); u.lang='en-US'; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){}
+  }
+  function done(){
+    clearInterval(tick); tick=null; left=0; draw(); state('done'); release();
+    beep(); speak(); var n=0;
+    alarm=setInterval(function(){ beep(); document.title = (n++%2) ? title : '⏰ '+name+' is ready!'; if(n%8===0) speak(); },1500);
+    if(window.gtag) gtag('event','timer_done',{page:'pasta', item:name});
+  }
+  function run(){
+    endAt=Date.now()+left; state('run'); keepAwake();
+    blip(523,784,.18); var m=Math.round(left/60000); say(name+", "+m+(m>1?" minutes":" minute")+". Timer started.");
+    tick=setInterval(function(){ left=endAt-Date.now(); if(left<=0) done(); else draw(); },250);
+    if(window.gtag) gtag('event','timer_started',{page:'pasta', item:name, minutes:Math.round(total/60000)});
+  }
+  function pause(){ blip(660,440,.14); clearInterval(tick); tick=null; left=Math.max(0,endAt-Date.now()); state('paused'); go.textContent='Resume'; release(); }
+  function stop(){ clearInterval(tick); tick=null; clearInterval(alarm); alarm=null; document.title=title; try{speechSynthesis.cancel();}catch(e){} release(); }
+  function keepAwake(){ try{ if(navigator.wakeLock) navigator.wakeLock.request('screen').then(function(l){lock=l;}).catch(function(){}); }catch(e){} }
+  function release(){ try{ if(lock){ lock.release(); lock=null; } }catch(e){} }
+
+  go.addEventListener('click',function(){
+    var s=box.getAttribute('data-state');
+    if(ctx && ctx.state==='suspended') ctx.resume();
+    else if(!ctx){ try{ ctx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } /* débloque le son sur iPhone */
+    if(s==='run') pause(); else if(s==='done'){ blip(660,440,.14); stop(); left=total; draw(); state('idle'); } else run();
+  });
+  reset.addEventListener('click',function(){ blip(440,330,.12); stop(); left=total; draw(); state('idle'); });
+  function nudge(d){ var s=box.getAttribute('data-state'); if(s==='done') return;
+    if(s==='run'){ endAt=Math.max(Date.now()+1000,endAt+d); left=endAt-Date.now(); } else { left=Math.max(60000,left+d); total=Math.max(60000,total+d); }
+    draw(); }
+  plus.addEventListener('click',function(){ blip(880,0,.06); nudge(60000); });
+  minus.addEventListener('click',function(){ blip(587,0,.06); nudge(-60000); });
+  chips.forEach(function(c){ c.addEventListener('click',function(){ choose(+c.getAttribute('data-min'), c.getAttribute('data-name')); }); });
+  [].forEach.call(document.querySelectorAll('td button'),function(b){
+    b.addEventListener('click',function(){ choose(+b.getAttribute('data-min'), b.getAttribute('data-name'), true); box.scrollIntoView({behavior:'smooth',block:'center'}); go.click(); });
+  });
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden && box.getAttribute('data-state')==='run') keepAwake(); });
+  draw();
+})();
+</script>
+<script>
+/* FAQ : ouverture et fermeture animees (hauteur + fondu). Sans JS ou avec
+   « reduire les animations », les <details> gardent leur comportement natif. */
+(function(){
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll('main details').forEach(function(d){
+    var s = d.querySelector('summary'), p = d.querySelector('p'), anim = null;
+    if (!s || !p || !d.animate) return;
+    s.addEventListener('click', function(e){
+      if (calm.matches) return;
+      e.preventDefault();
+      var from = d.offsetHeight, closing = d.open && !d.classList.contains('closing');
+      if (anim) anim.cancel();
+      var cs = getComputedStyle(d);
+      var shut = s.offsetHeight + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+      if (closing) { d.classList.add('closing'); }
+      else { d.classList.remove('closing'); d.open = true; }
+      var to = closing ? shut : d.offsetHeight;
+      d.style.overflow = 'hidden';
+      anim = d.animate({height: [from + 'px', to + 'px']}, {duration: closing ? 260 : 380, easing: 'cubic-bezier(.2,.7,.2,1)'});
+      p.animate(closing ? {opacity: [1, 0], transform: ['none', 'translateY(-6px)']}
+                        : {opacity: [0, 1], transform: ['translateY(-8px)', 'none']},
+                {duration: closing ? 180 : 380, easing: 'ease-out', fill: 'both'});
+      anim.onfinish = function(){
+        if (closing) d.open = false;
+        d.classList.remove('closing'); d.style.overflow = ''; anim = null;
+        p.getAnimations().forEach(function(a){ a.cancel(); });
+      };
+    });
+  });
+})();
+</script>
+</body>
+</html>
